@@ -1,10 +1,14 @@
 "use client";
 
 import { cn } from "@/utils/helpers";
-import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { 
+  AnimatePresence, motion,
+} from "framer-motion";
+import { 
+  useCallback, useEffect, useRef, useState,
+} from "react";
 
-export function PlaceholderAndVanishInput({
+export function PlaceholderAndVanishInput ({
   placeholders,
   onChange,
   onSubmit,
@@ -49,12 +53,17 @@ export function PlaceholderAndVanishInput({
   const [animating, setAnimating] = useState(false);
 
   const draw = useCallback(() => {
-    if (!inputRef.current) return;
+    if (!inputRef.current) {
+      return;
+    }
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas) {
+      return;
+    }
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
+    if (!ctx) {
+      return;
+    }
     canvas.width = 800;
     canvas.height = 800;
     ctx.clearRect(0, 0, 800, 800);
@@ -70,9 +79,9 @@ export function PlaceholderAndVanishInput({
     const newData: any[] = [];
 
     for (let t = 0; t < 800; t++) {
-      let i = 4 * t * 800;
+      const i = 4 * t * 800;
       for (let n = 0; n < 800; n++) {
-        let e = i + 4 * n;
+        const e = i + 4 * n;
         if (
           pixelData[e] !== 0 &&
           pixelData[e + 1] !== 0 &&
@@ -92,7 +101,9 @@ export function PlaceholderAndVanishInput({
       }
     }
 
-    newDataRef.current = newData.map(({ x, y, color }) => ({
+    newDataRef.current = newData.map(({ 
+      x, y, color,
+    }) => ({
       x,
       y,
       r: 1,
@@ -128,7 +139,9 @@ export function PlaceholderAndVanishInput({
         if (ctx) {
           ctx.clearRect(pos, 0, 800, 800);
           newDataRef.current.forEach((t) => {
-            const { x: n, y: i, r: s, color: color } = t;
+            const { 
+              x: n, y: i, r: s, color: color,
+            } = t;
             if (n > pos) {
               ctx.beginPath();
               ctx.rect(n, i, s, s);
@@ -163,7 +176,7 @@ export function PlaceholderAndVanishInput({
     if (value && inputRef.current) {
       const maxX = newDataRef.current.reduce(
         (prev, current) => (current.x > prev ? current.x : prev),
-        0
+        0,
       );
       animate(maxX);
     }
@@ -177,14 +190,14 @@ export function PlaceholderAndVanishInput({
   return (
     <form
       className={cn(
-        "w-full relative max-w-xl mx-auto bg-gray-800 dark:bg-gray-800 h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200"
+        "w-full relative max-w-xl mx-auto bg-gray-800 dark:bg-gray-800 h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
       )}
       onSubmit={handleSubmit}
     >
       <canvas
         className={cn(
           "absolute pointer-events-none  text-base transform scale-50 top-[20%] left-2 sm:left-8 origin-top-left filter invert dark:invert-0 pr-20",
-          !animating ? "opacity-0" : "opacity-100"
+          !animating ? "opacity-0" : "opacity-100",
         )}
         ref={canvasRef}
       />
@@ -201,7 +214,7 @@ export function PlaceholderAndVanishInput({
         type="text"
         className={cn(
           "w-full relative text-sm sm:text-base z-50 border-none dark:text-white bg-transparent text-black h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-20",
-          animating && "text-transparent dark:text-transparent"
+          animating && "text-transparent dark:text-transparent",
         )}
       />
 

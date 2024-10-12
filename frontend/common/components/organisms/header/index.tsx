@@ -47,7 +47,7 @@ export const Header = ({
             </div>
             <div className="flex space-x-4">
               <div className="text-white flex justify-center items-center mr-4 cursor-pointer">
-              <Search />
+                <Search />
               </div>
               <Button onClick={() => router.push(routes.createProjectPath)} size="sm" variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
                 Start a new idea

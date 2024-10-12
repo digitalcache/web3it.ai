@@ -1,4 +1,8 @@
-const ProcessStep = ({ number, title, description }) => (
+const ProcessStep = ({ 
+  number, 
+  title, 
+  description,
+}: any) => (
   <div className="text-center">
     <div className="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
       {number}
@@ -10,10 +14,22 @@ const ProcessStep = ({ number, title, description }) => (
 
 export const DevelopmentProcess = () => {
   const steps = [
-    { title: "Ideation", description: "Develop your web3 project idea" },
-    { title: "AI Assistance", description: "Use Claude AI for frontend development" },
-    { title: "Crowdfunding", description: "List your project for investment" },
-    { title: "Development", description: "Build and iterate on your project" }
+    { 
+      title: "Ideation", 
+      description: "Develop your web3 project idea",
+    },
+    { 
+      title: "AI Assistance", 
+      description: "Use Claude AI for frontend development",
+    },
+    { 
+      title: "Crowdfunding", 
+      description: "List your project for investment",
+    },
+    { 
+      title: "Development", 
+      description: "Build and iterate on your project",
+    },
   ];
   return (
     <section className="py-12 px-4">

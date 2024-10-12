@@ -1,6 +1,9 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { 
+  useEffect, 
+  useState,
+} from "react";
 import {
   Sun,
   Sunrise,
@@ -9,7 +12,7 @@ import {
 import { BackgroundBeamsWithCollision } from "@/common/components/molecules";
 import { Prompt } from "./Prompt";
 
-export default function Home() {
+export default function Home () {
   const [greeting, setGreeting] = useState("Good morning")
   useEffect(() => {
     const today = new Date()

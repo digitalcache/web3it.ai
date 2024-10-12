@@ -1,5 +1,7 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { 
+  useState, useEffect,
+} from 'react';
 import { ethers } from 'ethers'
 import { abi } from '@/utils/abi'
 import { useRouter } from 'next/navigation';
@@ -11,11 +13,12 @@ const ViewTokens = () => {
   const router = useRouter()
 
   const serialize = (obj: any) => {
-    var str = [];
-    for (var p in obj)
+    const str = [];
+    for (const p in obj) {
       if (obj.hasOwnProperty(p)) {
         str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
       }
+    }
     return str.join("&");
   }
 
@@ -34,7 +37,7 @@ const ViewTokens = () => {
             fundingRaised: ethers.formatUnits(token.fundingRaised, 'ether'), // Format the fundingRaised from Wei to Ether
             tokenAddress: token.tokenAddress,
             creatorAddress: token.creatorAddress,
-          }))
+          })),
         );
       } catch (error) {
         console.error('Error fetching meme tokens:', error);
@@ -47,7 +50,6 @@ const ViewTokens = () => {
   }, []);
 
   const handleSearch = () => {
-    console.log('Searching for:', searchTerm);
   };
 
   const navigateToTokenDetail = (card: any) => {
@@ -91,7 +93,10 @@ const ViewTokens = () => {
           <button className="search-button" onClick={handleSearch}>Search</button>
         </div>
 
-        <h4 style={{textAlign:"left", color:"rgb(134, 239, 172)"}}>Terminal</h4>
+        <h4 style={{
+          textAlign: "left", 
+          color: "rgb(134, 239, 172)",
+        }}>Terminal</h4>
         {loading ? (
           <p>Loading...</p>
         ) : (

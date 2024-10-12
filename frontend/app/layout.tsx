@@ -2,7 +2,6 @@ import {
   ReactNode,
   Suspense,
 } from "react";
-import { Viewport } from "next";
 import { Poppins } from 'next/font/google';
 import './globals.css'
 

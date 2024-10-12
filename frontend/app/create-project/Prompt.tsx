@@ -1,6 +1,4 @@
 import {
-  useEffect,
-  useRef,
   useState,
 } from 'react';
 import { PlaceholderAndVanishInput } from '@/common/components/atoms';
@@ -9,7 +7,6 @@ import { MultiStepLoader } from '@/common/components/molecules';
 export const Prompt = ({
 
 }) => {
-  const textAreaRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const placeholders = [
     "Create the next Decentralized Social Media Platform",
@@ -47,7 +44,6 @@ export const Prompt = ({
   ];
 
   const handleChange = () => {
-    console.log('change')
   }
   const onSubmit = () => {
     setLoading(true)

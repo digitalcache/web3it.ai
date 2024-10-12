@@ -1,18 +1,18 @@
 import { cn } from "@/utils/helpers";
-import { motion, stagger, useAnimate, useInView } from "framer-motion";
-import { useEffect, ReactNode } from "react";
+import { 
+  motion, stagger, useAnimate, useInView,
+} from "framer-motion";
+import { useEffect } from "react";
 
 export const TypewriterEffect = ({
   words,
   className,
-  cursorClassName,
 }: {
   words: {
     text: string;
     className?: string;
   }[];
   className?: string;
-  cursorClassName?: string;
 }) => {
   const wordsArray = words.map((word) => {
     return {
@@ -36,7 +36,7 @@ export const TypewriterEffect = ({
           duration: 0.3,
           delay: stagger(0.1),
           ease: "easeInOut",
-        }
+        },
       );
     }
   }, [isInView]);
@@ -53,7 +53,7 @@ export const TypewriterEffect = ({
                   key={`char-${index}`}
                   className={cn(
                     `dark:text-white text-black opacity-0 hidden`,
-                    word.className
+                    word.className,
                   )}
                 >
                   {char}
@@ -70,7 +70,7 @@ export const TypewriterEffect = ({
     <div
       className={cn(
         "text-base sm:text-xl md:text-3xl lg:text-5xl font-bold",
-        className
+        className,
       )}
     >
       {renderWords()}
@@ -81,14 +81,12 @@ export const TypewriterEffect = ({
 export const TypewriterEffectSmooth = ({
   words,
   className,
-  cursorClassName,
 }: {
   words: {
     text: string;
     className?: string;
   }[];
   className?: string;
-  cursorClassName?: string;
 }) => {
   // split text inside of words into array of characters
   const wordsArray = words.map((word) => {

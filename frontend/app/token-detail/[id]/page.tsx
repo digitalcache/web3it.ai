@@ -1,9 +1,13 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { 
+  useState, useEffect,
+} from 'react';
 import { ethers } from 'ethers'
 import { abi } from '@/utils/abi'
 import { tokenAbi } from '@/utils/tokenAbi'
-import { useRouter, useParams, useSearchParams } from 'next/navigation';
+import { 
+  useRouter, useParams, useSearchParams,
+} from 'next/navigation';
 
 const TokenDetail = () => {
   const { id: tokenAddress } = useParams()
@@ -49,7 +53,7 @@ const TokenDetail = () => {
               accept: 'application/json',
               'X-API-Key': process.env.NEXT_PUBLIC_X_API_KEY || '',
             },
-          }
+          },
         );
         const ownersData = await ownersResponse.json();
         setOwners(ownersData.result || []);
@@ -62,7 +66,7 @@ const TokenDetail = () => {
               accept: 'application/json',
               'X-API-Key': process.env.NEXT_PUBLIC_X_API_KEY || '',
             },
-          }
+          },
         );
         const transfersData = await transfersResponse.json();
         setTransfers(transfersData.result || []);
@@ -71,7 +75,7 @@ const TokenDetail = () => {
         const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
         const contract = new ethers.Contract(tokenAddress as string, tokenAbi, provider);
         const totalSupplyResponse = await contract.totalSupply();
-        var totalSupplyFormatted = parseInt(ethers.formatUnits(totalSupplyResponse, 'ether')) - 200000;
+        const totalSupplyFormatted = parseInt(ethers.formatUnits(totalSupplyResponse, 'ether')) - 200000;
         setTotalSupply(totalSupplyFormatted);
 
         // Calculate remaining tokens
@@ -91,36 +95,37 @@ const TokenDetail = () => {
   const totalSupplyPercentage = ((totalSupply - 200000) / valueAfterTwentyThousandInEther) * 100;
 
   const getCost = async () => {
-    if (!purchaseAmount) return;
+    if (!purchaseAmount) {
+      return;
+    }
 
     try {
-        const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-        const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', abi, provider);
-        const costInWei = await contract.calculateCost(totalSupply, purchaseAmount); // Replace with actual function
-        setCost(ethers.formatUnits(costInWei, 'ether'));
-        setIsModalOpen(true); // Open the modal
+      const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', abi, provider);
+      const costInWei = await contract.calculateCost(totalSupply, purchaseAmount); // Replace with actual function
+      setCost(ethers.formatUnits(costInWei, 'ether'));
+      setIsModalOpen(true); // Open the modal
     } catch (error) {
-        console.error('Error calculating cost:', error);
+      console.error('Error calculating cost:', error);
     }
   };
     
-      // Function to handle purchase
+  // Function to handle purchase
   const handlePurchase = async () => {
     try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        console.log(signer)
-        const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', abi, signer);
+      const win = window as any
+      const provider = new ethers.BrowserProvider(win.ethereum);
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', abi, signer);
 
-        const transaction = await contract.buyMemeToken(tokenAddress, purchaseAmount,{
+      const transaction = await contract.buyMemeToken(tokenAddress, purchaseAmount, {
         value: ethers.parseUnits(cost, 'ether'),
-        }); 
-        const receipt = await transaction.wait();
+      }); 
+      const receipt = await transaction.wait();
 
-        alert(`Transaction successful! Hash: ${receipt.hash}`);
-        setIsModalOpen(false); 
+      alert(`Transaction successful! Hash: ${receipt.hash}`);
+      setIsModalOpen(false); 
     } catch (error) {
-        console.error('Error during purchase:', error);
     }
   };
 
@@ -233,7 +238,7 @@ const TokenDetail = () => {
                 <td>{transfer.from_address}</td>
                 <td>{transfer.to_address}</td>
                 <td>{transfer.value_decimal}</td>
-                <td><a style={{color:"white"}} href={`https://sepolia.etherscan.io/tx/${transfer.transaction_hash}`} target="_blank" rel="noopener noreferrer">{transfer.transaction_hash}</a></td>
+                <td><a style={{ color: "white" }} href={`https://sepolia.etherscan.io/tx/${transfer.transaction_hash}`} target="_blank" rel="noopener noreferrer">{transfer.transaction_hash}</a></td>
               </tr>
             ))}
           </tbody>

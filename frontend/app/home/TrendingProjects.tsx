@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { 
+  useState, 
+  useEffect,
+} from 'react';
 import { ethers } from 'ethers'
 import { abi } from '@/utils/abi'
 import { useRouter } from 'next/navigation';
@@ -42,7 +45,7 @@ export const TrendingProjects = () => {
             fundingRaised: ethers.formatUnits(token.fundingRaised, 'ether'), // Format the fundingRaised from Wei to Ether
             tokenAddress: token.tokenAddress,
             creatorAddress: token.creatorAddress,
-          }))
+          })),
         );
       } catch (error) {
         console.error('Error fetching meme tokens:', error);

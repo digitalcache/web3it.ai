@@ -1,10 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
-import Image from 'next/image';
-import logo from '@/assets/logo.svg';
-import { LogoIcon } from '@/common/components/icons';
-import { Header } from '@/common/components/organisms';
+import { X } from 'lucide-react';
 import { Hero } from './Hero';
 import { TrendingProjects } from './TrendingProjects';
 import { DevelopmentProcess } from './DevelopmentProcess';
@@ -54,7 +50,7 @@ const Footer = () => {
   );
 };
 
-export default function Home() {
+export default function Home () {
   return (
     <div className="min-h-screen overflow-hidden">
       <Hero />

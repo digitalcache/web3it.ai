@@ -19,6 +19,7 @@
     "@anthropic-ai/sdk": "^0.29.0",
     "@headlessui/react": "^1.7.18",
     "@hookform/resolvers": "^3.3.4",
+    "@metamask/providers": "^17.2.1",
     "@tabler/icons-react": "^3.19.0",
     "@tomfreudenberg/next-auth-mock": "^0.5.6",
     "@types/negotiator": "^0.6.3",

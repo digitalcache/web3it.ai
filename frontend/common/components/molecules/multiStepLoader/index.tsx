@@ -1,7 +1,11 @@
 "use client";
+import { 
+  useState, useEffect,
+} from "react";
 import { cn } from "@/utils/helpers";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { 
+  AnimatePresence, motion,
+} from "framer-motion";
 
 const CheckIcon = ({ className }: { className?: string }) => {
   return (
@@ -56,8 +60,14 @@ const LoaderCore = ({
           <motion.div
             key={index}
             className={cn("text-left flex gap-2 mb-4")}
-            initial={{ opacity: 0, y: -(value * 40) }}
-            animate={{ opacity: opacity, y: -(value * 40) }}
+            initial={{ 
+              opacity: 0, 
+              y: -(value * 40),
+            }}
+            animate={{ 
+              opacity: opacity, 
+              y: -(value * 40),
+            }}
             transition={{ duration: 0.5 }}
           >
             <div>
@@ -69,7 +79,7 @@ const LoaderCore = ({
                   className={cn(
                     "text-black dark:text-white",
                     value === index &&
-                      "text-black dark:text-lime-500 opacity-100"
+                      "text-black dark:text-lime-500 opacity-100",
                   )}
                 />
               )}
@@ -77,7 +87,7 @@ const LoaderCore = ({
             <span
               className={cn(
                 "text-black dark:text-white",
-                value === index && "text-black dark:text-lime-500 opacity-100"
+                value === index && "text-black dark:text-lime-500 opacity-100",
               )}
             >
               {loadingState.text}
@@ -113,7 +123,7 @@ export const MultiStepLoader = ({
           ? prevState === loadingStates.length - 1
             ? 0
             : prevState + 1
-          : Math.min(prevState + 1, loadingStates.length - 1)
+          : Math.min(prevState + 1, loadingStates.length - 1),
       );
     }, duration);
 

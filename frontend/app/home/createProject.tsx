@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 
 export const CreateProject = () => {
   const router = useRouter()
-  return(
+  return (
     <>
       <Button size="md" onClick={() => router.push(routes.createProjectPath)} variant="primary" className="bg-gradient-to-r from-indigo-500 to-purple-500">
         Create a project
