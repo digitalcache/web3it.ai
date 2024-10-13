@@ -3,7 +3,7 @@ import subdomains from "./subdomains.json";
 
 export const config = {
   matcher: [
-    "/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)",
+    "/((?!api/|_next/|_static/|images|_vercel|[\\w-]+\\.\\w+).*)",
   ],
 };
 
@@ -15,15 +15,19 @@ export default async function middleware(req: NextRequest) {
     .get("host")!
     .replace(".localhost:3000", `.web3it-ai-mocha.vercel.app`);
 
+    console.log("1", hostname)
+
   // special case for Vercel preview deployment URLs
-  if (
-    hostname.includes("---") &&
-    hostname.endsWith(`.${process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_SUFFIX}`)
-  ) {
-    hostname = `${hostname.split("---")[0]}.${
-      'web3it-ai-mocha.vercel.app'
-    }`;
-  }
+  // if (
+  //   hostname.includes("---") &&
+  //   hostname.endsWith(`.vercel.app`)
+  // ) {
+  //   hostname = `${hostname.split("---")[0]}.${
+  //     'web3it-ai-mocha.vercel.app'
+  //   }`;
+  // }
+  console.log("2", url.pathname)
+
 
   const searchParams = req.nextUrl.searchParams.toString();
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
@@ -31,18 +35,22 @@ export default async function middleware(req: NextRequest) {
     searchParams.length > 0 ? `?${searchParams}` : ""
   }`;
 
+  console.log("3", searchParams)
+  console.log("4", path)
+
+  if (
+    hostname === "localhost:3000" ||
+    hostname === 'web3it-ai-mocha.vercel.app'
+  ) {
+    return NextResponse.rewrite(
+      new URL(`/home${path === "/" ? "" : path}`, req.url),
+    );
+  }
+
   // rewrites for app pages
-  // if (hostname == `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
-  //   const session = await getToken({ req });
-  //   if (!session && path !== "/login") {
-  //     return NextResponse.redirect(new URL("/login", req.url));
-  //   } else if (session && path == "/login") {
-  //     return NextResponse.redirect(new URL("/", req.url));
-  //   }
-  //   return NextResponse.rewrite(
-  //     new URL(`/app${path === "/" ? "" : path}`, req.url),
-  //   );
-  // }
+  if (hostname === `localhost:3000`) {
+    return NextResponse.next()
+  }
 
   // special case for `vercel.pub` domain
   // if (hostname === "vercel.pub") {
@@ -52,14 +60,7 @@ export default async function middleware(req: NextRequest) {
   // }
 
   // rewrite root application to `/home` folder
-  if (
-    hostname === "localhost:3000" ||
-    hostname === 'web3it-ai-mocha.vercel.app'
-  ) {
-    return NextResponse.rewrite(
-      new URL(`/home${path === "/" ? "" : path}`, req.url),
-    );
-  }
+ 
 
   // rewrite everything else to `/[domain]/[slug] dynamic route
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
