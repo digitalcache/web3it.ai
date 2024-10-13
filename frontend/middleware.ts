@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import subdomains from "./subdomains.json";
 
 export const config = {
     matcher: [
@@ -24,12 +25,10 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.next();
     }
     console.log("current", currentHost)
-    const siteExists = true
-    if (siteExists) {
+    const subdomainData = subdomains.find((d: any) => d.subdomain === currentHost);
+    if (subdomainData) {
         return NextResponse.rewrite(new URL(`/${currentHost}${pathname}`, req.url));
     }
   
-    return new Response(null, { status: 404 });
-    
-    // return NextResponse.next();
+    return NextResponse.next();
 };
