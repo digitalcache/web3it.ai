@@ -11,6 +11,7 @@ export default async function middleware(req: NextRequest) {
   const url = req.nextUrl;
 
   // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
+  console.log("headers",req.headers)
   let hostname = req.headers
     .get("host")!
     .replace(".localhost:3000", `.web3it-ai-mocha.vercel.app`);
@@ -66,7 +67,7 @@ export default async function middleware(req: NextRequest) {
  
 
   // rewrite everything else to `/[domain]/[slug] dynamic route
-  console.log("here3")
+  console.log("here3", new URL(`/${hostname}${path}`, req.url))
 
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }
