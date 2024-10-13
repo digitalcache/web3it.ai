@@ -18,14 +18,15 @@ export default async function middleware(req: NextRequest) {
     console.log("1", hostname)
 
   // special case for Vercel preview deployment URLs
-  // if (
-  //   hostname.includes("---") &&
-  //   hostname.endsWith(`.vercel.app`)
-  // ) {
-  //   hostname = `${hostname.split("---")[0]}.${
-  //     'web3it-ai-mocha.vercel.app'
-  //   }`;
-  // }
+  if (
+    hostname.includes("---") &&
+    hostname.endsWith(`.vercel.app`)
+  ) {
+    hostname = `${hostname.split("---")[0]}.${
+      'web3it-ai-mocha.vercel.app'
+    }`;
+  }
+  console.log('110', hostname)
   console.log("2", url.pathname)
 
 
@@ -48,7 +49,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   // rewrites for app pages
-  if (hostname === `localhost:3000`) {
+  if (hostname === `localhost:3000` || hostname === 'web3it-ai-mocha.vercel.app') {
     return NextResponse.next()
   }
 
