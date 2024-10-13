@@ -2,20 +2,6 @@
 
 const nextConfig = {
   reactStrictMode: true,
-  async rewrites() {
-		return [
-			{
-        has: [
-          {
-            type: "host",
-            value: "client1.web3it-ai-mocha.vercel.app",
-          }
-        ],
-        source: "/",
-        destination: "/actual-index",
-			}
-		]
-	},
   eslint: {
     dirs: ['app', 'common'],
   },
