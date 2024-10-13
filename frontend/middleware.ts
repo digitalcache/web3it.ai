@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { NextResponse } from "next/server";
 import subdomains from "./subdomains.json";
 
@@ -21,7 +20,7 @@ export default async function middleware (req: Request) {
     "https://web3it-ai-mocha.vercel.app",
     "https://web3it-ai-mocha.vercel.app/",
   ]
-  const allowedDomains = ["localhost:3000", "web3it-ai-mocha.vercel.app"];
+  const allowedDomains = ["localhost:3000", "vercel.app"];
 
   // Check if the current hostname is in the list of allowed domains
   const isAllowedDomain = allowedDomains.some(domain => hostname.includes(domain));
@@ -43,8 +42,6 @@ export default async function middleware (req: Request) {
 
   if (subdomainData) {
     // Rewrite the URL to a dynamic path based on the subdomain
-    console.log(subdomain)
-    console.log(req.url)
     return NextResponse.rewrite(new URL(`/${subdomain}`, req.url));
   }
 
