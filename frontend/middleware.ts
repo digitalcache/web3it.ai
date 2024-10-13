@@ -39,9 +39,10 @@ export default async function middleware (req: Request) {
 
   const subdomainData = subdomains.find((d: any) => d.subdomain === subdomain);
 
+
   if (subdomainData) {
     // Rewrite the URL to a dynamic path based on the subdomain
-    return NextResponse.rewrite(new URL(`/${subdomain}${url.pathname}`, req.url));
+    return NextResponse.rewrite(new URL(`/${subdomain}`, req.url));
   }
 
   return new Response(null, { status: 404 });
