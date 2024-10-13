@@ -14,8 +14,8 @@ export default async function middleware(req: NextRequest) {
   
     const hostname = req.headers.get("host");
     let currentHost;
+    const baseDomain = process.env.BASE_DOMAIN;
     if (process.env.NODE_ENV === "production") {
-      const baseDomain = process.env.BASE_DOMAIN;
       currentHost = hostname?.replace(`.${baseDomain}`, "");
     } else {
       currentHost = hostname?.split(":")[0].replace(".localhost", "");
@@ -27,8 +27,7 @@ export default async function middleware(req: NextRequest) {
     if (subdomainData) {
         return NextResponse.rewrite(new URL(`/${currentHost}${pathname}`, req.url));
     }
-
-    if (currentHost === process.env.BASE_DOMAIN) {
+    if (pathname === "/") {
         return NextResponse.rewrite(new URL(`/home`, req.url));
     }
     return NextResponse.next();
