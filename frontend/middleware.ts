@@ -43,6 +43,7 @@ export default async function middleware(req: NextRequest) {
     hostname === "localhost:3000" ||
     hostname === 'web3it-ai-mocha.vercel.app'
   ) {
+    console.log("here1")
     return NextResponse.rewrite(
       new URL(`/home${path === "/" ? "" : path}`, req.url),
     );
@@ -50,6 +51,7 @@ export default async function middleware(req: NextRequest) {
 
   // rewrites for app pages
   if (hostname === `localhost:3000` || hostname === 'web3it-ai-mocha.vercel.app') {
+    console.log("here2")
     return NextResponse.next()
   }
 
@@ -64,6 +66,8 @@ export default async function middleware(req: NextRequest) {
  
 
   // rewrite everything else to `/[domain]/[slug] dynamic route
+  console.log("here3")
+
   return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
 }
 
