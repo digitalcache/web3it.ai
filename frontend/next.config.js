@@ -5,14 +5,14 @@ const nextConfig = {
   async rewrites() {
 		return [
 			{
-				source: '*',
+				source: '/',
 				has: [
 					{
 						type: 'host',
-						value: 'client1',
+						value: '(^|\s)web3it-ai-mocha.vercel.app',
 					},
 				],
-				destination: 'https://client1.web3it-ai-mocha.vercel.app', // Admin routes
+				destination: '/', // Admin routes
 			}
 		]
 	},
