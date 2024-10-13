@@ -17,10 +17,12 @@ export default async function middleware (req: Request) {
   const homePages = [
     "http://localhost:3000", 
     "http://localhost:3000/",
+    "http://192.168.0.107:3000",
+    "http://192.168.0.107:3000/",
     "https://web3it-ai-mocha.vercel.app",
     "https://web3it-ai-mocha.vercel.app/",
   ]
-  const allowedDomains = ["localhost:3000", "web3it-ai-mocha.vercel.app"];
+  const allowedDomains = ["localhost:3000", "192.168.0.107", "web3it-ai-mocha.vercel.app"];
 
   // Check if the current hostname is in the list of allowed domains
   const isAllowedDomain = allowedDomains.some(domain => hostname.includes(domain));
@@ -42,7 +44,7 @@ export default async function middleware (req: Request) {
 
   if (subdomainData) {
     // Rewrite the URL to a dynamic path based on the subdomain
-    return NextResponse.rewrite(new URL(`/${subdomain}`, req.url));
+    return NextResponse.rewrite(new URL(`/create-project`, req.url));
   }
 
   return new Response(null, { status: 404 });
