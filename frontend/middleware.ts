@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import subdomains from "./subdomains.json";
 
 export const config = {
@@ -7,52 +7,58 @@ export const config = {
   ],
 };
 
-export default async function middleware(req: NextRequest) {
-  const url = req.nextUrl;
+export default async function middleware(req: Request) {
+  const url = new URL(req.url);
 
+  const hostname = req.headers.get("host") || "";
+  const subdomain = hostname.split(".")[0];
   // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
   console.log("headers",req.headers.get('host'))
-  let hostname = req.headers
-    .get("host")!
-    .replace(".localhost:3000", `.web3it-ai-mocha.vercel.app`);
+  // let hostname = req.headers
+  //   .get("host")!
+  //   .replace(".localhost:3000", `.web3it-ai-mocha.vercel.app`);
 
-    console.log("1", hostname)
+  //   console.log("1", hostname)
 
-  // special case for Vercel preview deployment URLs
-  if (
-    hostname.includes("---") &&
-    hostname.endsWith(`.vercel.app`)
-  ) {
-    hostname = `${hostname.split("---")[0]}.${
-      'web3it-ai-mocha.vercel.app'
-    }`;
-  }
+  // // special case for Vercel preview deployment URLs
+  // if (
+  //   hostname.includes("---") &&
+  //   hostname.endsWith(`.vercel.app`)
+  // ) {
+  //   hostname = `${hostname.split("---")[0]}.${
+  //     'web3it-ai-mocha.vercel.app'
+  //   }`;
+  // }
   console.log('110', hostname)
-  console.log("2", url.pathname)
+  console.log("2", url)
 
 
-  const searchParams = req.nextUrl.searchParams.toString();
-  // Get the pathname of the request (e.g. /, /about, /blog/first-post)
-  const path = `${url.pathname}${
-    searchParams.length > 0 ? `?${searchParams}` : ""
-  }`;
+  // const searchParams = req.nextUrl.searchParams.toString();
+  // // Get the pathname of the request (e.g. /, /about, /blog/first-post)
+  // const path = `${url.pathname}${
+  //   searchParams.length > 0 ? `?${searchParams}` : ""
+  // }`;
 
-  console.log("3", searchParams)
-  console.log("4", path)
+  // console.log("3", searchParams)
+  // console.log("4", path)
 
-  if (
-    hostname === "localhost:3000" ||
-    hostname === 'web3it-ai-mocha.vercel.app'
-  ) {
-    console.log("here1")
-    return NextResponse.rewrite(
-      new URL(`/home${path === "/" ? "" : path}`, req.url),
-    );
-  }
+  // if (
+  //   hostname === "localhost:3000" ||
+  //   hostname === 'web3it-ai-mocha.vercel.app'
+  // ) {
+  //   console.log("here1")
+  //   return NextResponse.rewrite(
+  //     new URL(`/home${url.pathname === "/" ? "" : url.pathname}`, req.url),
+  //   );
+  // }
 
   // rewrites for app pages
   if (hostname === `localhost:3000` || hostname === 'web3it-ai-mocha.vercel.app') {
-    console.log("here2")
+    if (url.pathname === "/") {
+      return NextResponse.rewrite(
+        new URL(`/home`, req.url),
+      )
+    }
     return NextResponse.next()
   }
 
@@ -67,9 +73,11 @@ export default async function middleware(req: NextRequest) {
  
 
   // rewrite everything else to `/[domain]/[slug] dynamic route
-  console.log("here3", new URL(`/${hostname}${path}`, req.url).href)
-
-  return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
+  console.log("here3", new URL(`/${subdomain}${url.pathname}`, req.url).href)
+  if (!subdomains.some((d: any) => d.subdomain === subdomain)) {
+    return NextResponse.rewrite(new URL(`/${subdomain}${url.pathname}`, req.url));
+  }
+  return new Response(null, { status: 404 });
 }
 
 // export default async function middleware (req: NextRequest) {
