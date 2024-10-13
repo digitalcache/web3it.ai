@@ -20,7 +20,7 @@ export default async function middleware (req: Request) {
     "https://web3it-ai-mocha.vercel.app",
     "https://web3it-ai-mocha.vercel.app/",
   ]
-  const allowedDomains = ["localhost:3000", "vercel.app"];
+  const allowedDomains = ["localhost:3000", "vercel.app", "charlisfls-projects"];
 
   // Check if the current hostname is in the list of allowed domains
   const isAllowedDomain = allowedDomains.some(domain => hostname.includes(domain));
