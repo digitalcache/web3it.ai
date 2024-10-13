@@ -10,9 +10,16 @@ export const config = {
 export default async function middleware (req: Request) {
   const url = new URL(req.url);
   const hostname = req.headers.get("host") || "";
+  // console.log("hostname",hostname)
 
   // Define list of allowed domains
   // (including localhost and your deployed domain)
+  const homePages = [
+    "http://localhost:3000", 
+    "http://localhost:3000/",
+    "https://web3it-ai-mocha.vercel.app",
+    "https://web3it-ai-mocha.vercel.app/",
+  ]
   const allowedDomains = ["localhost:3000", "web3it-ai-mocha.vercel.app"];
 
   // Check if the current hostname is in the list of allowed domains
@@ -23,7 +30,11 @@ export default async function middleware (req: Request) {
 
   // If user is on an allowed domain and it's not a subdomain, allow the request
   if (isAllowedDomain && !subdomains.some((d: any) => d.subdomain === subdomain)) {
-    return NextResponse.next();
+    const isHomePage = homePages.some(href => href === url.href);
+    if (isHomePage) {
+      return NextResponse.rewrite(new URL('/home', req.url))
+    }
+    return NextResponse.next()
   }
 
   const subdomainData = subdomains.find((d: any) => d.subdomain === subdomain);
