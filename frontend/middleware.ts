@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import subdomains from "./subdomains.json";
 
 export const config = {
-    matcher: [
-      "/((?!api/|_next/|_static/|images|_vercel|[\\w-]+\\.\\w+).*)",
-    ],
+  matcher: [
+    "/((?!api/|_next/|_static/|images|_vercel|[\\w-]+\\.\\w+).*)",
+  ],
 };
 
 export default async function middleware(req: NextRequest) {
@@ -24,10 +24,10 @@ export default async function middleware(req: NextRequest) {
     }
     const subdomainData = subdomains.find((d: any) => d.subdomain === currentHost);
     if (subdomainData) {
-        return NextResponse.rewrite(new URL(`/${currentHost}${pathname}`, req.url));
+      return NextResponse.rewrite(new URL(`/${currentHost}${pathname}`, req.url));
     }
     if (pathname === "/" && (currentHost === baseDomain)) {
-        return NextResponse.rewrite(new URL(`/home`, req.url));
+      return NextResponse.rewrite(new URL(`/home`, req.url));
     }
     return NextResponse.next();
 };

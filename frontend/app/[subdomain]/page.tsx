@@ -11,9 +11,10 @@ import {
 
 const TokenDetail = () => {
   const { 
-    id: tokenAddress, 
+    subdomain: tokenAddress, 
   } = useParams()
   const searchParams = useSearchParams()
+
 
   const name = searchParams.get('name')
   const symbol = searchParams.get('symbol')

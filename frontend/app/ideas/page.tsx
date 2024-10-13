@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 import { ethers } from 'ethers'
 import { abi } from '@/utils/abi'
-import { redirect, useRouter } from 'next/navigation';
 import { 
   BentoGrid, 
   BentoGridItem,
@@ -17,7 +16,6 @@ import { navigate } from '../actions';
 const ViewTokens = () => {
   const [cards, setCards] = useState<any>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter()
 
   const serialize = (obj: any) => {
     const str = [];
