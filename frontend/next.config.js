@@ -12,7 +12,7 @@ const nextConfig = {
 						value: 'client1.web3it-ai-mocha.vercel.app',
 					},
 				],
-				destination: 'http://client1.web3it-ai-mocha.vercel.app', // Admin routes
+				destination: 'https://client1.web3it-ai-mocha.vercel.app', // Admin routes
 			}
 		]
 	},
