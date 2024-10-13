@@ -1,3 +1,4 @@
+'use client'
 import { TypewriterEffect } from "@/common/components/atoms";
 import Lottie from 'react-lottie';
 import { BackgroundBeamsWithCollision } from "@/common/components/molecules";
@@ -57,7 +58,7 @@ export const Hero = () => {
             <CreateProject />
           </div>
         </div>
-        <div className="py-40">
+        <div className="py-40 pointer-events-none">
           <Lottie options={defaultOptions}
             height={400}
             width={400}

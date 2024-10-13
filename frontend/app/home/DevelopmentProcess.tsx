@@ -1,45 +1,54 @@
-const ProcessStep = ({ 
-  number, 
-  title, 
-  description,
-}: any) => (
-  <div className="text-center">
-    <div className="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-      {number}
-    </div>
-    <h3 className="text-xl font-semibold mb-2 text-white">{title}</h3>
-    <p className="text-gray-300">{description}</p>
-  </div>
-);
+'use client'
+import { Timeline } from "@/common/components/molecules";
 
 export const DevelopmentProcess = () => {
-  const steps = [
-    { 
-      title: "Ideation", 
-      description: "Develop your web3 project idea",
+  const data = [
+    {
+      title: "Ideation",
+      content: (
+        <div>
+          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+          Develop your web3 project idea
+          </p>
+        </div>
+      ),
     },
-    { 
-      title: "AI Assistance", 
-      description: "Use Claude AI for frontend development",
+    {
+      title: "AI Assistance",
+      content: (
+        <div>
+          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
+            You can use get creative with your prompts and translate text to working app using Claude AI
+          </p>
+        </div>
+      ),
     },
-    { 
-      title: "Crowdfunding", 
-      description: "List your project for investment",
+    {
+      title: "Crowdfunding",
+      content: (
+        <div>
+          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4">
+            List down by creating a token for your project so other's can view and buy tokens
+          </p>
+        </div>
+      ),
     },
-    { 
-      title: "Development", 
-      description: "Build and iterate on your project",
+    {
+      title: "Strategize",
+      content: (
+        <div>
+          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4">
+            Get support on how to get your networking and marketing top of the line.
+          </p>
+        </div>
+      ),
     },
   ];
   return (
     <section className="py-12 px-4">
       <div className="container mx-auto">
         <h2 className="text-3xl font-bold mb-8 text-white border-b border-white border-opacity-10 pb-4">Development Process</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {steps.map((step, index) => (
-            <ProcessStep key={index} number={index + 1} {...step} />
-          ))}
-        </div>
+        <Timeline data={data} />
       </div>
     </section>
   );

@@ -5,15 +5,6 @@ const nextConfig = {
   eslint: {
     dirs: ['app', 'common'],
   },
-  async redirects () {
-     return [
-       {
-         source: '/',
-         destination: '/home',
-         permanent: true,
-       },
-     ]
-  },
   images: {
     remotePatterns: [
       {

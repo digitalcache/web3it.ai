@@ -1,3 +1,4 @@
+'use client'
 import { 
   useState, 
   useEffect,
@@ -8,18 +9,26 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { routes } from '@/common/routes';
 import { serialize } from '@/utils/helpers';
-import { Button } from '@/common/components/atoms';
+import { 
+  Button, Loader,
+} from '@/common/components/atoms';
 
 const ProjectCard = (card: any) => {
   const url = routes.projectDetailPath.replace('%id%', card.tokenAddress).replace('%query%', serialize(card))
   return (
-    <Link href={url} className="bg-[#2C2C39] border-[#4D4C5A] border rounded-lg overflow-hidden p-4">
-      <img src={card.tokenImageUrl} alt={card.name} className="w-full h-48 object-cover rounded-lg" />
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold mb-2 text-white max-w-full whitespace-nowrap text-ellipsis overflow-hidden">{card.creatorAddress}</h3>
-        <p className="text-gray-300">{card.description}</p>
-        <p className="text-gray-300">Funding Raised: {card.fundingRaised}</p>
-        <p className="text-gray-300">{card.name} (ticker: {card.symbol})</p>
+    <Link href={url} className={"row-span-1 rounded-xl group/bento relative hover:shadow-xl transition duration-200 text-left shadow-input dark:shadow-none p-4 bg-gray-800 border border-white/[0.2] justify-between flex flex-col space-y-4"}>
+      <img 
+        src={card.tokenImageUrl} 
+        className="w-full max-h-[250px] object-cover rounded-lg"
+      />
+      <div className="group-hover/bento:translate-x-2 transition duration-200">
+        <div className="font-bold text-neutral-600 max-w-[180px] whitespace-nowrap text-ellipsis overflow-hidden dark:text-neutral-200 mb-2 mt-2">
+          {card.creatorAddress}
+        </div>
+        <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
+          {card.description}
+        </div>
+        <div className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text text-sm font-medium mt-2">{card.symbol}</div>
       </div>
     </Link>
   )
@@ -59,6 +68,7 @@ export const TrendingProjects = () => {
 
   return (
     <section className="py-12 px-4">
+      {loading && <Loader />}
       <div className="container mx-auto">
         <div className='flex justify-between items-center border-b border-white border-opacity-10 mb-12 pb-4'>
           <h2 className="text-3xl font-bold mb-8 text-white">Trending Projects</h2>
