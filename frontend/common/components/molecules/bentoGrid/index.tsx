@@ -31,7 +31,7 @@ export const BentoGridItem = ({
 }) => {
   return (
     <button
-      onClick={navigateToTokenDetail}
+      onClick={() => navigateToTokenDetail(card)}
       className={cn(
         "row-span-1 rounded-xl group/bento relative hover:shadow-xl transition duration-200 text-left shadow-input dark:shadow-none p-4 bg-gray-800 border border-white/[0.2] justify-between flex flex-col space-y-4",
         className,

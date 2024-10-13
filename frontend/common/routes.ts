@@ -1,6 +1,7 @@
+const basePath = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_ROOT_DOMAIN : 'localhost:3000'
 export const routes = {
   homePath: '/',
-  viewProjectsPath: '/view-projects',
-  projectDetailPath: '/token-detail/%id%?%query%',
-  createProjectPath: '/create-project',
+  viewProjectsPath: '/ideas',
+  projectDetailPath: process.env.NODE_ENV === "production" ? `https://%subdomain%.${basePath}?%query%` : `http://%subdomain%.${basePath}?%query%`,
+  createProjectPath: '/create',
 }

@@ -8,10 +8,10 @@ export const CreateProject = () => {
   return (
     <>
       <Button size="md" onClick={() => router.push(routes.createProjectPath)} variant="primary" className="bg-gradient-to-r from-indigo-500 to-purple-500">
-        Create a project
+        Develop a new idea
       </Button>
       <Button onClick={() => router.push(routes.viewProjectsPath)} size="md" variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
-        Explore projects
+        Start with existing project
       </Button>
     </>
   )

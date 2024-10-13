@@ -41,7 +41,7 @@ export const Header = ({
         {links && (
           <>
             <div className="hidden md:flex justify-center items-center space-x-4 flex-1">
-              <LinkStyled href={routes.viewProjectsPath}>Projects</LinkStyled>
+              <LinkStyled href={routes.viewProjectsPath}>Ideas</LinkStyled>
               <LinkStyled href={"#"}>Team</LinkStyled>
               <LinkStyled href={"#"}>About Us</LinkStyled>
             </div>
@@ -50,7 +50,7 @@ export const Header = ({
                 <Search />
               </div>
               <Button onClick={() => router.push(routes.createProjectPath)} size="sm" variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
-                Start a new idea
+                Develop a new idea
               </Button>
             </div>
           </>

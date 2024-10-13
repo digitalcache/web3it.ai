@@ -4,13 +4,15 @@ import React, {
 } from 'react';
 import { ethers } from 'ethers'
 import { abi } from '@/utils/abi'
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { 
   BentoGrid, 
   BentoGridItem,
 } from "@/common/components/molecules/bentoGrid";
 import { Footer } from '@/common/components/organisms';
 import { Loader } from '@/common/components/atoms';
+import { routes } from '@/common/routes';
+import { navigate } from '../actions';
 
 const ViewTokens = () => {
   const [cards, setCards] = useState<any>([]);
@@ -55,8 +57,8 @@ const ViewTokens = () => {
   }, []);
 
 
-  const navigateToTokenDetail = (card: any) => {
-    router.push(`/token-detail/${card.tokenAddress}?${serialize(card)}`)
+  const navigateToTokenDetail = async (card: any) => {
+    navigate(routes.projectDetailPath.replace('%subdomain%', 'client1').replace('%query%', serialize(card)))
   };
 
 

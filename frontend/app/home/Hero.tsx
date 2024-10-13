@@ -26,7 +26,7 @@ export const Hero = () => {
       className: "gradientText dark:gradientText",
     },
     {
-      text: "projects",
+      text: "ideas",
     },
     {
       text: "with",
@@ -44,7 +44,7 @@ export const Hero = () => {
       <div className="bottom-0 right-0 translate-x-1/2 translate-y-1/2 -z-[15] absolute w-[800px] h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-[#6741E8]"></div>
       <div className='container text-white mx-auto flex items-center w-full justify-between'>
         <div className="flex-1">
-          <h2 className='text-sm font-semibold'>Explore Ideas with Web3It.AI</h2>
+          <h2 className='text-sm font-semibold'>Explore ideas with Web3It.AI</h2>
           <TypewriterEffect words={words} className="text-7xl font-semibold mt-4" />
           <h1 className='sr-only'>
             Fund your Web3 project with ease.
