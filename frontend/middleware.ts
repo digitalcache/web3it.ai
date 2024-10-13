@@ -27,8 +27,8 @@ export default async function middleware (req: Request) {
 
   // Extract the potential subdomain from the URL
   const subdomain = hostname.split(".")[0];
-  console.log(subdomain)
-  console.log(req.url)
+  console.log("subdomain",subdomain)
+  console.log("request url",req.url)
 
   // If user is on an allowed domain and it's not a subdomain, allow the request
   if (isAllowedDomain && !subdomains.some((d: any) => d.subdomain === subdomain)) {
