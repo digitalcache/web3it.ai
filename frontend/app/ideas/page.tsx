@@ -1,11 +1,11 @@
 'use client'
-import React, { 
+import React, {
   useState, useEffect,
 } from 'react';
 import { ethers } from 'ethers'
 import { abi } from '@/utils/abi'
-import { 
-  BentoGrid, 
+import {
+  BentoGrid,
   BentoGridItem,
 } from "@/common/components/molecules/bentoGrid";
 import { Footer } from '@/common/components/organisms';
@@ -69,7 +69,7 @@ const ViewTokens = () => {
         </BackgroundBeamsWithCollision>
         <div className='container mx-auto'>
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-white">Current Ideas</h2>
-          <h2 className="mb-8 text-center text-white border-b border-white border-opacity-10 pb-4">Explore how ideas are doing in the market</h2>
+          <h2 className="mb-12 text-center text-white border-b border-white border-opacity-10 pb-4">Explore how ideas are doing in the market</h2>
           {loading ? (
             <Loader />
           ) : (
