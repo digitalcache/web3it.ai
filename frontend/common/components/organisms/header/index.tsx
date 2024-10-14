@@ -33,7 +33,7 @@ export const Header = ({
     }
   }, [])
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-150 ${isScrolled ? "bg-[#1D2144] bg-opacity-70 backdrop-blur-sm" : ""}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all px-4 duration-150 ${isScrolled ? "bg-[#1D2144] bg-opacity-70 backdrop-blur-sm" : ""}`}>
       <div className="container mx-auto py-3 flex items-center justify-between">
         <Link href={routes.homePath} className="">
           <LogoIcon />
@@ -45,11 +45,11 @@ export const Header = ({
               <LinkStyled href={"#"}>Team</LinkStyled>
               <LinkStyled href={"#"}>About Us</LinkStyled>
             </div>
-            <div className="flex space-x-4">
-              <div className="text-white flex justify-center items-center mr-4 cursor-pointer">
+            <div className="flex">
+              <div className="text-white flex justify-center items-center md:mr-4 cursor-pointer">
                 <Search />
               </div>
-              <Button onClick={() => router.push(routes.createProjectPath)} size="sm" variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
+              <Button onClick={() => router.push(routes.createProjectPath)} size="sm" variant="secondary" className="hidden lg:block ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
                 Develop a new idea
               </Button>
             </div>

@@ -11,6 +11,7 @@ import {
 import { Footer } from '@/common/components/organisms';
 import { Loader } from '@/common/components/atoms';
 import { routes } from '@/common/routes';
+import { BackgroundBeamsWithCollision } from '@/common/components/molecules';
 import { navigate } from '../actions';
 
 const ViewTokens = () => {
@@ -62,22 +63,30 @@ const ViewTokens = () => {
 
   return (
     <>
-      <div className="min-h-screen pt-48 pb-12">
-        <h2 className="text-3xl font-bold mb-8 text-center text-white">Ongoing Projects</h2>
-        {loading ? (
-          <Loader />
-        ) : (
-          <BentoGrid className="max-w-4xl mx-auto">
-            {cards.map((item: any, i: number) => (
-              <BentoGridItem
-                key={i}
-                card={item}
-                className={i === 3 || i === 6 ? "md:col-span-2" : ""}
-                navigateToTokenDetail={navigateToTokenDetail}
-              />
-            ))}
-          </BentoGrid>
-        )}
+      <div className="min-h-screen pt-20 md:pt-32 pb-12">
+        <BackgroundBeamsWithCollision className="absolute top-0 left-0 pointer-events-none">
+          <div className="w-full"></div>
+        </BackgroundBeamsWithCollision>
+        <div className='container mx-auto'>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-white">Current Ideas</h2>
+          <h2 className="mb-8 text-center text-white border-b border-white border-opacity-10 pb-4">Explore how ideas are doing in the market</h2>
+          {loading ? (
+            <Loader />
+          ) : (
+            <BentoGrid className="px-4 md:px-0">
+              {cards.map((item: any, i: number) => (
+                <BentoGridItem
+                  key={i}
+                  card={item}
+                  imageAbsolute={false}
+                  imageHeight="450"
+                  className={`${i === 3 || i === 6 ? "md:col-span-2" : ""} row-span-2`}
+                  navigateToTokenDetail={navigateToTokenDetail}
+                />
+              ))}
+            </BentoGrid>
+          )}
+        </div>
       </div>
       <Footer />
     </>

@@ -2,6 +2,7 @@
 import { 
   useState, 
   useEffect,
+  useMemo,
 } from 'react';
 import { ethers } from 'ethers'
 import { abi } from '@/utils/abi'
@@ -12,29 +13,9 @@ import {
 } from '@/common/components/atoms';
 import { useRouter } from 'next/navigation';
 import { navigate } from '../actions';
-
-const ProjectCard = (card: any) => {
-  const openIdea = () => {
-    navigate(routes.projectDetailPath.replace('%subdomain%', 'client1').replace('%query%', serialize(card)))
-  }
-  return (
-    <button onClick={openIdea} className={"row-span-1 rounded-xl group/bento relative hover:shadow-xl transition duration-200 text-left shadow-input dark:shadow-none p-4 bg-gray-800 border border-white/[0.2] justify-between flex flex-col space-y-4"}>
-      <img 
-        src={card.tokenImageUrl} 
-        className="w-full max-h-[250px] object-cover rounded-lg"
-      />
-      <div className="group-hover/bento:translate-x-2 transition duration-200">
-        <div className="font-bold text-neutral-600 max-w-[180px] whitespace-nowrap text-ellipsis overflow-hidden dark:text-neutral-200 mb-2 mt-2">
-          {card.creatorAddress}
-        </div>
-        <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
-          {card.description}
-        </div>
-        <div className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text text-sm font-medium mt-2">{card.symbol}</div>
-      </div>
-    </button>
-  )
-};
+import { BentoGrid } from '@/common/components/molecules';
+import { BentoGridItem } from '@/common/components/molecules/bentoGrid';
+import { Carousel } from '@/common/components/organisms';
 
 export const TrendingProjects = () => {
   const [cards, setCards] = useState<any>([]);
@@ -68,33 +49,50 @@ export const TrendingProjects = () => {
     fetchMemeTokens();
   }, []);
 
+  const navigateToTokenDetail = async (card: any) => {
+    navigate(routes.projectDetailPath.replace('%subdomain%', 'client1').replace('%query%', serialize(card)))
+  };
+
+  const reactCards = useMemo(() => {
+    if (cards) {
+      return cards.map((card: any) => (
+        <BentoGridItem key={card.src} card={card} navigateToTokenDetail={navigateToTokenDetail}  imageHeight='170' imageAbsolute={false} />
+      ));
+    }
+    return []
+  }, [cards])
+
   return (
     <section className="py-12 px-4">
       {loading && <Loader />}
       <div className="container mx-auto">
-        <div className='flex justify-between items-center border-b border-white border-opacity-10 mb-12 pb-4'>
-          <h2 className="text-3xl font-bold mb-8 text-white">Trending Ideas</h2>
+        <div className='flex justify-between border-b border-white border-opacity-10 mb-12 pb-4'>
+          <h2 className="text-2xl md:text-3xl font-bold text-white">Trending Ideas</h2>
           <Button size="md" onClick={() => router.push(routes.viewProjectsPath)} variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
             View all
           </Button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {loading && (
-            <>
-              <ProjectCard name="Loading..." symbol="Loading..." description="Loading..." tokenImageUrl="https://via.placeholder.com/300" fundingRaised="Loading..." tokenAddress="Loading..." creatorAddress="Loading..." />
-              <ProjectCard name="Loading..." symbol="Loading..." description="Loading..." tokenImageUrl="https://via.placeholder.com/300" fundingRaised="Loading..." tokenAddress="Loading..." creatorAddress="Loading..." />
-              <ProjectCard name="Loading..." symbol="Loading..." description="Loading..." tokenImageUrl="https://via.placeholder.com/300" fundingRaised="Loading..." tokenAddress="Loading..." creatorAddress="Loading..." />
-              <ProjectCard name="Loading..." symbol="Loading..." description="Loading..." tokenImageUrl="https://via.placeholder.com/300" fundingRaised="Loading..." tokenAddress="Loading..." creatorAddress="Loading..." />
-            </>
-          )}
-          {cards.map((card: any, index: number) => {
-            if (index >= 4) {
-              return null
-            }
-            return (
-              <ProjectCard key={index} {...card} />
-            )
-          })}
+        <div className="hidden md:block">
+          <BentoGrid>
+            {cards.map((item: any, i: number) => {
+              if (i >= 5) {
+                return null
+              }
+              return (
+                <BentoGridItem
+                  key={i}
+                  card={item}
+                  imageAbsolute={true}
+                  className={`${i === 3 || i === 6 ? "md:col-span-2" : ""}`}
+                  navigateToTokenDetail={navigateToTokenDetail}
+                  imageHeight='170'
+                />
+              )
+            })}
+          </BentoGrid>
+        </div>
+        <div className='md:hidden'>
+          {!loading && <Carousel items={reactCards} />}
         </div>
       </div>
     </section>

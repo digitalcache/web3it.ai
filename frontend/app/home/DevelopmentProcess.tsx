@@ -47,7 +47,7 @@ export const DevelopmentProcess = () => {
   return (
     <section className="py-12 px-4">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold mb-8 text-white border-b border-white border-opacity-10 pb-4">Development Process</h2>
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-white border-b border-white border-opacity-10 pb-4">Development Process</h2>
         <Timeline data={data} />
       </div>
     </section>
