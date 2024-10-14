@@ -5,9 +5,11 @@ import {
 } from "react";
 import Link from "next/link";
 import { routes } from "@/common/routes";
-import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { LogoIcon } from "../../icons";
+import {
+  LogoIcon,
+  SearchIcon,
+} from "../../icons";
 import { LinkStyled } from "../../atoms";
 import { Button } from "../../atoms/button";
 
@@ -59,9 +61,9 @@ export const Header = ({
             </div>
             <div className="flex lg:mr-0 gap-4">
               <div className="text-white flex justify-center items-center md:mr-4 cursor-pointer">
-                <Search />
+                <SearchIcon className="buttonWithGradient" />
               </div>
-              <Button onClick={() => router.push(routes.createProjectPath)} size="sm" variant="secondary" className="hidden lg:block ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
+              <Button onClick={() => router.push(routes.createProjectPath)} size="sm" variant="secondary" className="hidden lg:block ring-1 py-2 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
                 Develop a new idea
               </Button>
               <div className={`lg:hidden`}>
@@ -77,7 +79,7 @@ export const Header = ({
         )}
       </div>
 
-      <div className={`absolute top-1/2 h-auto -translate-y-1/2 left-0 w-full flex items-center justify-center flex-col`}>
+      <div className={`absolute top-1/2 -translate-y-full h-auto left-0 w-full flex items-center justify-center flex-col`}>
         <ul className={`${navbarOpened ? "" : "hidden"} w-full pt-0 pb-[0] [list-style:none] px-4`}>
           <li className={`${navbarOpened ? "scale-100 translate-y-0 opacity-100" : "scale-[1.15] -translate-y-[30px] opacity-0"} delay-[210ms] mt-[5px] [transition:transform_0.5s_cubic-bezier(0.4,_0.01,_0.165,_0.99),_opacity_0.6s_cubic-bezier(0.4,_0.01,_0.165,_0.99)]`}>
             <Button variant="primary" size="sm" type="button" onClick={() => openPage(routes.createProjectPath)} className="bg-gradient-to-r from-indigo-500 to-purple-500 w-full">Develop</Button>

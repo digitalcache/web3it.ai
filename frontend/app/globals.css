@@ -7,11 +7,9 @@ body {
   height: 100%;
 }
 
-
 html {
   scroll-behavior: smooth;
 }
-
 
 ::-webkit-scrollbar {
    	width: 6px;
@@ -31,6 +29,20 @@ html {
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
 }
+
+.buttonWithGradient defs stop:first-child {
+  stop-color: white;
+}
+.buttonWithGradient defs stop:last-child {
+  stop-color: white;
+}
+.buttonWithGradient:hover defs stop:first-child, .activeButton defs stop:first-child {
+  stop-color: #a855f7;
+}
+.buttonWithGradient:hover defs stop:last-child, .activeButton defs stop:last-child {
+  stop-color: #6366f1;
+}
+
 
 
 .app {

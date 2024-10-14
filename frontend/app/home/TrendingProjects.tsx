@@ -1,6 +1,6 @@
 'use client'
-import { 
-  useState, 
+import {
+  useState,
   useEffect,
   useMemo,
 } from 'react';
@@ -8,7 +8,7 @@ import { ethers } from 'ethers'
 import { abi } from '@/utils/abi'
 import { routes } from '@/common/routes';
 import { serialize } from '@/utils/helpers';
-import { 
+import {
   Button, Loader,
 } from '@/common/components/atoms';
 import { useRouter } from 'next/navigation';
@@ -56,7 +56,7 @@ export const TrendingProjects = () => {
   const reactCards = useMemo(() => {
     if (cards) {
       return cards.map((card: any) => (
-        <BentoGridItem key={card.src} card={card} navigateToTokenDetail={navigateToTokenDetail}  imageHeight='170' imageAbsolute={false} />
+        <BentoGridItem key={card.src} card={card} navigateToTokenDetail={navigateToTokenDetail}  imageHeight='150' imageAbsolute={false} />
       ));
     }
     return []

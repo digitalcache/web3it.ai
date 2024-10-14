@@ -3,4 +3,4 @@ export { Button } from './button'
 export { TypewriterEffect } from './typewriterEffect'
 export { PlaceholderAndVanishInput } from './placeholderAndVanishInput'
 export { Loader } from './loader'
-
+export { LampContainer } from './lamp'

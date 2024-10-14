@@ -1,6 +1,6 @@
 import { cn } from "@/utils/helpers";
+import Image from "next/image";
 
- 
 export const BentoGrid = ({
   className,
   children,
@@ -19,7 +19,7 @@ export const BentoGrid = ({
     </div>
   );
 };
- 
+
 export const BentoGridItem = ({
   className,
   card,
@@ -41,9 +41,12 @@ export const BentoGridItem = ({
         className,
       )}
     >
-      <img 
-        src={card.tokenImageUrl} 
-        className={` object-cover max-h-[300px] md:max-h-[500px]  ${imageAbsolute ? "absolute w-full h-full blur-sm group-hover/bento:blur-0" : `w-full h-[${imageHeight}px]`}`}
+      <Image
+        src={card.tokenImageUrl}
+        alt={card.symbol}
+        width={400}
+        height={400}
+        className={` object-cover ${imageAbsolute ? `absolute w-full h-[${imageHeight}px]` : `w-full h-[200px] lg:h-[458px]`}`}
       />
       <div className={`${imageAbsolute ? "group-hover/bento:bg-opacity-50 h-[100px] w-full absolute bg-black bg-opacity-100 backdrop-blur-sm bottom-0 left-0" : ""}`}></div>
       <div className={`group-hover/bento:translate-x-2 transition duration-200 px-4 z-10 ${imageAbsolute ? "absolute bottom-4 left-0 w-full opacity-80 group-hover/bento:opacity-100" : ""}`}>

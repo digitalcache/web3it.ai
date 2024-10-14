@@ -1,17 +1,18 @@
 'use client'
-import React, { 
+import React, {
   useState, useEffect,
 } from 'react';
 import { ethers } from 'ethers'
 import { abi } from '@/utils/abi'
 import { tokenAbi } from '@/utils/tokenAbi'
-import { 
+import {
   useRouter, useParams, useSearchParams,
 } from 'next/navigation';
+import Image from 'next/image';
 
 const TokenDetail = () => {
-  const { 
-    subdomain: tokenAddress, 
+  const {
+    subdomain: tokenAddress,
   } = useParams()
   const searchParams = useSearchParams()
 
@@ -32,7 +33,7 @@ const TokenDetail = () => {
   const [cost, setCost] = useState('0');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter()
-  
+
   const tokenDetails = {
     name: name || '',
     symbol: symbol || '',
@@ -43,12 +44,12 @@ const TokenDetail = () => {
   };
 
   const fundingRaised = parseFloat(tokenDetails.fundingRaised.replace(' ETH', ''));
-  const fundingGoal = 24; 
+  const fundingGoal = 24;
   const maxSupply = parseInt('800000');
   useEffect(() => {
     const fetchData = async () => {
       try {
-       
+
         const ownersResponse = await fetch(
           `https://deep-index.moralis.io/api/v2.2/erc20/${tokenAddress}/owners?chain=sepolia&order=DESC`,
           {
@@ -61,7 +62,7 @@ const TokenDetail = () => {
         const ownersData = await ownersResponse.json();
         setOwners(ownersData.result || []);
 
-       
+
         const transfersResponse = await fetch(
           `https://deep-index.moralis.io/api/v2.2/erc20/${tokenAddress}/transfers?chain=sepolia&order=DESC`,
           {
@@ -112,7 +113,7 @@ const TokenDetail = () => {
       console.error('Error calculating cost:', error);
     }
   };
-    
+
   // Function to handle purchase
   const handlePurchase = async () => {
     try {
@@ -123,11 +124,11 @@ const TokenDetail = () => {
 
       const transaction = await contract.buyMemeToken(tokenAddress, purchaseAmount, {
         value: ethers.parseUnits(cost, 'ether'),
-      }); 
+      });
       const receipt = await transaction.wait();
 
       alert(`Transaction successful! Hash: ${receipt.hash}`);
-      setIsModalOpen(false); 
+      setIsModalOpen(false);
     } catch (error) {
     }
   };
@@ -146,7 +147,13 @@ const TokenDetail = () => {
 
         <div className="token-details">
           <h2>Token Detail for {tokenDetails.name}</h2>
-          <img src={tokenDetails.tokenImageUrl} alt={tokenDetails.name} className="token-detail-image" />
+          <Image
+            src={tokenDetails.tokenImageUrl}
+            alt={tokenDetails.symbol}
+            width={400}
+            height={400}
+            className="token-detail-image"
+          />
           <p><strong>Creator Address:</strong> {tokenDetails.creatorAddress}</p>
           <p><strong>Token Address:</strong> {tokenAddress}</p>
           <p><strong>Funding Raised:</strong> {tokenDetails.fundingRaised}</p>
@@ -172,7 +179,7 @@ const TokenDetail = () => {
             </div>
           </div>
 
-       
+
           <div className="buy-tokens">
             <h3>Buy Tokens</h3>
             <input

@@ -1,1 +1,5 @@
 export { LogoIcon } from './LogoIcon'
+export { LinkedInIcon } from './LinkedInIcon'
+export { TwitterIcon } from './TwitterIcon'
+export { YoutubeIcon } from './YoutubeIcon'
+export { SearchIcon } from './SearchIcon'

@@ -79,7 +79,7 @@ const ViewTokens = () => {
                   key={i}
                   card={item}
                   imageAbsolute={false}
-                  imageHeight="450"
+                  imageHeight="458"
                   className={`${i === 3 || i === 6 ? "md:col-span-2" : ""} row-span-2`}
                   navigateToTokenDetail={navigateToTokenDetail}
                 />

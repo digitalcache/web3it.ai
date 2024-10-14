@@ -1,7 +1,7 @@
-import React, { 
+import React, {
   useRef, useState, useEffect,
 } from "react";
-import { 
+import {
   motion, AnimatePresence,
 } from "framer-motion";
 import { cn } from "@/utils/helpers";
@@ -72,7 +72,7 @@ export const BackgroundBeamsWithCollision = ({
     <div
       ref={parentRef}
       className={cn(
-        "h-screen relative flex items-center w-full justify-center overflow-hidden",
+        "h-full md:h-screen relative flex items-center w-full justify-center overflow-hidden",
         className,
       )}
     >
@@ -115,7 +115,7 @@ const CollisionMechanism = React.forwardRef<
       repeatDelay?: number;
     };
   }
->(({ 
+>(({
   parentRef, containerRef, beamOptions = {},
 }) => {
   const beamRef = useRef<HTMLDivElement>(null);
@@ -166,8 +166,8 @@ const CollisionMechanism = React.forwardRef<
   useEffect(() => {
     if (collision.detected && collision.coordinates) {
       setTimeout(() => {
-        setCollision({ 
-          detected: false, 
+        setCollision({
+          detected: false,
           coordinates: null,
         });
         setCycleCollisionDetected(false);
@@ -244,8 +244,8 @@ const Explosion = ({ ...props }: React.HTMLProps<HTMLDivElement>) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ 
-          duration: 1.5, 
+        transition={{
+          duration: 1.5,
           ease: "easeOut",
         }}
         className="absolute -inset-x-10 top-0 m-auto h-2 w-10 rounded-full bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm"
@@ -253,9 +253,9 @@ const Explosion = ({ ...props }: React.HTMLProps<HTMLDivElement>) => {
       {spans.map((span) => (
         <motion.span
           key={span.id}
-          initial={{ 
-            x: span.initialX, 
-            y: span.initialY, 
+          initial={{
+            x: span.initialX,
+            y: span.initialY,
             opacity: 1,
           }}
           animate={{
@@ -263,8 +263,8 @@ const Explosion = ({ ...props }: React.HTMLProps<HTMLDivElement>) => {
             y: span.directionY,
             opacity: 0,
           }}
-          transition={{ 
-            duration: Math.random() * 1.5 + 0.5, 
+          transition={{
+            duration: Math.random() * 1.5 + 0.5,
             ease: "easeOut",
           }}
           className="absolute h-1 w-1 rounded-full bg-gradient-to-b from-indigo-500 to-purple-500"
