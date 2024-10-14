@@ -37,7 +37,7 @@ const TokenDetail = () => {
   const tokenDetails = {
     name: name || '',
     symbol: symbol || '',
-    description: description || 'No description available',
+    description: description || 'No description available!',
     tokenImageUrl: tokenImageUrl || 'https://via.placeholder.com/200',
     fundingRaised: fundingRaisedParams || '0 ETH',
     creatorAddress: creatorAddress || '0x0000000000000000000000000000000000000000',
