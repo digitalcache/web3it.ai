@@ -27,6 +27,11 @@ const nextConfig = {
         hostname: 'studio.uxpincdn.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+        pathname: '/**',
+      },
     ],
   },
   logging: {

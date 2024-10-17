@@ -3,7 +3,7 @@
 export const themeElements = {
   buttons: {
     primary: {
-      style: `flex items-center justify-center text-white rounded-lg outline-none disabled:cursor-not-allowed`,
+      style: `flex items-center justify-center text-white rounded-xl outline-none disabled:cursor-not-allowed`,
       size: {
         sm: 'px-3 py-2 font-medium text-base',
         md: 'px-4 py-3 font-medium text-base',
@@ -11,7 +11,7 @@ export const themeElements = {
       },
     },
     secondary: {
-      style: `flex items-center justify-center text-white rounded-lg outline-none transition-colors duration-150`,
+      style: `flex items-center justify-center text-white rounded-xl outline-none transition-colors duration-150`,
       size: {
         sm: 'px-4 py-2 font-medium text-base',
         md: 'px-4 py-3 font-medium text-base',

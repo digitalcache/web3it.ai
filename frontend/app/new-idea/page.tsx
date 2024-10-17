@@ -8,6 +8,7 @@ import {
   useWriteContract,
 } from 'wagmi';
 import { injected } from 'wagmi/connectors'
+import { toast } from "react-hot-toast";
 import {
   Controller, SubmitHandler, useForm, 
 } from "react-hook-form";
@@ -15,10 +16,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Footer } from '@/common/components/organisms';
 import { Input } from '@/common/components/molecules';
 import abi from '@/utils/abis/ideaFactory.json'
-import { Button } from '@/common/components/atoms';
+import { 
+  Button, 
+  Loader, 
+  TextArea,
+} from '@/common/components/atoms';
+import { routes } from '@/common/routes';
 import { tokenSchema } from './validationSchema';
 import { TokenDTO } from './types';
-import { routes } from '@/common/routes';
 
 const TokenCreate = () => {
   const router = useRouter()
@@ -48,34 +53,47 @@ const TokenCreate = () => {
   });
 
   const { 
-    writeContract,
+    writeContractAsync,
+    isPending,
   } = useWriteContract()
 
   const onSubmit: SubmitHandler<TokenDTO> = async (data) => {
+    const createToken = async () => {
+      try {
+        await writeContractAsync({
+          abi,
+          address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
+          functionName: ContractFunctions.createIdeaToken,
+          args: [
+            data.name,
+            data.ticker,
+            data.imageUrl,
+            data.description,
+            data.website,
+            data.twitter || '',
+          ],
+        })
+        reset()
+        router.push(routes.viewProjectsPath)
+      } catch (error: unknown) {
+        toast.error('Something went wrong. Please try again!')
+      }
+    } 
     if (!isConnected) {
-      connect({ connector: injected() })
-      return
-    }
-    if (isConnected) {
-      await writeContract({
-        abi,
-        address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
-        functionName: ContractFunctions.createIdeaToken,
-        args: [
-          data.name,
-          data.ticker,
-          data.imageUrl,
-          data.description,
-          data.website,
-          data.twitter || '',
-        ],
+      connect({
+        connector: injected(),
+      }, {
+        onSuccess: async () => {
+          await createToken()
+        },
       })
-      reset()
-      router.push(routes.viewProjectsPath)
+    } else {
+      createToken()
     }
   };
   return (
     <div>
+      {isPending && <Loader />}
       <div className="min-h-screen pt-20 md:pt-32 pb-12 relative overflow-hidden">
         <div className="top-0 left-0 -translate-x-1/2 -translate-y-1/2 -z-[15] absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500"></div>
         <div className="bottom-0 right-0 translate-x-1/2 translate-y-1/2 -z-[15] absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500"></div>
@@ -150,7 +168,7 @@ const TokenCreate = () => {
                     <Input
                       id={field.name}
                       labelText="Image"
-                      placeholder="https://image.coo/file.jpg"
+                      placeholder="https://image.com/file.jpg"
                       error={!!error}
                       errorMessage={error?.message}
                       {...fieldProperties}
@@ -173,7 +191,7 @@ const TokenCreate = () => {
                     ref, ...fieldProperties
                   } = field;
                   return (
-                    <Input
+                    <TextArea
                       id={field.name}
                       labelText="Description"
                       placeholder="Describe your idea"

@@ -13,8 +13,8 @@ import {
 import { 
   ConnectButton, 
   LinkStyled,
+  Button,
 } from "../../atoms";
-import { Button } from "../../atoms/button";
 
 export const Header = ({
   links,
@@ -55,22 +55,18 @@ export const Header = ({
         <Link href={routes.homePath} className="">
           <LogoIcon />
         </Link>
-        <div className="hidden md:flex justify-center items-center space-x-4 flex-1 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
+        <div className="hidden lg:flex justify-center items-center space-x-4 flex-1 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
           <LinkStyled href={routes.viewProjectsPath}>Ideas</LinkStyled>
           <LinkStyled href={"#"}>Team</LinkStyled>
           <LinkStyled href={"#"}>About Us</LinkStyled>
         </div>
         {links && (
           <>
-            <div className="flex lg:mr-0 gap-4">
-              <div className="text-white flex justify-center items-center md:mr-4 cursor-pointer group">
+            <div className="flex lg:mr-0 gap-4 items-center">
+              <div className="text-white hidden md:flex justify-center items-center md:mr-4 cursor-pointer group">
                 <SearchIcon className="buttonWithGradient" />
               </div>
               <ConnectButton />
-              {/* <ConnectButton accountStatus="avatar" chainStatus="icon" /> */}
-              {/* <Button size="sm" variant="secondary" className="hidden lg:block ring-1 py-2 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
-                Connect wallet
-              </Button> */}
               <div className={`lg:hidden`}>
                 <div className={`${navbarOpened ? "rotate-90" : "rotate-0"} relative inline-block h-[20px] w-[20px] cursor-pointer [transition:all_0.3s_cubic-bezier(0.4,_0.01,_0.165,_0.99)]`}>
                   <button onClick={openNavbar} type="button" className={`w-[18px] h-[18px] relative block -mt-[10px] ${navbarOpened ? "ml-0.5" : "mx-[auto]"}  mb-[0] top-2/4`}>
