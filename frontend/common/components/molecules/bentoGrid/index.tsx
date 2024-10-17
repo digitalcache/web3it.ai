@@ -1,3 +1,4 @@
+import { IdeaType } from "@/common/types";
 import { cn } from "@/utils/helpers";
 import Image from "next/image";
 
@@ -28,7 +29,7 @@ export const BentoGridItem = ({
   imageHeight,
 }: {
   className?: string;
-  card?: any;
+  card: IdeaType;
   imageAbsolute: boolean;
   imageHeight: string;
   navigateToTokenDetail: (card: any) => void;
@@ -37,7 +38,7 @@ export const BentoGridItem = ({
     <button
       onClick={() => navigateToTokenDetail(card)}
       className={cn(
-        "rounded-2xl group/bento relative overflow-hidden hover:shadow-xl transition duration-200 text-left bg-[#080b25] justify-between pb-4 border border-white/[0.2] flex flex-col space-y-4",
+        "rounded-2xl group/bento relative overflow-hidden hover:shadow-xl transition duration-200 text-left justify-between pb-4 border border-white/[0.2] flex flex-col space-y-4",
         className,
       )}
     >
@@ -53,7 +54,7 @@ export const BentoGridItem = ({
         <div className="font-bold text-neutral-600 max-w-[180px] whitespace-nowrap text-ellipsis overflow-hidden dark:text-neutral-200 mb-2 mt-2">
           {card.creatorAddress}
         </div>
-        <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-300">
+        <div className="font-normal text-neutral-600 text-xs dark:text-neutral-300">
           {card.description}
         </div>
         <div className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text text-sm font-medium mt-2">{card.symbol}</div>

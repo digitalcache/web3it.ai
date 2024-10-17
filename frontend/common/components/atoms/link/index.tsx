@@ -9,6 +9,6 @@ export const LinkStyled = ({
   children: ReactNode;
 }) => {
   return (
-    <Link href={href} className="text-gray-300 hover:text-white hover:font-medium px-4">{children}</Link>
+    <Link href={href} className="text-gray-300 hover:text-white text-lg font-medium px-4">{children}</Link>
   )
 }

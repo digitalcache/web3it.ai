@@ -47,7 +47,6 @@ html {
 
 .app {
   color: white;
-  font-family: Arial, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -183,7 +182,6 @@ html {
 .token-detail-container {
   background-color: rgb(27, 29, 40);
   color: white;
-  font-family: Arial, sans-serif;
   padding: 20px;
   min-height: 100vh;
   display: flex;

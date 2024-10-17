@@ -22,6 +22,11 @@ const nextConfig = {
         hostname: 'i.imgur.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'studio.uxpincdn.com',
+        pathname: '/**',
+      },
     ],
   },
   logging: {

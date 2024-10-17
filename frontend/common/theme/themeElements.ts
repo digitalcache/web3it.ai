@@ -3,7 +3,7 @@
 export const themeElements = {
   buttons: {
     primary: {
-      style: `flex items-center justify-center text-white rounded-lg outline-none`,
+      style: `flex items-center justify-center text-white rounded-lg outline-none disabled:cursor-not-allowed`,
       size: {
         sm: 'px-3 py-2 font-medium text-base',
         md: 'px-4 py-3 font-medium text-base',

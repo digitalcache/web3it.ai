@@ -1,9 +1,7 @@
 'use client'
 import { X } from "lucide-react";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Button } from "../../atoms";
-import { LampContainer } from "../../atoms/lamp";
 import {
   LinkedInIcon,
   TwitterIcon,
@@ -15,26 +13,11 @@ export const Footer = () => {
 
   return (
     <>
-      <footer className="bg-black relative">
-        <LampContainer className="hidden md:block">
-          <div></div>
-        </LampContainer>
-        <div className="md:absolute bottom-0 left-0 w-full">
-          <motion.div
-            initial={{
-              opacity: 0.5,
-            }}
-            whileInView={{
-              opacity: 1,
-            }}
-            transition={{
-              delay: 0.3,
-              duration: 0.8,
-              ease: "easeInOut",
-            }}
-            className="container mx-auto flex flex-col md:flex-row w-full justify-between mb-0 md:mb-4 items-center md:items-end px-4 gap-4 py-4 md:py-0 md:gap-2 md:px-0 pb-4"
-          >
+      <footer className="bg-yankees-blue relative overflow-hidden">
+        <div className="">
+          <div className="container mx-auto flex flex-col md:flex-row w-full justify-between items-center md:items-end px-4 gap-4 py-4 md:py-12 md:gap-2 md:px-0 pb-4">
             <div className="flex flex-col gap-4">
+              <div className="bottom-0 right-0 translate-x-1/2 translate-y-1/2 absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-white pointer-events-none"></div>
               <div className="flex gap-4 justify-center md:justify-start">
                 <a href="#" className="group buttonWithGradient">
                   <LinkedInIcon className="group-hover:text-white text-gradient"  />
@@ -58,10 +41,10 @@ export const Footer = () => {
                 </a>
               </div>
             </div>
-            <Button onClick={() => setIsModalOpen(true)} size="md" variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
+            <Button onClick={() => setIsModalOpen(true)} size="md" variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
               Contact Us
             </Button>
-          </motion.div>
+          </div>
         </div>
       </footer>
 
@@ -87,7 +70,7 @@ export const Footer = () => {
                 required
                 className="w-full mb-4 p-2 bg-gray-600 rounded h-32 text-white"
               ></textarea>
-              <Button size="md" type="submit" variant="primary" className="w-full bg-gradient-to-r from-indigo-500 to-purple-500">
+              <Button size="md" type="submit" variant="primary" className="transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 w-full bg-gradient-to-r from-indigo-500 to-purple-500 font-semibold">
                 Send
               </Button>
             </form>

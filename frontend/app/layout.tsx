@@ -2,17 +2,22 @@ import {
   ReactNode,
   Suspense,
 } from "react";
-import { Poppins } from 'next/font/google';
+import { DM_Sans } from 'next/font/google';
+import { Providers } from "@/utils/providers";
+import { headers } from 'next/headers';
+import { cookieToInitialState } from "wagmi";
+import '@rainbow-me/rainbowkit/styles.css'
+import { config } from "@/config";
 import './globals.css'
 
-const primaryFont = Poppins({
+const primaryFont = DM_Sans({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
   variable: '--font-primaryFont',
 });
 
 export const metadata = {
-  title: 'Web3.it.ai',
+  title: 'Web3.It.AI',
   description: 'Translate ideas into Web3 projects',
 }
 
@@ -21,11 +26,17 @@ export default function RootLayout ({
 }: {
   children: ReactNode;
 }) {
+  const initialState = cookieToInitialState(
+    config,
+    headers().get('cookie'),
+  )
   return (
-    <html lang="en">
-      <body className={`${primaryFont.variable} font-primary bg-dark-background`}>
+    <html lang="en" className={primaryFont.className}>
+      <body className={`bg-eerie-black`}>
         <Suspense>
-          {children}
+          <Providers initialState={initialState}>
+            {children}
+          </Providers>
         </Suspense>
       </body>
     </html>

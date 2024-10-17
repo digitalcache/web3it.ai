@@ -5,11 +5,15 @@ require("@nomicfoundation/hardhat-toolbox");
 module.exports = {
   solidity: "0.8.24",
   networks: {
-    hardhat: {
-      forking: {
-        url: 'https://site1.moralis-nodes.com/sepolia/3445899ba34247dab22e887096372638',
-      },
-      chainId: 1,
+    polygonAmoy: {
+      url: process.env.POLYGON_AMOY_RPC_URL,
+      accounts: [process.env.ACCOUNT_PRIVATE_KEY],
+      chainId: 80002
     }
+  },
+  etherscan: {
+    apiKey: {
+      polygonAmoy: process.env.POLYGONSCAN_API_KEY
+    },
   }
 };

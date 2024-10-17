@@ -117,7 +117,8 @@ const CollisionMechanism = React.forwardRef<
   }
 >(({
   parentRef, containerRef, beamOptions = {},
-}) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+}, ref) => {
   const beamRef = useRef<HTMLDivElement>(null);
   const [collision, setCollision] = useState<{
     detected: boolean;

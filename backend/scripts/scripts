@@ -1,0 +1,2 @@
+npx hardhat run scripts/deployContract.js --network polygonAmoy
+npx hardhat run scripts/verify-factory.js --network polygonAmoy

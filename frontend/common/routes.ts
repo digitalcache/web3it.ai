@@ -4,4 +4,5 @@ export const routes = {
   viewProjectsPath: '/ideas',
   projectDetailPath: process.env.NODE_ENV === "production" ? `https://%subdomain%.${basePath}?%query%` : `http://%subdomain%.${basePath}?%query%`,
   createProjectPath: '/create',
+  newIdeaPath: '/new-idea',  
 }
