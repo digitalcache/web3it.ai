@@ -1,13 +1,11 @@
 'use client'
-import {
-  useMemo,
-} from 'react';
 import { Address } from 'viem';
 import { routes } from '@/common/routes';
 import { serialize } from '@/utils/helpers';
 import { 
   useReadContract,
 } from 'wagmi';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import abi from '@/utils/abis/ideaFactory.json'
 import { ContractFunctions } from '@/common/constants';
 import { 
@@ -18,10 +16,8 @@ import {
   Button, Loader,
 } from '@/common/components/atoms';
 import { useRouter } from 'next/navigation';
-import { BentoGrid } from '@/common/components/molecules';
-import { BentoGridItem } from '@/common/components/molecules/bentoGrid';
-import { Carousel } from '@/common/components/organisms';
 import { navigate } from '../actions';
+import { Token } from '@/common/components/molecules';
 
 export const TrendingProjects = () => {
   const router = useRouter()
@@ -37,18 +33,9 @@ export const TrendingProjects = () => {
 
   const ideas = ideaTokens as IdeasType
 
-  const navigateToTokenDetail = async (card: any) => {
+  const navigateToTokenDetail = async (card: IdeaType) => {
     navigate(routes.projectDetailPath.replace('%subdomain%', 'client1').replace('%query%', serialize(card)))
   };
-
-  const reactCards = useMemo(() => {
-    if (ideas?.length) {
-      return ideas.map((card: IdeaType) => (
-        <BentoGridItem key={card.tokenAddress} card={card} navigateToTokenDetail={navigateToTokenDetail}  imageHeight='150' imageAbsolute={false} />
-      ));
-    }
-    return []
-  }, [ideas])
 
   return (
     <section className="py-12 px-4">
@@ -60,27 +47,31 @@ export const TrendingProjects = () => {
             View all
           </Button>
         </div>
-        <div className="hidden md:block">
-          <BentoGrid>
-            {ideas?.length && ideas.map((item: IdeaType, i: number) => {
-              if (i >= 5) {
-                return null
-              }
-              return (
-                <BentoGridItem
-                  key={i}
-                  card={item}
-                  imageAbsolute={true}
-                  className={`${i === 3 || i === 6 ? "md:col-span-2" : ""}`}
-                  navigateToTokenDetail={navigateToTokenDetail}
-                  imageHeight='170'
-                />
-              )
-            })}
-          </BentoGrid>
-        </div>
-        <div className='md:hidden'>
-          {!isLoading && <Carousel items={reactCards} />}
+        <div className="">
+          <ResponsiveMasonry
+            columnsCountBreakPoints={{ 
+              350: 1, 
+              480: 2,
+              769: 3, 
+              1120: 4,
+            }}
+          >
+            <Masonry gutter="16px">
+              {ideas && ideas.length && ideas.map((token: IdeaType, index: number) => {
+                if (index >= 10) {
+                  return null
+                }
+                return (
+                  <Token
+                    key={token.tokenAddress}
+                    card={token}
+                    navigateToTokenDetail={navigateToTokenDetail}
+                  />
+                )
+              })}
+             
+            </Masonry>
+          </ResponsiveMasonry>
         </div>
       </div>
     </section>

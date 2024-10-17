@@ -1,13 +1,14 @@
 'use client'
 import {
-  BentoGrid,
-  BentoGridItem,
-} from "@/common/components/molecules/bentoGrid";
+  Token,
+} from "@/common/components/molecules/token";
 import { Footer } from '@/common/components/organisms';
 import { Loader } from '@/common/components/atoms';
 import { Address } from 'viem';
 import { routes } from '@/common/routes';
 import { BackgroundBeamsWithCollision } from '@/common/components/molecules';
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+
 import { 
   useReadContract,
 } from 'wagmi';
@@ -38,7 +39,7 @@ const ViewTokens = () => {
     return str.join("&");
   }
 
-  const navigateToTokenDetail = async (card: any) => {
+  const navigateToTokenDetail = async (card: IdeaType) => {
     navigate(routes.projectDetailPath.replace('%subdomain%', 'client1').replace('%query%', serialize(card)))
   };
 
@@ -56,18 +57,27 @@ const ViewTokens = () => {
           {isLoading ? (
             <Loader />
           ) : (
-            <BentoGrid className="px-4 md:px-0">
-              {ideas && ideas.length && ideas.map((item: IdeaType, index: number) => (
-                <BentoGridItem
-                  key={item.tokenAddress}
-                  card={item}
-                  imageAbsolute={false}
-                  imageHeight="458"
-                  className={`${index === 3 || index === 6 ? "md:col-span-2" : ""} row-span-2`}
-                  navigateToTokenDetail={navigateToTokenDetail}
-                />
-              ))}
-            </BentoGrid>
+            
+            <div className="px-4 md:px-0">
+              <ResponsiveMasonry
+                columnsCountBreakPoints={{ 
+                  350: 1, 
+                  480: 2,
+                  769: 3, 
+                  1120: 4,
+                }}
+              >
+                <Masonry gutter="16px">
+                  {ideas && ideas.length && ideas.map((token: IdeaType) => (
+                    <Token
+                      key={token.tokenAddress}
+                      card={token}
+                      navigateToTokenDetail={navigateToTokenDetail}
+                    />
+                  ))}
+                </Masonry>
+              </ResponsiveMasonry>
+            </div>
           )}
         </div>
       </div>

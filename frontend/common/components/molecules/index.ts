@@ -1,5 +1,5 @@
 export { BackgroundBeamsWithCollision } from './backgroundBeamsWithCollision'
 export { MultiStepLoader } from './multiStepLoader'
-export { BentoGrid } from './bentoGrid'
+export { Token } from './token'
 export { Timeline } from './timeline'
 export { Input } from './input'
