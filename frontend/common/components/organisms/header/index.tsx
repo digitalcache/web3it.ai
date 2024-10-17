@@ -10,7 +10,10 @@ import {
   LogoIcon,
   SearchIcon,
 } from "../../icons";
-import { LinkStyled } from "../../atoms";
+import { 
+  ConnectButton, 
+  LinkStyled,
+} from "../../atoms";
 import { Button } from "../../atoms/button";
 
 export const Header = ({
@@ -63,9 +66,11 @@ export const Header = ({
               <div className="text-white flex justify-center items-center md:mr-4 cursor-pointer group">
                 <SearchIcon className="buttonWithGradient" />
               </div>
-              <Button size="sm" variant="secondary" className="hidden lg:block ring-1 py-2 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
+              <ConnectButton />
+              {/* <ConnectButton accountStatus="avatar" chainStatus="icon" /> */}
+              {/* <Button size="sm" variant="secondary" className="hidden lg:block ring-1 py-2 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
                 Connect wallet
-              </Button>
+              </Button> */}
               <div className={`lg:hidden`}>
                 <div className={`${navbarOpened ? "rotate-90" : "rotate-0"} relative inline-block h-[20px] w-[20px] cursor-pointer [transition:all_0.3s_cubic-bezier(0.4,_0.01,_0.165,_0.99)]`}>
                   <button onClick={openNavbar} type="button" className={`w-[18px] h-[18px] relative block -mt-[10px] ${navbarOpened ? "ml-0.5" : "mx-[auto]"}  mb-[0] top-2/4`}>

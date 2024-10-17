@@ -8,6 +8,7 @@ import {
 import { 
   RainbowKitProvider, 
   getDefaultConfig,
+  darkTheme,
 } from '@rainbow-me/rainbowkit'
 import { 
   type State, 
@@ -17,7 +18,7 @@ import {
 import { polygonAmoy } from 'wagmi/chains'
 
 const config = getDefaultConfig({
-  appName: 'RainbowKit demo',
+  appName: 'Web3It.AI',
   projectId: '9c501b5f82295e29fb3a0b4eb14dab53',
   chains: [polygonAmoy],
   transports: {
@@ -38,7 +39,7 @@ export function Providers ({
   return (
     <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>
+        <RainbowKitProvider theme={darkTheme()}>
           {children}
         </RainbowKitProvider>
       </QueryClientProvider>

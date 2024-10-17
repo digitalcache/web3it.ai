@@ -33,9 +33,9 @@ export const Footer = () => {
                 </a>
               </div>
               <div className="flex gap-8">
-                <LinkStyled href="#" className="px-0">Blog</LinkStyled>
-                <LinkStyled href="#" className="px-0">FAQ</LinkStyled>
-                <LinkStyled href="#" className="px-0">Privacy Policy</LinkStyled>
+                <LinkStyled href="#" className="!px-0">Blog</LinkStyled>
+                <LinkStyled href="#" className="!px-0">FAQ</LinkStyled>
+                <LinkStyled href="#" className="!px-0">Privacy Policy</LinkStyled>
               </div>
             </div>
             <Button onClick={() => setIsModalOpen(true)} size="md" variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">

@@ -8,7 +8,6 @@ import { Address } from 'viem';
 import { routes } from '@/common/routes';
 import { BackgroundBeamsWithCollision } from '@/common/components/molecules';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-
 import { 
   useReadContract,
 } from 'wagmi';
@@ -47,17 +46,18 @@ const ViewTokens = () => {
 
   return (
     <>
-      <div className="min-h-screen pt-20 md:pt-32 pb-12">
-        <BackgroundBeamsWithCollision className="absolute top-0 left-0 pointer-events-none">
+      <div className="w-full h-full absolute top-0 left-0 pointer-events-none">
+        <BackgroundBeamsWithCollision className="!h-full">
           <div className="w-full"></div>
         </BackgroundBeamsWithCollision>
+      </div>
+      <div className="min-h-screen pt-20 md:pt-32 pb-12">
         <div className='container mx-auto'>
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-white">Current Ideas</h2>
           <h2 className="mb-12 text-center text-white border-b border-white border-opacity-10 pb-4">Explore how ideas are doing in the market</h2>
           {isLoading ? (
             <Loader />
           ) : (
-            
             <div className="px-4 md:px-0">
               <ResponsiveMasonry
                 columnsCountBreakPoints={{ 
