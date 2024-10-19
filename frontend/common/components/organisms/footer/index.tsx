@@ -39,7 +39,7 @@ export const Footer = () => {
               </div>
             </div>
             <Button onClick={() => setIsModalOpen(true)} size="md" variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
-              Contact Us
+              Contact us
             </Button>
           </div>
         </div>

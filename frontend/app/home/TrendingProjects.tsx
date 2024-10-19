@@ -1,4 +1,5 @@
 'use client'
+import { useMemo } from 'react';
 import { Address } from 'viem';
 import { routes } from '@/common/routes';
 import { serialize } from '@/utils/helpers';
@@ -16,8 +17,10 @@ import {
   Button, Loader,
 } from '@/common/components/atoms';
 import { useRouter } from 'next/navigation';
-import { navigate } from '../actions';
 import { Token } from '@/common/components/molecules';
+import subdomains from "@/subdomains.json";
+import { SubdomainType } from '@/middleware';
+import { navigate } from '../actions';
 
 export const TrendingProjects = () => {
   const router = useRouter()
@@ -29,12 +32,23 @@ export const TrendingProjects = () => {
     abi,
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
     functionName: ContractFunctions.getIdeas,
+    query: {
+      refetchInterval: 10000,
+    },
   })
 
-  const ideas = ideaTokens as IdeasType
+  const ideas = useMemo<IdeasType>(() => {
+    if (ideaTokens && Array.isArray(ideaTokens)) {
+      return ideaTokens.toReversed().slice(0, 8)
+    }
+    return []
+  }, [ideaTokens])
 
   const navigateToTokenDetail = async (card: IdeaType) => {
-    navigate(routes.projectDetailPath.replace('%subdomain%', 'client1').replace('%query%', serialize(card)))
+    const subdomainData = subdomains.find((d: SubdomainType) => d.address.toLowerCase() === card.tokenAddress.toLowerCase())
+    if (subdomainData) {
+      navigate(routes.projectDetailPath.replace('%subdomain%', subdomainData.subdomain).replace('%query%', serialize(card)))
+    }
   };
 
   return (
@@ -57,10 +71,7 @@ export const TrendingProjects = () => {
             }}
           >
             <Masonry gutter="16px">
-              {ideas && ideas.length && ideas.map((token: IdeaType, index: number) => {
-                if (index >= 10) {
-                  return null
-                }
+              {ideas && ideas.length && ideas.map((token: IdeaType) => {
                 return (
                   <Token
                     key={token.tokenAddress}

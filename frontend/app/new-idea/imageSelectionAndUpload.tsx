@@ -11,6 +11,7 @@ import { UploadIcon } from "@/common/components/icons";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import { UseFormSetValue } from "react-hook-form";
+import { pinataUploadUrl } from "@/common/utils/network/endpoints";
 import { TokenDTO } from "./types";
 
 export const ImageSelectionAndUpload = ({
@@ -46,7 +47,7 @@ export const ImageSelectionAndUpload = ({
         setUploadInProgress(true)
         const data = new FormData();
         data.set("file", file);
-        const uploadRequest = await fetch("/api/pinata", {
+        const uploadRequest = await fetch(pinataUploadUrl, {
           method: "POST",
           body: data,
         });

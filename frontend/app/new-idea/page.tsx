@@ -1,10 +1,15 @@
 'use client'
+import { 
+  useEffect, 
+  useState,
+} from 'react';
 import { Address } from 'viem';
 import { useRouter } from 'next/navigation';
 import { ContractFunctions } from '@/common/constants';
 import { 
   useAccount, 
   useConnect, 
+  useTransactionReceipt, 
   useWriteContract,
 } from 'wagmi';
 import { injected } from 'wagmi/connectors'
@@ -30,6 +35,8 @@ const TokenCreate = () => {
   const router = useRouter()
   const { connect } = useConnect()
 
+  const [txnHash, setTxnHash] = useState('')
+
   const {
     isConnected,
   } = useAccount()
@@ -39,9 +46,7 @@ const TokenCreate = () => {
     control,
     reset,
     setValue,
-    formState: { 
-      isValid,
-    },
+    getValues,
   } = useForm<TokenDTO>({
     resolver: yupResolver(tokenSchema),
     mode: 'onBlur',
@@ -60,10 +65,39 @@ const TokenCreate = () => {
     isPending,
   } = useWriteContract()
 
+  const { 
+    data: tokenData,
+  } = useTransactionReceipt({
+    hash: txnHash as Address,
+    query: {
+      enabled: txnHash ? true : false,
+    },
+  })
+
+  useEffect(() => {
+    const addTokenAddressToJSON = async () => {
+      if (tokenData) {
+        await fetch("/api/add-subdomain", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ 
+            subdomain: getValues('ticker').toLowerCase(),
+            address: tokenData.logs[0].address.toLowerCase(),
+          }),
+        });
+        reset()
+        router.push(routes.viewProjectsPath)
+      }
+    }
+    addTokenAddressToJSON()
+  }, [tokenData, router, reset, getValues])
+
   const onSubmit: SubmitHandler<TokenDTO> = async (data) => {
     const createToken = async () => {
       try {
-        await writeContractAsync({
+        const transaction = await writeContractAsync({
           abi,
           address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
           functionName: ContractFunctions.createIdeaToken,
@@ -76,8 +110,7 @@ const TokenCreate = () => {
             data.twitter || '',
           ],
         })
-        reset()
-        router.push(routes.viewProjectsPath)
+        setTxnHash(transaction)
       } catch (error: unknown) {
         toast.error('Something went wrong. Please try again!')
       }
@@ -258,7 +291,6 @@ const TokenCreate = () => {
                 size="md" 
                 type='submit'
                 variant="primary" 
-                disabled={!isValid}
                 className="transition-all w-full md:w-auto duration-150 disabled:bg-space-cadet/40 bg-space-cadet hover:bg-space-cadet/80 font-semibold"
               >
               Register your product

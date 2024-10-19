@@ -1,13 +1,18 @@
 import { 
   NextRequest, NextResponse,
 } from "next/server";
-import subdomains from "./subdomains.json";
+import subdomains from "@/subdomains.json";
 
 export const config = {
   matcher: [
     "/((?!api/|_next/|_static/|images|_vercel|[\\w-]+\\.\\w+).*)",
   ],
 };
+
+export type SubdomainType = {
+  address: string;
+  subdomain: string;
+}
 
 export default async function middleware (req: NextRequest) {
   const url = req.nextUrl;
@@ -24,9 +29,9 @@ export default async function middleware (req: NextRequest) {
   if (!currentHost) {
     return NextResponse.next();
   }
-  const subdomainData = subdomains.find((d: any) => d.subdomain === currentHost);
+  const subdomainData = subdomains.find((d: SubdomainType) => d.subdomain.toLowerCase() === currentHost);
   if (subdomainData) {
-    return NextResponse.rewrite(new URL(`/${currentHost}${pathname}`, req.url));
+    return NextResponse.rewrite(new URL(`/${subdomainData.subdomain}${pathname}`, req.url));
   }
   if (pathname === "/" && (currentHost === baseDomain)) {
     return NextResponse.rewrite(new URL(`/home`, req.url));

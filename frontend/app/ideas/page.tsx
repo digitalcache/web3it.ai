@@ -1,4 +1,5 @@
 'use client'
+import { useMemo } from "react";
 import {
   Token,
 } from "@/common/components/molecules/token";
@@ -11,13 +12,15 @@ import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { 
   useReadContract,
 } from 'wagmi';
-import abi from '@/utils/abis/ideaFactory.json'
 import { ContractFunctions } from '@/common/constants';
 import { 
   IdeasType, 
   IdeaType,
 } from '@/common/types';
+import { SubdomainType } from "@/middleware";
 import { navigate } from '../actions';
+import abi from '@/utils/abis/ideaFactory.json'
+import subdomains from "@/subdomains.json";
 
 const ViewTokens = () => {
   const { 
@@ -27,6 +30,9 @@ const ViewTokens = () => {
     abi,
     address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
     functionName: ContractFunctions.getIdeas,
+    query: {
+      refetchInterval: 10000,
+    },
   })
   const serialize = (obj: any) => {
     const str = [];
@@ -39,10 +45,18 @@ const ViewTokens = () => {
   }
 
   const navigateToTokenDetail = async (card: IdeaType) => {
-    navigate(routes.projectDetailPath.replace('%subdomain%', 'client1').replace('%query%', serialize(card)))
+    const subdomainData = subdomains.find((d: SubdomainType) => d.address.toLowerCase() === card.tokenAddress.toLowerCase())
+    if (subdomainData) {
+      navigate(routes.projectDetailPath.replace('%subdomain%', subdomainData.subdomain).replace('%query%', serialize(card)))
+    }
   };
 
-  const ideas = ideaTokens as IdeasType
+  const ideas = useMemo<IdeasType>(() => {
+    if (ideaTokens && Array.isArray(ideaTokens)) {
+      return ideaTokens.toReversed()
+    }
+    return []
+  }, [ideaTokens])
 
   return (
     <>
