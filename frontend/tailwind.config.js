@@ -15,6 +15,15 @@ module.exports = {
         'manatee': '#979DA6',
       },
     },
+    keyframes: {
+      ldsLoader: {
+        '0%': { transform: 'rotate(0deg)' },
+        '100%': { transform: 'rotate(360deg)' },
+      },
+    },
+    animation: {
+      ldsLoader: 'ldsLoader 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
+    },
   },
   plugins: [
     require('./common/utils/tailwindPlugins/animations'),

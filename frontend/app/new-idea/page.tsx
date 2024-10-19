@@ -23,11 +23,13 @@ import {
 } from '@/common/components/atoms';
 import { routes } from '@/common/routes';
 import { tokenSchema } from './validationSchema';
+import { ImageSelectionAndUpload } from './imageSelectionAndUpload';
 import { TokenDTO } from './types';
 
 const TokenCreate = () => {
   const router = useRouter()
   const { connect } = useConnect()
+
   const {
     isConnected,
   } = useAccount()
@@ -35,7 +37,8 @@ const TokenCreate = () => {
   const {
     handleSubmit, 
     control,
-    reset, 
+    reset,
+    setValue,
     formState: { 
       isValid,
     },
@@ -98,7 +101,7 @@ const TokenCreate = () => {
         <div className="top-0 left-0 -translate-x-1/2 -translate-y-1/2 -z-[15] absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500"></div>
         <div className="bottom-0 right-0 translate-x-1/2 translate-y-1/2 -z-[15] absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500"></div>
         <div className='container mx-auto flex flex-col items-center px-4 md:px-0'>
-          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-white">Create token</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-white">Create Idea</h2>
           <h2 className="mb-12 max-w-[400px] text-center text-white border-b w-full border-white border-opacity-10 pb-4">Register your product by creating a token and try to give as much details as possible about your idea</h2>
           <form onSubmit={handleSubmit(onSubmit)} className='max-w-[800px] relative bg-gradient-to-r overflow-hidden from-indigo-500 to-purple-500 w-full rounded-2xl pt-8 flex flex-col gap-4'>
             <div className='bg-gradient-to-t from-white to-transparent backdrop-blur-3xl blur-[200px] absolute bottom-0 left-0 w-full h-[400px] -z-[0]'></div>
@@ -162,17 +165,14 @@ const TokenCreate = () => {
                 }) => {
                   const { error } = fieldState;
                   const {
-                    ref, ...fieldProperties
+                    ref, value,
                   } = field;
                   return (
-                    <Input
-                      id={field.name}
-                      labelText="Image"
-                      placeholder="https://image.com/file.jpg"
-                      error={!!error}
+                    <ImageSelectionAndUpload 
+                      errorField={!!error}
                       errorMessage={error?.message}
-                      {...fieldProperties}
-                      width="w-full"
+                      setValue={setValue}
+                      value={value}
                     />
                   )
                 }}
@@ -232,7 +232,6 @@ const TokenCreate = () => {
               <Controller
                 name="twitter"
                 control={control}
-                rules={{ required: true }}
                 render={({
                   field, fieldState, 
                 }) => {
@@ -254,7 +253,7 @@ const TokenCreate = () => {
                 }}
               />
             </div>
-            <div className='flex px-4 md:px-0 justify-center mt-12 pb-8 relative'>
+            <div className='flex px-4 md:px-0 justify-center mt-8 pb-8 relative'>
               <Button
                 size="md" 
                 type='submit'
@@ -266,56 +265,15 @@ const TokenCreate = () => {
               </Button>
             </div>
           </form>
+          <p className="text-neutral-200 mt-4">Idea token creation fee: 0.0001 ETH</p>
+          <p className="text-neutral-200">Max supply: 1 million tokens. Initial mint: 200k tokens.</p>
+          <p className="text-neutral-200">If funding target of 24 ETH is met, a liquidity pool will be created on Uniswap.</p>
         </div>
       </div>
-      
-      {/* <div className="app">
-        <nav className="navbar">
-          <a href="#" className="nav-link">[moralis]</a>
-          <a href="#" className="nav-link">[docs]</a>
-          <button className="nav-button">[connect wallet]</button>
-        </nav>
-        <div className="token-create-container">
-          <h3 className="start-new-coin" onClick={() => router.push('/')}>[go back]</h3>
-          <p className="info-text">MemeCoin creation fee: 0.0001 ETH</p>
-          <p className="info-text">Max supply: 1 million tokens. Initial mint: 200k tokens.</p>
-          <p className="info-text">If funding target of 24 ETH is met, a liquidity pool will be created on Uniswap.</p>
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="Token Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="input-field"
-            />
-            <input
-              type="text"
-              placeholder="Ticker Symbol"
-              value={ticker}
-              onChange={(e) => setTicker(e.target.value)}
-              className="input-field"
-            />
-            <textarea
-              placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="input-field"
-            />
-            <input
-              type="text"
-              placeholder="Image URL"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              className="input-field"
-            />
-            <button className="create-button" onClick={handleCreate}>Create MemeToken</button>
-          </div>
-        </div>
-      </div> */}
       <Footer />
     </div>
     
   )
 };
 
-export default TokenCreate;
+export default TokenCreate

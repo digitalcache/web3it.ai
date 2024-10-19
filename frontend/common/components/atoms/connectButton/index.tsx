@@ -62,7 +62,7 @@ export const ConnectButton = () => {
               }
               return (
                 <div className='flex gap-3'>
-                  <button onClick={openAccountModal} className='px-4 py-3 rounded-xl text-white transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 font-semibold flex gap-1 items-center' type="button">
+                  <button onClick={openAccountModal} className='px-4 py-3 rounded-xl text-white transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 font-semibold flex gap-1 items-center hover:scale-105 ease-in-out' type="button">
                     <span className='rounded-full flex justify-center items-center bg-white p-0.5'>
                       {account.ensAvatar ? (
                         <Image src={account.ensAvatar} alt="avatar" width={20} height={20} />

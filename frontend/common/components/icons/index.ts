@@ -6,6 +6,4 @@ export { SearchIcon } from './SearchIcon'
 export { ExclamationErrorIcon } from './ExclamationErrorIcon'
 export { AlertErrorIcon } from './AlertErrorIcon'
 export { AlertSuccessIcon } from './AlertSuccessIcon'
-
-
-
+export { UploadIcon } from './UploadIcon'

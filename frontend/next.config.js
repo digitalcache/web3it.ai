@@ -27,6 +27,11 @@ const nextConfig = {
         hostname: 'studio.uxpincdn.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'bronze-deep-gazelle-81.mypinata.cloud',
+        pathname: '/**',
+      },
     ],
   },
   logging: {

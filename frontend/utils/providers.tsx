@@ -1,6 +1,8 @@
 'use client'
 
-import { ReactNode } from "react";
+import { 
+  ReactNode, useEffect,
+} from "react";
 import { 
   QueryClient, 
   QueryClientProvider,
@@ -36,6 +38,9 @@ export function Providers ({
   children: ReactNode;
   initialState: State | undefined;
 }) {
+  useEffect(() => {
+    window.history.scrollRestoration = 'manual'
+  }, []);
   return (
     <WagmiProvider config={config} initialState={initialState}>
       <QueryClientProvider client={queryClient}>

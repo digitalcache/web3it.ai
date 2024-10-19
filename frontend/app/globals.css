@@ -43,6 +43,18 @@ html {
   stop-color: #6366f1;
 }
 
+.uploadIconWithGradient defs stop:first-child {
+  stop-color: #9ca3af;
+}
+.uploadIconWithGradient defs stop:last-child {
+  stop-color: #9ca3af;
+}
+.uploadIconWithGradient:hover defs stop:first-child {
+  stop-color: #a855f7;
+}
+.uploadIconWithGradient:hover defs stop:last-child {
+  stop-color: #6366f1;
+}
 
 
 .app {
