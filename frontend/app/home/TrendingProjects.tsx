@@ -2,28 +2,28 @@
 import { useMemo } from 'react';
 import { Address } from 'viem';
 import { routes } from '@/common/routes';
-import { serialize } from '@/utils/helpers';
 import { 
   useReadContract,
 } from 'wagmi';
-import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import abi from '@/utils/abis/ideaFactory.json'
+import { Masonry } from "masonic";
 import { ContractFunctions } from '@/common/constants';
 import { 
   IdeasType,
-  IdeaType, 
 } from '@/common/types';
 import {
   Button, Loader,
 } from '@/common/components/atoms';
 import { useRouter } from 'next/navigation';
 import { Token } from '@/common/components/molecules';
-import subdomains from "@/subdomains.json";
-import { SubdomainType } from '@/middleware';
-import { navigate } from '../actions';
+import { useWindowDimensions } from '@/common/hooks/useWindowDimensions';
+import abi from '@/utils/abis/ideaFactory.json'
 
 export const TrendingProjects = () => {
   const router = useRouter()
+
+  const {
+    windowSize,
+  } = useWindowDimensions()
 
   const { 
     data: ideaTokens, 
@@ -44,16 +44,22 @@ export const TrendingProjects = () => {
     return []
   }, [ideaTokens])
 
-  const navigateToTokenDetail = async (card: IdeaType) => {
-    const subdomainData = subdomains.find((d: SubdomainType) => d.address.toLowerCase() === card.tokenAddress.toLowerCase())
-    if (subdomainData) {
-      navigate(routes.projectDetailPath.replace('%subdomain%', subdomainData.subdomain).replace('%query%', serialize(card)))
+
+  const columnCount = useMemo(() => {
+    if (windowSize === 'desktop') {
+      return 4
     }
-  };
+    if (windowSize === 'desktopLowRes') {
+      return 3
+    }
+    if (windowSize === 'tablet') {
+      return 2
+    }
+    return 1
+  }, [windowSize])
 
   return (
     <section className="py-12 px-4">
-      {isLoading && <Loader />}
       <div className="container mx-auto">
         <div className='flex justify-between border-b border-white border-opacity-10 mb-12 pb-4'>
           <h2 className="text-2xl md:text-3xl font-bold text-white">Trending Ideas</h2>
@@ -61,29 +67,20 @@ export const TrendingProjects = () => {
             View all
           </Button>
         </div>
-        <div className="">
-          <ResponsiveMasonry
-            columnsCountBreakPoints={{ 
-              350: 1, 
-              480: 2,
-              769: 3, 
-              1120: 4,
-            }}
-          >
-            <Masonry gutter="16px">
-              {ideas && ideas.length && ideas.map((token: IdeaType) => {
-                return (
-                  <Token
-                    key={token.tokenAddress}
-                    card={token}
-                    navigateToTokenDetail={navigateToTokenDetail}
-                  />
-                )
-              })}
-             
-            </Masonry>
-          </ResponsiveMasonry>
-        </div>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="">
+            <Masonry 
+              columnCount={columnCount} 
+              columnGutter={16} 
+              rowGutter={16} 
+              items={ideas} 
+              render={Token} 
+            />
+          </div>
+        )}
+        
       </div>
     </section>
   );

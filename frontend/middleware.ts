@@ -1,7 +1,7 @@
 import { 
   NextRequest, NextResponse,
 } from "next/server";
-import subdomains from "@/subdomains.json";
+import { createClient } from '@/common/utils/supabase/client';
 
 export const config = {
   matcher: [
@@ -29,10 +29,16 @@ export default async function middleware (req: NextRequest) {
   if (!currentHost) {
     return NextResponse.next();
   }
-  const subdomainData = subdomains.find((d: SubdomainType) => d.subdomain.toLowerCase() === currentHost);
-  if (subdomainData) {
-    return NextResponse.rewrite(new URL(`/${subdomainData.subdomain}${pathname}`, req.url));
+  const supabase = createClient();
+
+  const { data: subdomains } = await supabase.from('Subdomains').select('*')
+  if (subdomains?.length) {
+    const subdomainData = subdomains.find((d: SubdomainType) => d.subdomain.toLowerCase() === currentHost);
+    if (subdomainData) {
+      return NextResponse.rewrite(new URL(`/${subdomainData.subdomain}${pathname}`, req.url));
+    }
   }
+  
   if (pathname === "/" && (currentHost === baseDomain)) {
     return NextResponse.rewrite(new URL(`/home`, req.url));
   }

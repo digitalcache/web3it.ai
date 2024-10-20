@@ -4,7 +4,7 @@ import {
 } from "react";
 import { 
   acceptedImageMimeTypes, 
-  FILE_SIZE_TWENTY_MB,
+  FILE_SIZE_FIVE_MB,
 } from "@/common/constants";
 import { CircularSpinner } from "@/common/components/atoms";
 import { UploadIcon } from "@/common/components/icons";
@@ -35,8 +35,8 @@ export const ImageSelectionAndUpload = ({
       if (!file) {
         return;
       }
-      if (file.size > FILE_SIZE_TWENTY_MB) {
-        setError('Please upload image less than 20 mb')
+      if (file.size > FILE_SIZE_FIVE_MB) {
+        setError('Please upload image less than 5 mb')
         return;
       }
       if (!acceptedImageMimeTypes.includes(file.type)) {

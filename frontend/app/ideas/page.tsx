@@ -2,27 +2,27 @@
 import { useMemo } from "react";
 import {
   Token,
-} from "@/common/components/molecules/token";
+} from "@/common/components/molecules";
 import { Footer } from '@/common/components/organisms';
 import { Loader } from '@/common/components/atoms';
 import { Address } from 'viem';
-import { routes } from '@/common/routes';
 import { BackgroundBeamsWithCollision } from '@/common/components/molecules';
-import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import { Masonry } from "masonic";
 import { 
   useReadContract,
 } from 'wagmi';
 import { ContractFunctions } from '@/common/constants';
+import { useWindowDimensions } from "@/common/hooks/useWindowDimensions";
 import { 
   IdeasType, 
-  IdeaType,
 } from '@/common/types';
-import { SubdomainType } from "@/middleware";
-import { navigate } from '../actions';
 import abi from '@/utils/abis/ideaFactory.json'
-import subdomains from "@/subdomains.json";
 
 const ViewTokens = () => {
+  const {
+    windowSize,
+  } = useWindowDimensions()
+
   const { 
     data: ideaTokens, 
     isLoading,
@@ -34,22 +34,6 @@ const ViewTokens = () => {
       refetchInterval: 10000,
     },
   })
-  const serialize = (obj: any) => {
-    const str = [];
-    for (const p in obj) {
-      if (obj.hasOwnProperty(p)) {
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-      }
-    }
-    return str.join("&");
-  }
-
-  const navigateToTokenDetail = async (card: IdeaType) => {
-    const subdomainData = subdomains.find((d: SubdomainType) => d.address.toLowerCase() === card.tokenAddress.toLowerCase())
-    if (subdomainData) {
-      navigate(routes.projectDetailPath.replace('%subdomain%', subdomainData.subdomain).replace('%query%', serialize(card)))
-    }
-  };
 
   const ideas = useMemo<IdeasType>(() => {
     if (ideaTokens && Array.isArray(ideaTokens)) {
@@ -57,6 +41,20 @@ const ViewTokens = () => {
     }
     return []
   }, [ideaTokens])
+  
+
+  const columnCount = useMemo(() => {
+    if (windowSize === 'desktop') {
+      return 4
+    }
+    if (windowSize === 'desktopLowRes') {
+      return 3
+    }
+    if (windowSize === 'tablet') {
+      return 2
+    }
+    return 1
+  }, [windowSize])
 
   return (
     <>
@@ -73,24 +71,13 @@ const ViewTokens = () => {
             <Loader />
           ) : (
             <div className="px-4 md:px-0">
-              <ResponsiveMasonry
-                columnsCountBreakPoints={{ 
-                  350: 1, 
-                  480: 2,
-                  769: 3, 
-                  1120: 4,
-                }}
-              >
-                <Masonry gutter="16px">
-                  {ideas && ideas.length && ideas.map((token: IdeaType) => (
-                    <Token
-                      key={token.tokenAddress}
-                      card={token}
-                      navigateToTokenDetail={navigateToTokenDetail}
-                    />
-                  ))}
-                </Masonry>
-              </ResponsiveMasonry>
+              <Masonry 
+                columnCount={columnCount} 
+                columnGutter={16} 
+                rowGutter={16} 
+                items={ideas} 
+                render={Token} 
+              />
             </div>
           )}
         </div>

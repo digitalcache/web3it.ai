@@ -20,6 +20,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Footer } from '@/common/components/organisms';
 import { Input } from '@/common/components/molecules';
+import { createClient } from '@/common/utils/supabase/client';
 import abi from '@/utils/abis/ideaFactory.json'
 import { 
   Button, 
@@ -34,6 +35,7 @@ import { TokenDTO } from './types';
 const TokenCreate = () => {
   const router = useRouter()
   const { connect } = useConnect()
+  const supabase = createClient();
 
   const [txnHash, setTxnHash] = useState('')
 
@@ -77,22 +79,22 @@ const TokenCreate = () => {
   useEffect(() => {
     const addTokenAddressToJSON = async () => {
       if (tokenData) {
-        await fetch("/api/add-subdomain", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ 
-            subdomain: getValues('ticker').toLowerCase(),
-            address: tokenData.logs[0].address.toLowerCase(),
-          }),
-        });
+        try {
+          await supabase.from('Subdomains').insert([
+            { 
+              subdomain: getValues('ticker').toLowerCase(),
+              address: tokenData.logs[0].address.toLowerCase(),
+            },
+          ])
+        } catch (err) {
+          toast.error("Error occurred!")
+        }
         reset()
         router.push(routes.viewProjectsPath)
       }
     }
     addTokenAddressToJSON()
-  }, [tokenData, router, reset, getValues])
+  }, [tokenData, router, reset, getValues, supabase])
 
   const onSubmit: SubmitHandler<TokenDTO> = async (data) => {
     const createToken = async () => {
