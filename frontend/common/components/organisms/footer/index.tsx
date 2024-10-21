@@ -20,7 +20,8 @@ export const Footer = () => {
         <div className="">
           <div className="container mx-auto flex flex-col md:flex-row w-full justify-between items-center md:items-end px-4 gap-4 py-4 md:py-12 md:gap-2 md:px-0 pb-4">
             <div className="flex flex-col gap-4">
-              <div className="bottom-0 right-0 translate-x-1/2 translate-y-1/2 absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-white pointer-events-none"></div>
+              <div className="bottom-0 left-0 -translate-x-1/2 translate-y-1/2 absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-indigo-500 pointer-events-none"></div>
+              <div className="bottom-0 right-0 translate-x-1/2 translate-y-1/2 absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500 pointer-events-none"></div>
               <div className="flex gap-4 justify-center md:justify-start">
                 <a href="#" className="group buttonWithGradient">
                   <LinkedInIcon className="group-hover:text-white text-gradient"  />

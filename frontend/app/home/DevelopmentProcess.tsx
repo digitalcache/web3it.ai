@@ -7,28 +7,28 @@ export const DevelopmentProcess = () => {
       title: "Ideation",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
-          Develop your web3 project idea
+          <p className="text-neutral-200 text-sm md:text-lg font-normal">
+          Conceptualize Your Web3 Idea
           </p>
         </div>
       ),
     },
     {
-      title: "AI Assistance",
+      title: "App Development",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-8">
-            You can use get creative with your prompts and translate text to working app using Claude AI
+          <p className="text-neutral-200 text-sm md:text-lg font-normal">
+            Unleash your creativity with your prompts and transform text into functional applications using Claude AI
           </p>
         </div>
       ),
     },
     {
-      title: "Crowdfunding",
+      title: "Funding",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4">
-            List down by creating a token for your project so other's can view and buy tokens
+          <p className="text-neutral-200 text-sm md:text-lg font-normal">
+            Enhance your project's visibility by issuing a token, allowing others to discover and purchase your tokens
           </p>
         </div>
       ),
@@ -37,15 +37,15 @@ export const DevelopmentProcess = () => {
       title: "Strategize",
       content: (
         <div>
-          <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4">
-            Get support on how to get your networking and marketing top of the line.
+          <p className="text-neutral-200 text-sm md:text-lg font-normal">
+            Receive guidance on enhancing your networking and marketing to achieve excellence
           </p>
         </div>
       ),
     },
   ];
   return (
-    <section className="py-12 px-4">
+    <section className="md:py-12 px-4">
       <div className="container mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold mb-8 text-white border-b border-white border-opacity-10 pb-4">Development Process</h2>
         <Timeline data={data} />

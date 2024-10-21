@@ -15,22 +15,12 @@ export const Token = ({
 }) => {
   const supabase = createClient();
 
-  const serialize = (obj: any) => {
-    const str = [];
-    for (const p in obj) {
-      if (obj.hasOwnProperty(p)) {
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-      }
-    }
-    return str.join("&");
-  }
-
   const navigateToTokenDetail = async (card: IdeaType) => {
     const { data: subdomains } = await supabase.from('Subdomains').select('*')
     if (subdomains?.length) {
       const subdomainData = subdomains.find((d: SubdomainType) => d.address.toLowerCase() === card.tokenAddress.toLowerCase())
       if (subdomainData) {
-        navigate(routes.projectDetailPath.replace('%subdomain%', subdomainData.subdomain).replace('%query%', serialize(card)))
+        navigate(routes.projectDetailPath.replace('%subdomain%', subdomainData.subdomain))
       }
     }
   };
@@ -41,7 +31,7 @@ export const Token = ({
         "rounded-2xl group h-auto max-w-full relative overflow-hidden hover:shadow-xl transition duration-200 text-left justify-between bg-black flex flex-col",
       )}
     >
-      <div className="shadow-lg">
+      <div className="shadow-lg flex justify-center items-center w-full">
         <Image
           src={data.tokenImageUrl}
           alt={data.symbol}

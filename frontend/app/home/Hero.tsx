@@ -23,7 +23,7 @@ export const Hero = () => {
     },
     {
       text: "Web3",
-      className: "gradientText dark:gradientText",
+      className: "gradientText",
     },
     {
       text: "ideas",
@@ -37,7 +37,7 @@ export const Hero = () => {
   ];
   return (
     <header className="pt-24 px-4 max-w-[100vw] relative pb-12">
-      <BackgroundBeamsWithCollision className="absolute top-0 left-0 pointer-events-none">
+      <BackgroundBeamsWithCollision className="hidden md:block absolute top-0 left-0 pointer-events-none">
         <div className="w-full"></div>
       </BackgroundBeamsWithCollision>
       <div className="top-0 left-0 -translate-x-1/2 -translate-y-1/2 -z-[15] absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500"></div>

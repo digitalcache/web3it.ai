@@ -32,6 +32,26 @@ const nextConfig = {
         hostname: 'bronze-deep-gazelle-81.mypinata.cloud',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'image.thum.io',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.apiflash.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.dribbble.com',
+        pathname: '/**',
+      },
     ],
   },
   logging: {

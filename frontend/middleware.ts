@@ -17,7 +17,6 @@ export type SubdomainType = {
 export default async function middleware (req: NextRequest) {
   const url = req.nextUrl;
   const pathname = url.pathname;
-
   const hostname = req.headers.get("host");
   let currentHost;
   const baseDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN;

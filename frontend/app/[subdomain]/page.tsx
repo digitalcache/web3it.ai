@@ -1,169 +1,187 @@
-'use client'
-import React, {
-  useState, useEffect,
-} from 'react';
-import { ethers } from 'ethers'
-import { tokenAbi } from '@/utils/tokenAbi'
-import ideaAbi from '@/utils/abis/ideaFactory.json'
-import {
-  useRouter, useParams,
-} from 'next/navigation';
-import Image from 'next/image';
-import { 
-  useReadContract,
-  useWriteContract,
-} from 'wagmi';
-
+import { createClient } from '@/common/utils/supabase/client';
+import { readContract } from '@wagmi/core'
+import { Metadata } from 'next';
+import { config } from '@/config';
 import { Address } from 'viem';
 import { ContractFunctions } from '@/common/constants';
-import { Loader } from '@/common/components/atoms';
+import NotFound from '../not-found';
+import { TokenDetails } from './tokenDetails';
+import ideaAbi from '@/utils/abis/ideaFactory.json'
 import { IdeaType } from '@/common/types';
 
-const TokenDetail = () => {
-  const {
-    subdomain: tokenAddress,
-  } = useParams()
-
-  const { 
-    data: ideaToken, 
-    isLoading,
-  } = useReadContract({
-    abi: ideaAbi,
-    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
-    functionName: ContractFunctions.getIdea,
-    args: [
-      '0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666',
-    ],
-  })
-
-  const { 
-    writeContractAsync,
-  } = useWriteContract()
-
-  const idea = ideaToken as IdeaType
-
-  const [owners, setOwners] = useState<any>([]);
-  const [transfers, setTransfers] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
-  const [totalSupply, setTotalSupply] = useState(0);
-  const [remainingTokens, setRemainingTokens] = useState(0);
-  const [purchaseAmount, setPurchaseAmount] = useState('');
-  const [cost, setCost] = useState('0');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const router = useRouter()
-
-  const fundingRaised = idea?.fundingRaised ? parseFloat(idea.fundingRaised.replace(' ETH', '')) : 0;
-  const fundingGoal = 20;
-  const maxSupply = parseInt('800000');
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-
-        const ownersResponse = await fetch(
-          `https://deep-index.moralis.io/api/v2.2/erc20/${'0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666'}/owners?chain=polygon amoy&order=DESC`,
-          {
-            headers: {
-              accept: 'application/json',
-              'X-API-Key': process.env.NEXT_PUBLIC_X_API_KEY || '',
-            },
-          },
-        );
-        const ownersData = await ownersResponse.json();
-        setOwners(ownersData.result || []);
-
-        // `https://deep-index.moralis.io/api/v2.2/erc20/${tokenAddress}/transfers?chain=sepolia&order=DESC`,
-
-        const transfersResponse = await fetch(
-          `https://deep-index.moralis.io/api/v2.2/erc20/0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666/transfers?chain=polygon amoy&order=DESC`,
-          {
-            headers: {
-              accept: 'application/json',
-              'X-API-Key': process.env.NEXT_PUBLIC_X_API_KEY || '',
-            },
-          },
-        );
-
-        const transfersData = await transfersResponse.json();
-        
-        setTransfers(transfersData.result || []);
-        
-        // Fetch total supply
-        const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-        const contract = new ethers.Contract('0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666' as string, tokenAbi, provider);
-        const totalSupplyResponse = await contract.totalSupply();
-        const totalSupplyFormatted = parseInt(ethers.formatUnits(totalSupplyResponse, 'ether')) - 200000;
-        setTotalSupply(totalSupplyFormatted);
-
-        // // Calculate remaining tokens
-        setRemainingTokens(maxSupply - totalSupplyFormatted);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [tokenAddress, maxSupply]);
-
-  const fundingRaisedPercentage = (fundingRaised / fundingGoal) * 100;
-  const valueAfterTwentyThousandInEther: any = ethers.formatUnits(maxSupply - 200000, 'ether')
-  const totalSupplyPercentage = ((totalSupply - 200000) / valueAfterTwentyThousandInEther) * 100;
-
-  const getCost = async () => {
-    if (!purchaseAmount) {
-      return;
-    }
-
-    try {
-      const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
-      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
-      const costInWei = await contract.calculateCost(totalSupply, purchaseAmount); // Replace with actual function
-      setCost(ethers.formatUnits(costInWei, 'ether'));
-      setIsModalOpen(true); // Open the modal
-    } catch (error) {
-      console.error('Error calculating cost:', error);
-    }
-  };
-
-  // Function to handle purchase
-  const handlePurchase = async () => {
-    try {
-
-      await writeContractAsync({
+export async function generateMetadata ({ params } : {
+  params: {
+    subdomain: string;
+  }
+}): Promise<Metadata> {
+  const supabase = createClient();
+  const { data: subdomains } = await supabase.from('Subdomains').select('*')
+  if (subdomains?.length) {
+    const subdomainData = subdomains.find((d) => d.subdomain === params.subdomain)
+    if (subdomainData?.address) {
+      const ideaToken = await readContract(config, {
         abi: ideaAbi,
         address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
-        functionName: ContractFunctions.buyToken,
-        args: [
-          '0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666',
-          purchaseAmount,
-        ],
-      })
-
-      // const win = window as any
-      // const provider = new ethers.BrowserProvider(win.ethereum);
-      // const signer = await provider.getSigner();
-      // const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', abi, signer);
-      // console.log("here", contract)
-      
-      // const transaction = await contract.buyIdeaToken('0xb739c297c20b0fff91839f015f3aff2e65f6b4f5', purchaseAmount, {
-      //   value: ethers.parseUnits(cost, 'ether'),
-      // });
-      // const receipt = await transaction.wait();
-      // console.log("here", receipt)
-
-      // alert(`Transaction successful! Hash: ${receipt.hash}`);
-      // setIsModalOpen(false);
-    } catch (error) {
+        functionName: ContractFunctions.getIdea,
+        args: [subdomainData.address],
+      });
+      const idea = ideaToken as IdeaType
+      return {
+        title: `Web3It.AI | ${idea.name}`,
+        description: `${idea.description}`,
+      }
     }
-  };
+  }
+  return {}
+}
+
+
+const TokenDetail = async ({ params } : {
+  params: {
+    subdomain: string;
+  }
+}) => {
+  const supabase = createClient();
+  const { data: subdomains } = await supabase.from('Subdomains').select('*')
+
+  if (subdomains?.length) {
+    const subdomainData = subdomains.find((d) => d.subdomain === params.subdomain)
+    if (subdomainData?.address) {
+      return (
+        <TokenDetails tokenAddress={subdomainData.address} />
+      )
+    }
+  }
+  return <NotFound />
+
+  
+
+  // const { 
+  //   writeContractAsync,
+  // } = useWriteContract()
+
+  // const idea = ideaToken as IdeaType
+
+  // const [owners, setOwners] = useState<any>([]);
+  // const [transfers, setTransfers] = useState<any>([]);
+  // const [loading, setLoading] = useState(true);
+  // const [totalSupply, setTotalSupply] = useState(0);
+  // const [remainingTokens, setRemainingTokens] = useState(0);
+  // const [purchaseAmount, setPurchaseAmount] = useState('');
+  // const [cost, setCost] = useState('0');
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const router = useRouter()
+
+  // const fundingRaised = idea?.fundingRaised ? parseFloat(idea.fundingRaised.replace(' ETH', '')) : 0;
+  // const fundingGoal = 20;
+  // const maxSupply = parseInt('800000');
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+
+  //       const ownersResponse = await fetch(
+  //         `https://deep-index.moralis.io/api/v2.2/erc20/${'0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666'}/owners?chain=polygon amoy&order=DESC`,
+  //         {
+  //           headers: {
+  //             accept: 'application/json',
+  //             'X-API-Key': process.env.NEXT_PUBLIC_X_API_KEY || '',
+  //           },
+  //         },
+  //       );
+  //       const ownersData = await ownersResponse.json();
+  //       setOwners(ownersData.result || []);
+
+  //       // `https://deep-index.moralis.io/api/v2.2/erc20/${tokenAddress}/transfers?chain=sepolia&order=DESC`,
+
+  //       const transfersResponse = await fetch(
+  //         `https://deep-index.moralis.io/api/v2.2/erc20/0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666/transfers?chain=polygon amoy&order=DESC`,
+  //         {
+  //           headers: {
+  //             accept: 'application/json',
+  //             'X-API-Key': process.env.NEXT_PUBLIC_X_API_KEY || '',
+  //           },
+  //         },
+  //       );
+
+  //       const transfersData = await transfersResponse.json();
+        
+  //       setTransfers(transfersData.result || []);
+        
+  //       // Fetch total supply
+  //       const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+  //       const contract = new ethers.Contract('0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666' as string, tokenAbi, provider);
+  //       const totalSupplyResponse = await contract.totalSupply();
+  //       const totalSupplyFormatted = parseInt(ethers.formatUnits(totalSupplyResponse, 'ether')) - 200000;
+  //       setTotalSupply(totalSupplyFormatted);
+
+  //       // // Calculate remaining tokens
+  //       setRemainingTokens(maxSupply - totalSupplyFormatted);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, [tokenAddress, maxSupply]);
+
+  // const fundingRaisedPercentage = (fundingRaised / fundingGoal) * 100;
+  // const valueAfterTwentyThousandInEther: any = ethers.formatUnits(maxSupply - 200000, 'ether')
+  // const totalSupplyPercentage = ((totalSupply - 200000) / valueAfterTwentyThousandInEther) * 100;
+
+  // const getCost = async () => {
+  //   if (!purchaseAmount) {
+  //     return;
+  //   }
+
+  //   try {
+  //     const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+  //     const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
+  //     const costInWei = await contract.calculateCost(totalSupply, purchaseAmount); // Replace with actual function
+  //     setCost(ethers.formatUnits(costInWei, 'ether'));
+  //     setIsModalOpen(true); // Open the modal
+  //   } catch (error) {
+  //     console.error('Error calculating cost:', error);
+  //   }
+  // };
+
+  // // Function to handle purchase
+  // const handlePurchase = async () => {
+  //   try {
+
+  //     await writeContractAsync({
+  //       abi: ideaAbi,
+  //       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
+  //       functionName: ContractFunctions.buyToken,
+  //       args: [
+  //         '0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666',
+  //         purchaseAmount,
+  //       ],
+  //     })
+
+  //     // const win = window as any
+  //     // const provider = new ethers.BrowserProvider(win.ethereum);
+  //     // const signer = await provider.getSigner();
+  //     // const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', abi, signer);
+  //     // console.log("here", contract)
+      
+  //     // const transaction = await contract.buyIdeaToken('0xb739c297c20b0fff91839f015f3aff2e65f6b4f5', purchaseAmount, {
+  //     //   value: ethers.parseUnits(cost, 'ether'),
+  //     // });
+  //     // const receipt = await transaction.wait();
+  //     // console.log("here", receipt)
+
+  //     // alert(`Transaction successful! Hash: ${receipt.hash}`);
+  //     // setIsModalOpen(false);
+  //   } catch (error) {
+  //   }
+  // };
 
 
   return (
-    isLoading ? (
-      <Loader />
-    ) : (
-      <div className="token-detail-container">
+    <>
+      {/* <div className="token-detail-container">
         <nav className="navbar">
           <a href="#" className="nav-link">[moralis]</a>
           <a href="#" className="nav-link">[docs]</a>
@@ -283,8 +301,8 @@ const TokenDetail = () => {
             </tbody>
           </table>
         )}
-      </div>
-    )
+      </div> */}
+    </>
   )
 };
 

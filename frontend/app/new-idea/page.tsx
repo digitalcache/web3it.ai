@@ -37,6 +37,7 @@ const TokenCreate = () => {
   const { connect } = useConnect()
   const supabase = createClient();
 
+  const [isSupabaseSubmitting, setIsSupabaseSubmitting] = useState(false)
   const [txnHash, setTxnHash] = useState('')
 
   const {
@@ -69,6 +70,7 @@ const TokenCreate = () => {
 
   const { 
     data: tokenData,
+    isLoading,
   } = useTransactionReceipt({
     hash: txnHash as Address,
     query: {
@@ -79,18 +81,25 @@ const TokenCreate = () => {
   useEffect(() => {
     const addTokenAddressToJSON = async () => {
       if (tokenData) {
-        try {
-          await supabase.from('Subdomains').insert([
-            { 
-              subdomain: getValues('ticker').toLowerCase(),
-              address: tokenData.logs[0].address.toLowerCase(),
-            },
-          ])
-        } catch (err) {
-          toast.error("Error occurred!")
+        setIsSupabaseSubmitting(true)
+        const { data: subdomains } = await supabase.from('Subdomains').select('*')
+        if (subdomains) {
+          const duplicatedDomain = subdomains.find((d) => d.subdomain === getValues('ticker').toLowerCase())
+          try {
+            await supabase.from('Subdomains').insert([
+              { 
+                subdomain: duplicatedDomain ? `${duplicatedDomain.subdomain}1` : getValues('ticker').toLowerCase(),
+                address: tokenData.logs[0].address.toLowerCase(),
+              },
+            ])
+            setIsSupabaseSubmitting(false)
+            reset()
+            router.push(routes.viewProjectsPath)
+          } catch (err) {
+            toast.error("Error occurred!")
+            setIsSupabaseSubmitting(false)
+          }
         }
-        reset()
-        router.push(routes.viewProjectsPath)
       }
     }
     addTokenAddressToJSON()
@@ -131,7 +140,7 @@ const TokenCreate = () => {
   };
   return (
     <div>
-      {isPending && <Loader />}
+      {(isPending || isLoading || isSupabaseSubmitting) && <Loader />}
       <div className="min-h-screen pt-20 md:pt-32 pb-12 relative overflow-hidden">
         <div className="top-0 left-0 -translate-x-1/2 -translate-y-1/2 -z-[15] absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500"></div>
         <div className="bottom-0 right-0 translate-x-1/2 translate-y-1/2 -z-[15] absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500"></div>

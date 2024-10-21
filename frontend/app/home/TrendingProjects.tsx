@@ -39,10 +39,13 @@ export const TrendingProjects = () => {
 
   const ideas = useMemo<IdeasType>(() => {
     if (ideaTokens && Array.isArray(ideaTokens)) {
+      if (windowSize === 'mobile') {
+        return ideaTokens.toReversed().slice(0, 3)
+      }
       return ideaTokens.toReversed().slice(0, 8)
     }
     return []
-  }, [ideaTokens])
+  }, [ideaTokens, windowSize])
 
 
   const columnCount = useMemo(() => {
