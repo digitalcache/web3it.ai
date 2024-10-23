@@ -16,7 +16,7 @@ export const Footer = () => {
 
   return (
     <>
-      <footer className="bg-yankees-blue relative overflow-hidden">
+      <footer className="bg-yankees-blue overflow-hidden relative">
         <div className="">
           <div className="container mx-auto flex flex-col md:flex-row w-full justify-between items-center md:items-end px-4 gap-4 py-4 md:py-12 md:gap-2 md:px-0 pb-4">
             <div className="flex flex-col gap-4">

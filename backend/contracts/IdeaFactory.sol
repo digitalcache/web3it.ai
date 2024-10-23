@@ -25,9 +25,9 @@ contract IdeaFactory {
 
     mapping(address => ideaToken) public addressToIdeaTokenMapping;
 
-    uint constant IDEATOKEN_CREATION_PLATFORM_FEE = 0.00001 ether;
+    uint constant IDEATOKEN_CREATION_PLATFORM_FEE = 0.0001 ether;
     uint constant IDEACOIN_FUNDING_DEADLINE_DURATION = 10 days;
-    uint constant IDEACOIN_FUNDING_GOAL = 20 ether;
+    uint constant IDEACOIN_FUNDING_GOAL = 24 ether;
 
     address constant UNISWAP_V2_FACTORY_ADDRESS = 0x9e5A52f57b3038F1B8EeE45F28b3C1967e22799C;
     address constant UNISWAP_V2_ROUTER_ADDRESS = 0xedf6066a2b290C185783862C7F4776A2C8077AD1;
@@ -84,7 +84,7 @@ contract IdeaFactory {
     ) public payable returns(address) {
 
         //should deploy the meme token, mint the initial supply to the token factory contract
-        // require(msg.value>= MEMETOKEN_CREATION_PLATFORM_FEE, "fee not paid for memetoken creation");
+        require(msg.value >= IDEATOKEN_CREATION_PLATFORM_FEE, "fee not paid for ideatoken creation");
         Idea ct = new Idea(name, symbol, INIT_SUPPLY);
         address ideaTokenAddress = address(ct);
         
@@ -110,10 +110,10 @@ contract IdeaFactory {
 
         // check to ensure there is enough supply to facilitate the purchase
         uint currentSupply = ideaTokenCt.totalSupply();
-        console.log("Current supply of token is ", currentSupply);
-        console.log("Max supply of token is ", MAX_SUPPLY);
+        // console.log("Current supply of token is ", currentSupply);
+        // console.log("Max supply of token is ", MAX_SUPPLY);
         uint available_qty = MAX_SUPPLY - currentSupply;
-        console.log("Qty available for purchase ",available_qty);
+        // console.log("Qty available for purchase ",available_qty);
 
 
         uint scaled_available_qty = available_qty / DECIMALS;
@@ -125,9 +125,6 @@ contract IdeaFactory {
         uint currentSupplyScaled = (currentSupply - INIT_SUPPLY) / DECIMALS;
         uint requiredEth = calculateCost(currentSupplyScaled, tokenQty);
 
-        console.log(requiredEth);
-
-
         // check if user has sent correct value of eth to facilitate this purchase
         require(msg.value >= requiredEth, "Incorrect value of ETH sent");
 
@@ -137,13 +134,13 @@ contract IdeaFactory {
         if(listedToken.fundingRaised >= IDEACOIN_FUNDING_GOAL){
             // create liquidity pool
             address pool = _createLiquidityPool(ideaTokenAddress);
-            console.log("Pool address ", pool);
+            // console.log("Pool address ", pool);
 
             // provide liquidity
             uint tokenAmount = INIT_SUPPLY;
             uint ethAmount = listedToken.fundingRaised;
             uint liquidity = _provideLiquidity(ideaTokenAddress, tokenAmount, ethAmount);
-            console.log("UNiswap provided liquidty ", liquidity);
+            // console.log("UNiswap provided liquidty ", liquidity);
 
             // burn lp token
             _burnLpTokens(pool, liquidity);
@@ -153,11 +150,11 @@ contract IdeaFactory {
         // mint the tokens
         ideaTokenCt.mint(tokenQty_scaled, msg.sender);
 
-        console.log("User balance of the tokens is ", ideaTokenCt.balanceOf(msg.sender));
+        // console.log("User balance of the tokens is ", ideaTokenCt.balanceOf(msg.sender));
 
-        console.log("New available qty ", MAX_SUPPLY - ideaTokenCt.totalSupply());
+        // console.log("New available qty ", MAX_SUPPLY - ideaTokenCt.totalSupply());
 
-        return requiredEth;
+        return 1;
     }
     function getAllIdeaTokens() public view returns(ideaToken[] memory) {
         ideaToken[] memory allTokens = new ideaToken[](ideaTokenAddresses.length);
@@ -170,7 +167,6 @@ contract IdeaFactory {
         ideaToken storage listedToken = addressToIdeaTokenMapping[ideaTokenAddress];
         Idea ideaTokenCt = Idea(ideaTokenAddress);
         listedToken.tokenCurrentSupply = ideaTokenCt.totalSupply();
-        console.log(ideaTokenCt.totalSupply());
         return addressToIdeaTokenMapping[ideaTokenAddress];
     }
     function _createLiquidityPool(address memeTokenAddress) internal returns(address) {
@@ -193,7 +189,7 @@ contract IdeaFactory {
     function _burnLpTokens(address pool, uint liquidity) internal returns(uint){
         IUniswapV2Pair uniswapv2pairct = IUniswapV2Pair(pool);
         uniswapv2pairct.transfer(address(0), liquidity);
-        console.log("Uni v2 tokens burnt");
+        // console.log("Uni v2 tokens burnt");
         return 1;
     }
 

@@ -7,6 +7,7 @@ export type IdeaType = {
     symbol: string;
     tokenAddress: string;
     tokenImageUrl: string;
+    tokenCurrentSupply: bigint;
 }
 
 export type IdeasType = Array<IdeaType>

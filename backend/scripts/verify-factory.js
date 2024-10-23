@@ -2,7 +2,7 @@ const { run } = require("hardhat");
 
 async function main() {
 //add the contract address that you deployed in the prev steps
-  const contractAddress = '0x1a633F2c332C92722c24e2bF0F178aEf61822d0e'; //line 5
+  const contractAddress = '0x6702E991C8616C3d825B09c19742E04DE49Ecdd6'; //line 5
 
   try {
     await run("verify:verify", {

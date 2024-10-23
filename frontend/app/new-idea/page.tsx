@@ -40,6 +40,8 @@ const TokenCreate = () => {
   const [isSupabaseSubmitting, setIsSupabaseSubmitting] = useState(false)
   const [txnHash, setTxnHash] = useState('')
 
+  const MEME_CREATION_FEE = BigInt(100000000000000)
+
   const {
     isConnected,
   } = useAccount()
@@ -89,11 +91,12 @@ const TokenCreate = () => {
             await supabase.from('Subdomains').insert([
               { 
                 subdomain: duplicatedDomain ? `${duplicatedDomain.subdomain}1` : getValues('ticker').toLowerCase(),
-                address: tokenData.logs[0].address.toLowerCase(),
+                address: tokenData.logs[1].address.toLowerCase(),
               },
             ])
             setIsSupabaseSubmitting(false)
             reset()
+            toast.success("Idea successfully created!!")
             router.push(routes.viewProjectsPath)
           } catch (err) {
             toast.error("Error occurred!")
@@ -112,6 +115,7 @@ const TokenCreate = () => {
           abi,
           address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
           functionName: ContractFunctions.createIdeaToken,
+          value: MEME_CREATION_FEE,
           args: [
             data.name,
             data.ticker,
@@ -146,7 +150,10 @@ const TokenCreate = () => {
         <div className="bottom-0 right-0 translate-x-1/2 translate-y-1/2 -z-[15] absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500"></div>
         <div className='container mx-auto flex flex-col items-center px-4 md:px-0'>
           <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-white">Create Idea</h2>
-          <h2 className="mb-12 max-w-[400px] text-center text-white border-b w-full border-white border-opacity-10 pb-4">Register your product by creating a token and try to give as much details as possible about your idea</h2>
+          <h2 className="max-w-[400px] text-center text-white w-full border-b border-white border-opacity-10 pb-4">Register your product by creating a token and try to give as much details as possible about your idea</h2>
+          <p className="text-neutral-200 mt-4 text-xs font-semibold">Idea token creation fee: 0.0001 ETH</p>
+          <p className="text-neutral-200 text-xs font-semibold">Max supply: 1 million tokens. Initial mint: 200k tokens.</p>
+          <p className="text-neutral-200 mb-8 text-xs font-semibold">If funding target of 24 ETH is met, a liquidity pool will be created on Uniswap.</p>
           <form onSubmit={handleSubmit(onSubmit)} className='max-w-[800px] relative bg-gradient-to-r overflow-hidden from-indigo-500 to-purple-500 w-full rounded-2xl pt-8 flex flex-col gap-4'>
             <div className='bg-gradient-to-t from-white to-transparent backdrop-blur-3xl blur-[200px] absolute bottom-0 left-0 w-full h-[400px] -z-[0]'></div>
             <div className="px-4 md:px-8 relative flex gap-4 flex-col md:gap-2 md:flex-row">
@@ -308,9 +315,6 @@ const TokenCreate = () => {
               </Button>
             </div>
           </form>
-          <p className="text-neutral-200 mt-4">Idea token creation fee: 0.0001 ETH</p>
-          <p className="text-neutral-200">Max supply: 1 million tokens. Initial mint: 200k tokens.</p>
-          <p className="text-neutral-200">If funding target of 24 ETH is met, a liquidity pool will be created on Uniswap.</p>
         </div>
       </div>
       <Footer />

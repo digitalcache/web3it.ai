@@ -7,6 +7,7 @@ export const ContractFunctions = {
   getIdea: 'getIdeaToken',
   createIdeaToken: 'createIdeaToken',
   buyToken: 'buyIdeaToken',
+  calculateCost: 'calculateCost',
 }
 
 export const FILE_SIZE_FIVE_MB = 5000000;

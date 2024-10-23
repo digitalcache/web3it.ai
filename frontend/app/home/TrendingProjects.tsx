@@ -62,29 +62,30 @@ export const TrendingProjects = () => {
   }, [windowSize])
 
   return (
-    <section className="py-12 px-4">
-      <div className="container mx-auto">
-        <div className='flex justify-between border-b border-white border-opacity-10 mb-12 pb-4'>
-          <h2 className="text-2xl md:text-3xl font-bold text-white">Trending Ideas</h2>
-          <Button size="md" onClick={() => router.push(routes.viewProjectsPath)} variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
-            View all
-          </Button>
-        </div>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div className="">
-            <Masonry 
-              columnCount={columnCount} 
-              columnGutter={16} 
-              rowGutter={16} 
-              items={ideas} 
-              render={Token} 
-            />
+    ideas.length ? 
+      <section className="py-12 px-4">
+        <div className="container mx-auto">
+          <div className='flex justify-between border-b border-white border-opacity-10 mb-12 pb-4'>
+            <h2 className="text-2xl md:text-3xl font-bold text-white">Trending Ideas</h2>
+            <Button size="md" onClick={() => router.push(routes.viewProjectsPath)} variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
+              View all
+            </Button>
           </div>
-        )}
-        
-      </div>
-    </section>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div className="">
+              <Masonry 
+                columnCount={columnCount} 
+                columnGutter={16} 
+                rowGutter={16} 
+                items={ideas} 
+                render={Token} 
+              />
+            </div>
+          )}
+          
+        </div>
+      </section> : null
   );
 };

@@ -28,7 +28,7 @@ export const Token = ({
     <button
       onClick={() => navigateToTokenDetail(data)}
       className={cn(
-        "rounded-2xl group h-auto max-w-full relative overflow-hidden hover:shadow-xl transition duration-200 text-left justify-between bg-black flex flex-col",
+        "rounded-2xl group h-auto w-full relative overflow-hidden hover:shadow-xl transition duration-200 text-left justify-between bg-black flex flex-col",
       )}
     >
       <div className="shadow-lg flex justify-center items-center w-full">
@@ -41,7 +41,7 @@ export const Token = ({
           className={`h-auto w-full`}
         />
       </div>
-      <div className={`transition duration-200 px-2 xl:px-4 z-10 relative pb-3`}>
+      <div className={`transition duration-200 px-2 xl:px-4 z-10 relative pb-3 w-full`}>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r overflow-hidden from-indigo-500 to-purple-500 -z-30"></div>
         <div className='bg-gradient-to-b from-white to-transparent backdrop-blur-3xl blur-[200px] absolute bottom-0 left-0 w-full h-full -z-20'></div>
         <div className="flex justify-between flex-1 mt-2 items-center">
@@ -51,7 +51,7 @@ export const Token = ({
             </div>
           </div>
           <div className="bg-white rounded-full text-sm px-2 py-1/2 font-bold">
-            <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text whitespace-nowrap">
               {data.symbol}
             </span>
           </div>

@@ -1,6 +1,7 @@
-'use client'
 import { ReactNode } from "react";
-import { Header } from "@/common/components/organisms";
+import { 
+  Footer, Header,
+} from "@/common/components/organisms";
 
 export default function Layout ({
   children,
@@ -11,6 +12,7 @@ export default function Layout ({
     <div>
       <Header links={false} />
       {children}
+      <Footer />
     </div>
   )
 }

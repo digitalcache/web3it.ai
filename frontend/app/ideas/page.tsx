@@ -59,7 +59,7 @@ const ViewTokens = () => {
   return (
     <>
       <div className="w-full h-full absolute top-0 left-0 pointer-events-none">
-        <BackgroundBeamsWithCollision className="!h-full">
+        <BackgroundBeamsWithCollision className="!h-[calc(100%-180px)]">
           <div className="w-full"></div>
         </BackgroundBeamsWithCollision>
       </div>
