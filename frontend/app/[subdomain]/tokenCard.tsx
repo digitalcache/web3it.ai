@@ -3,6 +3,7 @@ import { IdeaType } from "@/common/types";
 import Image from "next/image";
 import { ArrowUpRight } from 'lucide-react';
 import { OwnerType } from "./types";
+import { ethers } from "ethers";
 
 export const TokenCard = ({ 
   idea,
@@ -11,6 +12,7 @@ export const TokenCard = ({
   idea: IdeaType;
   owners: Array<OwnerType> | []
 }) => {
+  const fundingRaised = idea?.fundingRaised ? ethers.formatUnits(idea.fundingRaised, 'ether') : 0
 
   return (
     <div className="bg-gradient-to-r from-indigo-500 to-purple-500 p-4 h-auto rounded-2xl shadow-lg">
@@ -53,7 +55,7 @@ export const TokenCard = ({
           </div>
           <div className="text-neutral-300 text-xs flex items-center">
             Funding raised:{" "}
-            <div className="ml-2">{idea.fundingRaised || 0} MATIC</div>
+            <div className="ml-2">{fundingRaised ? parseFloat(fundingRaised).toFixed(4) : 0} MATIC</div>
           </div>
           <LinkStyled
             className="!px-0 !text-xs flex items-center mt-1"

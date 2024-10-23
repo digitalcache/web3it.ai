@@ -7,6 +7,7 @@ import { routes } from '@/common/routes';
 import { navigate } from '@/app/actions';
 import { createClient } from '@/common/utils/supabase/client';
 import { LinkStyled } from "../../atoms";
+import { ethers } from "ethers";
 
 export const Token = ({
   data,
@@ -14,6 +15,8 @@ export const Token = ({
   data: IdeaType;
 }) => {
   const supabase = createClient();
+
+  const fundingRaised = data.fundingRaised ? ethers.formatUnits(data.fundingRaised, 'ether') : 0
 
   const navigateToTokenDetail = async (card: IdeaType) => {
     const { data: subdomains } = await supabase.from('Subdomains').select('*')
@@ -68,7 +71,7 @@ export const Token = ({
           ) : <div></div>}
           <div className="flex gap-2 items-end text-gray-300">
             <span className="text-sm">Raised:</span>
-            <span className="text-sm text-neutral-200 font-semibold">{data.fundingRaised || 0} MATIC</span>
+            <span className="text-sm text-neutral-200 font-semibold">{fundingRaised ? parseFloat(fundingRaised).toFixed(4) : 0} MATIC</span>
           </div>
         </div>
       </div>
