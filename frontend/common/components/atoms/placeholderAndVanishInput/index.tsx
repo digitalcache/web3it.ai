@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/utils/helpers";
-import { 
+import {
   AnimatePresence, motion,
 } from "framer-motion";
-import { 
+import {
   useCallback, useEffect, useRef, useState,
 } from "react";
 
@@ -12,27 +12,34 @@ export function PlaceholderAndVanishInput ({
   placeholders,
   onChange,
   onSubmit,
+  input,
 }: {
+  input: string;
   placeholders: string[];
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
 
+  useEffect(() => {
+    setValue(input)
+  }, [input])
+
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const startAnimation = () => {
+
+  const startAnimation = useCallback(() => {
     intervalRef.current = setInterval(() => {
       setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
     }, 3000);
-  };
-  const handleVisibilityChange = () => {
+  }, [placeholders]);
+  const handleVisibilityChange = useCallback(() => {
     if (document.visibilityState !== "visible" && intervalRef.current) {
       clearInterval(intervalRef.current); // Clear the interval when the tab is not visible
       intervalRef.current = null;
     } else if (document.visibilityState === "visible") {
       startAnimation(); // Restart the interval when the tab becomes visible
     }
-  };
+  }, [startAnimation]);
 
   useEffect(() => {
     startAnimation();
@@ -44,7 +51,7 @@ export function PlaceholderAndVanishInput ({
       }
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [placeholders]);
+  }, [placeholders, handleVisibilityChange, startAnimation]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const newDataRef = useRef<any[]>([]);
@@ -101,7 +108,7 @@ export function PlaceholderAndVanishInput ({
       }
     }
 
-    newDataRef.current = newData.map(({ 
+    newDataRef.current = newData.map(({
       x, y, color,
     }) => ({
       x,
@@ -112,7 +119,9 @@ export function PlaceholderAndVanishInput ({
   }, [value]);
 
   useEffect(() => {
-    draw();
+    if (value) {
+      draw();
+    }
   }, [value, draw]);
 
   const animate = (start: number) => {
@@ -139,7 +148,7 @@ export function PlaceholderAndVanishInput ({
         if (ctx) {
           ctx.clearRect(pos, 0, 800, 800);
           newDataRef.current.forEach((t) => {
-            const { 
+            const {
               x: n, y: i, r: s, color: color,
             } = t;
             if (n > pos) {
@@ -163,7 +172,7 @@ export function PlaceholderAndVanishInput ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !animating) {
+    if (e.key === "Enter" && !animating && inputRef.current?.value) {
       vanishAndSubmit();
     }
   };
@@ -190,7 +199,7 @@ export function PlaceholderAndVanishInput ({
   return (
     <form
       className={cn(
-        "w-full relative max-w-xl mx-auto bg-gray-800 dark:bg-gray-800 h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
+        "w-full relative max-w-xl mx-auto bg-white h-10 md:h-12 rounded-full overflow-hidden shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),_0px_1px_0px_0px_rgba(25,28,33,0.02),_0px_0px_0px_1px_rgba(25,28,33,0.08)] transition duration-200",
       )}
       onSubmit={handleSubmit}
     >
@@ -213,15 +222,14 @@ export function PlaceholderAndVanishInput ({
         value={value}
         type="text"
         className={cn(
-          "w-full relative text-sm sm:text-base z-50 border-none text-white bg-transparent h-full rounded-full focus:outline-none focus:ring-0 pl-4 sm:pl-10 pr-20",
-          animating && "text-transparent dark:text-transparent",
+          "w-full relative text-sm sm:text-base z-50 border-none text-eerie-black bg-transparent h-full rounded-full focus:outline-none focus:ring-0 pl-8 pr-12",
+          animating && "text-transparent",
         )}
       />
-
       <button
         disabled={!value}
         type="submit"
-        className="absolute right-2 top-1/2 z-50 -translate-y-1/2 h-8 w-8 rounded-full bg-eerie-black disabled:bg-zinc-600 transition duration-200 flex items-center justify-center"
+        className="absolute right-2 top-1/2 z-50 -translate-y-1/2 h-6 w-6 md:h-8 md:w-8 rounded-full bg-eerie-black disabled:bg-zinc-600 transition duration-200 flex items-center justify-center"
       >
         <motion.svg
           xmlns="http://www.w3.org/2000/svg"
@@ -254,7 +262,6 @@ export function PlaceholderAndVanishInput ({
           <path d="M13 6l6 6" />
         </motion.svg>
       </button>
-
       <div className="absolute inset-0 flex items-center rounded-full pointer-events-none">
         <AnimatePresence mode="wait">
           {!value && (
@@ -276,7 +283,7 @@ export function PlaceholderAndVanishInput ({
                 duration: 0.3,
                 ease: "linear",
               }}
-              className="text-zinc-500 text-sm sm:text-base font-normal pl-4 sm:pl-12 text-left w-[calc(100%-2rem)] truncate"
+              className="text-zinc-500 text-sm sm:text-base font-normal pl-8 text-left w-[calc(100%-4rem)] truncate"
             >
               {placeholders[currentPlaceholder]}
             </motion.p>

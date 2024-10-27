@@ -1,11 +1,11 @@
 'use client'
 
-import { 
+import {
   useState,
 } from 'react';
 import { Address } from 'viem';
 import { ContractFunctions } from '@/common/constants';
-import { 
+import {
   useReadContract,
 } from 'wagmi';
 import { IdeaType } from '@/common/types';
@@ -19,15 +19,14 @@ import { useGetTransfers } from './useGetTransfers';
 import { useGetOwners } from './useGetOwners';
 import ideaAbi from '@/utils/abis/ideaFactory.json'
 
-
 export const TokenDetails = ({
   tokenAddress,
 } : {
   tokenAddress: string;
 }) => {
   const [tokenInfoLoading, setTokenInfoLoading] = useState(false);
-  const { 
-    data: ideaToken, 
+  const {
+    data: ideaToken,
     isLoading,
     refetch: mutateIdea,
   } = useReadContract({
@@ -56,19 +55,21 @@ export const TokenDetails = ({
 
   const idea = ideaToken as IdeaType
   return (
-    <>
+    <div>
       {(isLoading || !idea || tokenInfoLoading) && <Loader />}
       <div className="container mx-auto flex flex-col-reverse lg:flex-row gap-8 pt-24 px-4 md:px-0 lg:pt-32 pb-12">
         <div className="lg:w-4/5 flex flex-col gap-4" style={{ perspective: '1000px' }}>
           <Website idea={idea} />
-          <TradeTable
-            idea={idea}
-            transfers={transfers}
-          />
+          {transfers?.length ? (
+            <TradeTable
+              idea={idea}
+              transfers={transfers}
+            />
+          ) : null}
         </div>
         <div className="flex flex-col-reverse lg:flex-col gap-4">
           <BuyToken
-            idea={idea} 
+            idea={idea}
             setTokenInfoLoading={setTokenInfoLoading}
             tokenAddress={tokenAddress}
             mutateTransfers={mutateTransfers}
@@ -76,7 +77,7 @@ export const TokenDetails = ({
             mutateIdea={mutateIdea}
           />
           {idea ? (
-            <TokenCard 
+            <TokenCard
               owners={owners}
               idea={idea}
             />
@@ -84,6 +85,6 @@ export const TokenDetails = ({
         </div>
       </div>
       <Toaster />
-    </>
+    </div>
   );
 }

@@ -8,7 +8,7 @@ export default function Layout ({
 }) {
   return (
     <div>
-      <Header links={true} />
+      <Header />
       {children}
     </div>
   )

@@ -1,9 +1,9 @@
 'use client'
 import {
-  useRef, useState, 
+  useRef, useState,
 } from "react";
-import { 
-  acceptedImageMimeTypes, 
+import {
+  acceptedImageMimeTypes,
   FILE_SIZE_FIVE_MB,
 } from "@/common/constants";
 import { CircularSpinner } from "@/common/components/atoms";
@@ -28,7 +28,7 @@ export const ImageSelectionAndUpload = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState('');
   const [uploadInProgress, setUploadInProgress] = useState(false)
- 
+
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const file = event.target.files[0];
@@ -70,14 +70,13 @@ export const ImageSelectionAndUpload = ({
     const element = event.target as HTMLInputElement;
     element.value = '';
   }
-
   return (
     <div className="flex flex-col">
       <label
         htmlFor="file"
         className="text-left w-max text-white font-semibold text-sm"
       >
-      Snap of your MVP
+      Logo or image depicting your idea
       </label>
       <input
         type="file"
@@ -91,11 +90,11 @@ export const ImageSelectionAndUpload = ({
       />
       {value ? (
         <div className="w-full h-auto rounded-xl overflow-hidden mt-2 bg-white/50">
-          <Image 
-            src={value} 
-            alt="pinata" 
-            width={400} 
-            height={200} 
+          <Image
+            src={value}
+            alt="pinata"
+            width={400}
+            height={200}
             className="w-full h-auto"
             quality={50}
           />
@@ -108,8 +107,8 @@ export const ImageSelectionAndUpload = ({
           onClick={handleUploadFile}
         >
           {uploadInProgress ? <CircularSpinner /> : <UploadIcon />}
-          <span className="text-gray-400 text-sm font-semibold group-hover:bg-gradient-to-b from-indigo-500 to-purple-500 group-hover:text-transparent group-hover:bg-clip-text">
-            {uploadInProgress ? "Uploading..." : 'Upload image'}
+          <span className="text-gray-400 text-sm font-medium group-hover:bg-gradient-to-b from-indigo-500 to-purple-500 group-hover:text-transparent group-hover:bg-clip-text">
+            {uploadInProgress ? "Uploading..." : 'Upload here'}
           </span>
         </button>
       )}

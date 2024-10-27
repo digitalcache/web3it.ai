@@ -1,46 +1,53 @@
-import { IdeaType } from "@/common/types";
+import {
+  useMemo,
+} from "react";
 import { cn } from "@/utils/helpers";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
 import { SubdomainType } from "@/middleware";
 import { routes } from '@/common/routes';
-import { navigate } from '@/app/actions';
-import { createClient } from '@/common/utils/supabase/client';
-import { LinkStyled } from "../../atoms";
 import { ethers } from "ethers";
+import Link from "next/link";
+import { IdeaTypeWithDomain } from "@/common/types";
+
 
 export const Token = ({
   data,
 }: {
-  data: IdeaType;
+  data: IdeaTypeWithDomain;
 }) => {
-  const supabase = createClient();
 
-  const fundingRaised = data.fundingRaised ? ethers.formatUnits(data.fundingRaised, 'ether') : 0
+  const {
+    idea,
+    subdomains,
+  } = data
 
-  const navigateToTokenDetail = async (card: IdeaType) => {
-    const { data: subdomains } = await supabase.from('Subdomains').select('*')
+  const fundingRaised = idea.fundingRaised ? ethers.formatUnits(idea.fundingRaised, 'ether') : 0
+
+  const tokenLink = useMemo(() => {
     if (subdomains?.length) {
-      const subdomainData = subdomains.find((d: SubdomainType) => d.address.toLowerCase() === card.tokenAddress.toLowerCase())
+      const subdomainData = subdomains.find((d: SubdomainType) => d.address.toLowerCase() === idea.tokenAddress.toLowerCase())
       if (subdomainData) {
-        navigate(routes.projectDetailPath.replace('%subdomain%', subdomainData.subdomain))
+        return routes.projectDetailPath.replace('%subdomain%', subdomainData.subdomain)
       }
     }
-  };
+    return ''
+  }, [subdomains, idea])
+
   return (
-    <button
-      onClick={() => navigateToTokenDetail(data)}
+    <Link
+      href={tokenLink}
+      prefetch={true}
       className={cn(
         "rounded-2xl group h-auto w-full relative overflow-hidden hover:shadow-xl transition duration-200 text-left justify-between bg-black flex flex-col",
       )}
     >
-      <div className="shadow-lg flex justify-center items-center w-full">
+      <div className="shadow-lg bg-white flex justify-center items-center w-full">
         <Image
-          src={data.tokenImageUrl}
-          alt={data.symbol}
+          src={idea.tokenImageUrl}
+          alt={idea.symbol}
           width={400}
           height={200}
-          quality={60}
+          quality={40}
           className={`h-auto w-full`}
         />
       </div>
@@ -50,31 +57,26 @@ export const Token = ({
         <div className="flex justify-between flex-1 mt-2 items-center">
           <div className="flex text-neutral-200 justify-between w-full items-center">
             <div className="font-semibold mr-1">
-              {data.name}
+              {idea.name}
             </div>
           </div>
           <div className="bg-white rounded-full text-sm px-2 py-1/2 font-bold">
             <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text whitespace-nowrap">
-              {data.symbol}
+              {idea.symbol}
             </span>
           </div>
         </div>
         <div className="text-neutral-300 text-xs line-clamp-4 mt-2">
-          {data.description}
+          {idea.description.replaceAll('$comma$', ',')}
         </div>
         <div className="flex justify-between mt-2 items-center">
-          {data.productUrl ? (
-            <LinkStyled className="!px-0 !text-sm flex items-center" href={data.productUrl} target="_blank">
-              Explore here
-              <ArrowUpRight height={16}/>
-            </LinkStyled>
-          ) : <div></div>}
+          <div></div>
           <div className="flex gap-2 items-end text-gray-300">
             <span className="text-sm">Raised:</span>
             <span className="text-sm text-neutral-200 font-semibold">{fundingRaised ? parseFloat(fundingRaised).toFixed(4) : 0} MATIC</span>
           </div>
         </div>
       </div>
-    </button>
+    </Link>
   );
 };

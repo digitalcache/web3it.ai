@@ -1,8 +1,11 @@
 import { ConnectButton as RainbowConnect } from '@rainbow-me/rainbowkit';
-import { ChevronDown } from 'lucide-react'; 
+import {
+  ChevronDown,
+  WalletMinimal,
+} from 'lucide-react';
 import Image from 'next/image';
-import { Button } from '../button';
 import { useMemo } from 'react';
+import { Button } from '../button';
 
 export const ConnectButton = () => {
   const avatarGradient = useMemo(() => {
@@ -46,33 +49,33 @@ export const ConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <Button size="sm" onClick={openConnectModal} variant="secondary" className="hidden lg:block ring-1 py-2 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
-                    Connect wallet
-                  </Button> 
+                  <Button size="sm" onClick={openConnectModal} variant="secondary" className="flex gap-2 md:ring-1 py-1 !px-2 md:!px-4 md:py-2.5 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
+                    <span className='hidden md:inline'>Connect wallet</span>
+                    <WalletMinimal />
+                  </Button>
                 );
               }
-
               if (chain.unsupported) {
                 return (
-                  <button onClick={openChainModal} type="button" className='px-4 py-3 rounded-xl bg-red-500 text-white font-semibold flex gap-1'>
+                  <button onClick={openChainModal} type="button" className='px-3 md:px-4 py-2 md:py-3 rounded-xl bg-red-500 text-white font-semibold flex gap-2 items-center text-xs md:text-base'>
                     Wrong network
-                    <ChevronDown strokeWidth={3} width={20} height={20} />
+                    <ChevronDown strokeWidth={3} width={20} height={20} className='w-4 h-4 md:w-5 md:h-5' />
                   </button>
                 );
               }
               return (
                 <div className='flex gap-3'>
-                  <button onClick={openAccountModal} className='px-4 py-3 rounded-xl text-white transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 font-semibold flex gap-1 items-center hover:scale-105 ease-in-out' type="button">
+                  <button onClick={openAccountModal} className='px-3 md:px-4 py-2 md:py-3 rounded-xl text-white transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r text-xs md:text-base from-indigo-500 to-purple-500 font-semibold flex gap-2 items-center hover:scale-105 ease-in-out' type="button">
                     <span className='rounded-full flex justify-center items-center bg-white p-0.5'>
                       {account.ensAvatar ? (
                         <Image src={account.ensAvatar} alt="avatar" width={20} height={20} />
                       ) : (
-                        <div className='h-5 w-5 rounded-full' style={{ background: avatarGradient }}>
+                        <div className='w-4 h-4 md:w-5 md:h-5 rounded-full' style={{ background: avatarGradient }}>
                         </div>
                       )}
                     </span>
                     {account.displayName}
-                    <ChevronDown strokeWidth={3} width={20} height={20} />
+                    <ChevronDown strokeWidth={3} width={20} height={20} className='w-4 h-4 md:w-5 md:h-5' />
                   </button>
                 </div>
               );

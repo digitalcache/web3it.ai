@@ -1,6 +1,5 @@
 export { Header } from './header'
 export { Footer } from './footer'
-export { Carousel } from './carousel'
 export { 
   Modal, 
   ModalBody, 
@@ -8,4 +7,4 @@ export {
   ModalFooter,
   ModalTrigger,
 } from './modal'
-
+export { SearchIdeas } from './searchIdeas'

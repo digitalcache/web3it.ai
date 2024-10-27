@@ -1,8 +1,10 @@
 'use client'
-import { X } from "lucide-react";
+import {
+  X,
+} from "lucide-react";
 import { useState } from "react";
-import { 
-  Button, 
+import {
+  Button,
   LinkStyled,
 } from "../../atoms";
 import {
@@ -16,17 +18,16 @@ export const Footer = () => {
 
   return (
     <>
-      <footer className="bg-yankees-blue overflow-hidden relative">
+      <footer className="relative border-t border-gray-200/5">
+        <div className="bottom-0 left-0 opacity-30 absolute w-full h-[300px] bg-gradient-to-b from-transparent to-purple-500 pointer-events-none -z-10"></div>
         <div className="">
           <div className="container mx-auto flex flex-col md:flex-row w-full justify-between items-center md:items-end px-4 gap-4 py-4 md:py-12 md:gap-2 md:px-0 pb-4">
             <div className="flex flex-col gap-4">
-              <div className="bottom-0 left-0 -translate-x-1/2 translate-y-1/2 absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-indigo-500 pointer-events-none"></div>
-              <div className="bottom-0 right-0 translate-x-1/2 translate-y-1/2 absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] blur-[200px] rounded-full bg-opacity-30 bg-purple-500 pointer-events-none"></div>
               <div className="flex gap-4 justify-center md:justify-start">
-                <a href="#" className="group buttonWithGradient">
+                <a href="https://www.linkedin.com/company/web3ai/" target="_blank" className="group buttonWithGradient">
                   <LinkedInIcon className="group-hover:text-white text-gradient"  />
                 </a>
-                <a href="#" className="group buttonWithGradient">
+                <a href="https://x.com/justweb3it" target="_blank" className="group buttonWithGradient">
                   <TwitterIcon width={32} height={32} className="text-white" />
                 </a>
                 <a href="#" className="group buttonWithGradient">
@@ -34,12 +35,12 @@ export const Footer = () => {
                 </a>
               </div>
               <div className="flex gap-8">
-                <LinkStyled href="#" className="!px-0">Blog</LinkStyled>
-                <LinkStyled href="#" className="!px-0">FAQ</LinkStyled>
+                <LinkStyled href="#" className="!px-0">Team</LinkStyled>
+                <LinkStyled href="#" className="!px-0">About Us</LinkStyled>
                 <LinkStyled href="#" className="!px-0">Privacy Policy</LinkStyled>
               </div>
             </div>
-            <Button onClick={() => setIsModalOpen(true)} size="md" variant="secondary" className="ring-1 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
+            <Button onClick={() => setIsModalOpen(true)} size="md" variant="secondary" className="ring-1 gap-2 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
               Contact us
             </Button>
           </div>

@@ -1,10 +1,10 @@
-import { 
+import {
   useState,
 } from "react";
 import { Button } from "@/common/components/atoms";
 import { Input } from "@/common/components/molecules";
 import { IdeaType } from "@/common/types";
-import { 
+import {
   useAccount, useConnect, useWriteContract,
 } from "wagmi";
 import { injected } from 'wagmi/connectors'
@@ -13,7 +13,7 @@ import { ethers } from "ethers";
 import { ContractFunctions } from "@/common/constants";
 import { Address } from "viem";
 import toast from "react-hot-toast";
-import { 
+import {
   Modal,
   ModalBody,
   ModalContent,
@@ -21,20 +21,20 @@ import {
   ModalTrigger,
 } from "@/common/components/organisms";
 import { KeyedMutator } from "swr";
-import { 
-  Get_Owners_Dto, 
+import {
+  Get_Owners_Dto,
   Get_Transfers_Dto,
 } from "./types";
 import ideaAbi from '@/utils/abis/ideaFactory.json'
 
-export const BuyToken = ({ 
-  idea, 
+export const BuyToken = ({
+  idea,
   setTokenInfoLoading,
   tokenAddress,
   mutateTransfers,
   mutateOwners,
   mutateIdea,
-} : { 
+} : {
   idea: IdeaType;
   setTokenInfoLoading: (value: boolean) => void;
   tokenAddress: string;
@@ -42,7 +42,7 @@ export const BuyToken = ({
   mutateOwners: KeyedMutator<Get_Owners_Dto>;
   mutateIdea: any;
 }) => {
-  const { 
+  const {
     writeContractAsync,
   } = useWriteContract()
   const { connect } = useConnect()
@@ -103,7 +103,7 @@ export const BuyToken = ({
         await mutateOwners()
         await mutateIdea()
       } catch (error) {
-        toast.error("Purchase did not complete. Error occurred. Please try again!")
+        toast.error("Purchase could not be completed. Please try again!")
       } finally {
         setIsModalOpen(false);
         setTokenInfoLoading(false)
@@ -137,7 +137,7 @@ export const BuyToken = ({
         <div>
           <Progress value={fundingRaisedPercentage} />
         </div>
-        <div className="text-neutral-300 text-xs mt-1 max-w-[300px]">
+        <div className="text-neutral-300 text-xs mt-2 max-w-[300px]">
           When the market cap reaches {fundingGoal} ETH, all the liquidity from the bonding
           curve will be deposited into Uniswap, and the LP tokens will be
           burned. Progression increases as the price goes up.
@@ -183,9 +183,9 @@ export const BuyToken = ({
             <p className="text-neutral-200 mt-8 md:mt-4 text-center text-xs md:text-sm">Ensure you have enough funds in your account</p>
           </ModalContent>
           <ModalFooter className="gap-4 pb-6">
-            <Button 
-              size="md" 
-              variant="primary" 
+            <Button
+              size="md"
+              variant="primary"
               onClick={handlePurchase}
               className="transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 font-semibold"
             >

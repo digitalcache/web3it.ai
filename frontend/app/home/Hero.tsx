@@ -3,6 +3,8 @@ import { TypewriterEffect } from "@/common/components/atoms";
 import Lottie from 'react-lottie';
 import { BackgroundBeamsWithCollision } from "@/common/components/molecules";
 import * as animationData from '@/common/lottie/hero-animation.json'
+import { useWindowDimensions } from "@/common/hooks/useWindowDimensions";
+import { heroWords } from "@/common/constants";
 import { CreateProject } from "./createProject";
 
 export const Hero = () => {
@@ -14,27 +16,11 @@ export const Hero = () => {
       preserveAspectRatio: 'xMidYMid slice',
     },
   };
-  const words = [
-    {
-      text: "Fund",
-    },
-    {
-      text: "your",
-    },
-    {
-      text: "Web3",
-      className: "gradientText",
-    },
-    {
-      text: "ideas",
-    },
-    {
-      text: "with",
-    },
-    {
-      text: "ease.",
-    },
-  ];
+
+  const {
+    windowSize,
+  } = useWindowDimensions()
+
   return (
     <header className="pt-24 px-4 max-w-[100vw] relative pb-12">
       <BackgroundBeamsWithCollision className="hidden md:block absolute top-0 left-0 pointer-events-none">
@@ -45,7 +31,7 @@ export const Hero = () => {
       <div className='container text-white mx-auto flex items-center w-full justify-between'>
         <div className="flex-1 text-center md:text-left mt-10 md:mt-0">
           <h2 className='font-medium md:font-semibold'>Explore ideas with Web3It.AI</h2>
-          <TypewriterEffect words={words} className="font-bold text-4xl md:text-5xl mt-4 min-h-20 md:min-h-12" />
+          <TypewriterEffect words={heroWords} className="font-bold text-4xl md:text-5xl mt-4 min-h-20 md:min-h-12" />
           <h1 className='sr-only'>
             Fund your Web3 project with ease.
           </h1>
@@ -58,12 +44,14 @@ export const Hero = () => {
             <CreateProject />
           </div>
         </div>
-        <div className="py-40 pointer-events-none hidden md:block">
-          <Lottie options={defaultOptions}
-            height={400}
-            width={400}
-          />
-        </div>
+        {windowSize !== "mobile" ? (
+          <div className="py-40 pointer-events-none hidden md:block">
+            <Lottie options={defaultOptions}
+              height={400}
+              width={400}
+            />
+          </div>
+        ) : null}
       </div>
     </header>
   );

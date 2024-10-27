@@ -1,10 +1,13 @@
-import { useMemo } from "react";
+import {
+  useEffect, useMemo, useRef,
+} from "react";
+import autosize from 'autosize';
 import { TextAreaProps } from "./types"
 
 const getErrorClasses = (error: boolean | undefined) => error ? 'ring-1 ring-red-300 pr-10' : '';
 
 export const TextArea = (props : TextAreaProps) => {
-  const { 
+  const {
     name = 'input-name',
     id = 'input-id',
     placeholder = 'input placeholder',
@@ -17,6 +20,17 @@ export const TextArea = (props : TextAreaProps) => {
     onChange = () => null,
     ...rest
   } = props;
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => {
+    if (textAreaRef?.current) {
+      autosize(textAreaRef.current);
+    }
+  }, [])
+  useEffect(() => {
+    if (textAreaRef?.current) {
+      autosize.update(textAreaRef.current)
+    }
+  }, [value])
   const computedClasses = useMemo(() => {
     return getErrorClasses(error);
   }, [error]);
@@ -31,7 +45,7 @@ export const TextArea = (props : TextAreaProps) => {
       </div>
       <div className="mt-2 relative">
         <textarea
-          rows={4}
+          ref={textAreaRef}
           name={name}
           id={id}
           disabled={disabled}

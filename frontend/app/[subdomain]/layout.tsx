@@ -10,7 +10,7 @@ export default function Layout ({
 }) {
   return (
     <div>
-      <Header links={false} />
+      <Header />
       {children}
       <Footer />
     </div>

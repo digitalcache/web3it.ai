@@ -9,7 +9,7 @@ export default function Layout ({
 }) {
   return (
     <div className="relative">
-      <Header links={true} />
+      <Header />
       {children}
     </div>
   )

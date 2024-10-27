@@ -1,19 +1,21 @@
 import dayjs from 'dayjs';
+import relativeTime from "dayjs/plugin/relativeTime"
 import { IdeaType } from "@/common/types";
 import { TransferType } from './types';
 
+dayjs.extend(relativeTime)
 
-export const TradeTable = ({ 
+export const TradeTable = ({
   idea,
   transfers,
-}: { 
+}: {
   idea: IdeaType;
   transfers: Array<TransferType> | [];
 }) => {
-  
+
   return (
     <div>
-      <div className="mb-2 mt-2 md:mt-8 text-neutral-200 font-semibold text:lg lg:text-xl">
+      <div className="mb-2 md:mt-4 text-neutral-200 font-semibold text:lg lg:text-xl">
         Check out ongoing trades on {idea?.name}
       </div>
       <table className="w-full text-sm text-left text-gray-400 rtl:text-right rounded-xl overflow-hidden">
@@ -34,7 +36,7 @@ export const TradeTable = ({
           </tr>
         </thead>
         <tbody>
-          {transfers.map((transfer) => (
+          {transfers?.length ? transfers.map((transfer) => (
             <tr
               className="odd:bg-zinc-900 text-sm even:bg-zinc-800 :not(:last-child):border-b border-gray-700"
               key={transfer.transaction_hash}
@@ -55,8 +57,8 @@ export const TradeTable = ({
               <th className="px-6 py-4 font-normal">
                 {parseFloat(transfer.value_decimal).toFixed(0)}
               </th>
-              <th className="hidden lg:block px-6 py-4 font-normal">
-                {dayjs(transfer.block_timestamp).format("DD MMM YY")}
+              <th className="hidden lg:block px-6 py-4 font-normal first-letter:capitalize">
+                {dayjs().to(dayjs(transfer.block_timestamp))}
               </th>
               <th className="px-6 py-4 font-medium hover:underline">
                 <a
@@ -69,7 +71,7 @@ export const TradeTable = ({
                 </a>
               </th>
             </tr>
-          ))}
+          )) : null}
         </tbody>
       </table>
     </div>

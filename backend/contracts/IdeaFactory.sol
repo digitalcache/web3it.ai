@@ -14,6 +14,8 @@ contract IdeaFactory {
         string description;
         string tokenImageUrl;
         string productUrl;
+        string categories;
+        string productScreenshotUrl;
         string twitterUrl;
         uint fundingRaised;
         address tokenAddress;
@@ -35,7 +37,7 @@ contract IdeaFactory {
 
     uint constant DECIMALS = 10 ** 18;
     uint constant MAX_SUPPLY = 1000000 * DECIMALS;
-    uint constant INIT_SUPPLY = 20 * MAX_SUPPLY / 100;
+    uint constant INIT_SUPPLY = 98 * MAX_SUPPLY / 100;
 
     uint256 public constant INITIAL_PRICE = 30000000000000;  // Initial price in wei (P0), 3.00 * 10^13
     uint256 public constant K = 8 * 10**15;  // Growth rate (k), scaled to avoid precision loss (0.01 * 10^18)
@@ -79,6 +81,8 @@ contract IdeaFactory {
         string memory symbol, 
         string memory imageUrl, 
         string memory description,
+        string memory categories,
+        string memory productScreenshotUrl,
         string memory productUrl,
         string memory twitterUrl
     ) public payable returns(address) {
@@ -88,7 +92,7 @@ contract IdeaFactory {
         Idea ct = new Idea(name, symbol, INIT_SUPPLY);
         address ideaTokenAddress = address(ct);
         
-        ideaToken memory newlyCreatedToken = ideaToken(name, symbol, description, imageUrl, productUrl, twitterUrl, 0, ideaTokenAddress, msg.sender, 0);
+        ideaToken memory newlyCreatedToken = ideaToken(name, symbol, description, imageUrl, productUrl, categories, productScreenshotUrl, twitterUrl, 0, ideaTokenAddress, msg.sender, 0);
         ideaTokenAddresses.push(ideaTokenAddress);
         addressToIdeaTokenMapping[ideaTokenAddress] = newlyCreatedToken;
         return ideaTokenAddress;

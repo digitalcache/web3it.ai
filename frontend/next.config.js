@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
-
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
     dirs: ['app', 'common'],
   },
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -50,6 +50,11 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'cdn.dribbble.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'iad.microlink.io',
         pathname: '/**',
       },
     ],

@@ -3,4 +3,3 @@ declare module "next-auth" {
     token: string;
   }
 }
-

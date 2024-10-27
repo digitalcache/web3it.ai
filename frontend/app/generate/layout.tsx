@@ -1,7 +1,7 @@
 'use client'
 import { ReactNode } from "react";
-import { Toaster } from "@/common/components/molecules";
 import { Header } from "@/common/components/organisms";
+import { Toaster } from "@/common/components/molecules";
 
 export default function Layout ({
   children,
@@ -10,7 +10,7 @@ export default function Layout ({
 }) {
   return (
     <div>
-      <Header links={true} />
+      <Header />
       {children}
       <Toaster />
     </div>
