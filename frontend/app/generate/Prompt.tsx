@@ -28,7 +28,15 @@ export const Prompt = ({
         setIsGenerating(true)
         // setGeneratedIdea(aiResponse)
         const res = await generate(input);
-        setGeneratedIdea(res)
+        // eslint-disable-next-line no-console
+        console.log(res)
+        setGeneratedIdea({
+          ideaName: res.ideaName,
+          ideaDescription: '',
+          ideaLandingPage: '',
+          ideaLogo: '',
+          ideaTicker: '',
+        })
       } catch (error) {
         console.error(error)
       } finally {
