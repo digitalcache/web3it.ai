@@ -10,6 +10,7 @@ import {
 } from '@/common/constants';
 import { generate } from '../actions';
 import { IntefaceAIDTO } from './types';
+import toast from 'react-hot-toast';
 // import aiResponse from '@/utils/ai_sample_response.json';
 
 export const Prompt = ({
@@ -38,6 +39,7 @@ export const Prompt = ({
           ideaTicker: res.ideaTicker || '',
         })
       } catch (error) {
+        toast.error('Something went wrong. Please try again.')
         console.error(error)
       } finally {
         setIsGenerating(false)
