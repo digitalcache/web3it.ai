@@ -17,6 +17,8 @@ import { useGreeting } from "./useGreeting";
 import { useGenerateIdea } from "./useGenerateIdea";
 import { IntefaceAIDTO } from "./types";
 
+export const maxDuration = 5
+
 export default function Home () {
   const [generatedIdea, setGeneratedIdea] = useState<IntefaceAIDTO>(null);
   const {
