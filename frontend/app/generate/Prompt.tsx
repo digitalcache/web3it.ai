@@ -2,7 +2,6 @@ import {
   ChangeEvent,
   useState,
 } from 'react';
-// import { readStreamableValue } from 'ai/rsc';
 import { PlaceholderAndVanishInput } from '@/common/components/atoms';
 import { MultiStepLoader } from '@/common/components/molecules';
 import {
@@ -14,7 +13,6 @@ import { generate } from '../actions';
 import { IntefaceAIDTO } from './types';
 
 export const Prompt = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setGeneratedIdea,
 } : {
   setGeneratedIdea: (value: IntefaceAIDTO) => void;
@@ -29,14 +27,8 @@ export const Prompt = ({
       try {
         setIsGenerating(true)
         // setGeneratedIdea(aiResponse)
-        const { object } = await generate(input);
-        // eslint-disable-next-line no-console
-        console.log(object)
-        // for await (const partialObject of readStreamableValue(object)) {
-        //   if (partialObject) {
-        //     setGeneratedIdea(partialObject)
-        //   }
-        // }
+        const res = await generate(input);
+        setGeneratedIdea(res)
       } catch (error) {
         console.error(error)
       } finally {
