@@ -2,7 +2,6 @@ import {
   ChangeEvent,
   useState,
 } from 'react';
-import { readStreamableValue } from 'ai/rsc';
 import { PlaceholderAndVanishInput } from '@/common/components/atoms';
 import { MultiStepLoader } from '@/common/components/molecules';
 import {
@@ -28,12 +27,8 @@ export const Prompt = ({
       try {
         setIsGenerating(true)
         // setGeneratedIdea(aiResponse)
-        const { object } = await generate(input);
-        for await (const partialObject of readStreamableValue(object)) {
-          if (partialObject) {
-            setGeneratedIdea(partialObject)
-          }
-        }
+        const res = await generate(input);
+        setGeneratedIdea(res)
       } catch (error) {
         console.error(error)
       } finally {
