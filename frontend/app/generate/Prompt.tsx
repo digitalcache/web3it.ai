@@ -32,10 +32,10 @@ export const Prompt = ({
         console.log(res)
         setGeneratedIdea({
           ideaName: res.ideaName,
-          ideaDescription: '',
-          ideaLandingPage: '',
-          ideaLogo: '',
-          ideaTicker: '',
+          ideaDescription: res.ideaDescription || '',
+          ideaLandingPage: res.ideaLandingPage || '',
+          ideaLogo: res.ideaLogo || '',
+          ideaTicker: res.ideaTicker || '',
         })
       } catch (error) {
         console.error(error)
