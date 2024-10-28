@@ -80,7 +80,6 @@ export const SearchIdeas = ({
                 primary: '#7E5EF2',
               },
             })}
-            menuIsOpen={true}
             noOptionsMessage={() => "No Ideas found"}
             autoFocus={true}
             onChange={(inputValue) => {
@@ -96,7 +95,7 @@ export const SearchIdeas = ({
               input: () => '!ring-0 !my-0 cursor-text',
               menu: () => '!rounded-xl overflow-hidden',
               menuList: () => '!py-0',
-              option: (state) => `${state.isFocused ? "!text-white" : "!text-neutral-600"} transition-all duration-200 ease-in-out active:!bg-[#7E5EF2] !cursor-pointer capitalize active:!text-white`,
+              option: (state) => `${state.isFocused ? "!text-white" : "!text-neutral-600"} !uppercase transition-all duration-200 ease-in-out active:!bg-[#7E5EF2] !cursor-pointer capitalize active:!text-white`,
             }}
           />
         </div>
