@@ -102,6 +102,7 @@ export const BuyToken = ({
         await mutateTransfers()
         await mutateOwners()
         await mutateIdea()
+        setPurchaseAmount(0)
       } catch (error) {
         toast.error("Purchase could not be completed. Please try again!")
       } finally {
@@ -132,13 +133,13 @@ export const BuyToken = ({
       <div className="mb-4">
         <div className="text-neutral-200 text-sm font-semibold mb-2 mt-2 flex justify-between items-center">
           <span>Bonding curve progress</span>
-          <span className="text-sm font-semibold">{fundingRaised}/{fundingGoal} MATIC</span>
+          <span className="text-sm font-semibold">{fundingRaised}/{fundingGoal} {process.env.NEXT_PUBLIC_CURRENCY || ''}</span>
         </div>
         <div>
           <Progress value={fundingRaisedPercentage} />
         </div>
         <div className="text-neutral-300 text-xs mt-2 max-w-[300px]">
-          When the market cap reaches {fundingGoal} ETH, all the liquidity from the bonding
+          When the market cap reaches {fundingGoal} {process.env.NEXT_PUBLIC_CURRENCY || ''}, all the liquidity from the bonding
           curve will be deposited into Uniswap, and the LP tokens will be
           burned. Progression increases as the price goes up.
         </div>
@@ -173,7 +174,7 @@ export const BuyToken = ({
                   {cost}
                 </span>
               </div>
-              <span>MATIC for {purchaseAmount}</span>
+              <span>{process.env.NEXT_PUBLIC_CURRENCY || ''} for {purchaseAmount}</span>
               <div className="bg-white rounded-full px-2 py-1/2 font-black">
                 <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
                   {idea?.symbol}

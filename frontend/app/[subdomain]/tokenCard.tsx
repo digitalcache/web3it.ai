@@ -71,7 +71,7 @@ export const TokenCard = ({
           </div>
           <div className="text-neutral-300 text-xs flex items-center justify-between">
             Funding raised:{" "}
-            <div className="ml-2">{fundingRaised ? parseFloat(fundingRaised).toFixed(4) : 0} MATIC</div>
+            <div className="ml-2">{fundingRaised ? parseFloat(fundingRaised).toFixed(4) : 0} {process.env.NEXT_PUBLIC_CURRENCY || ''}</div>
           </div>
           <LinkStyled
             className="!px-0 !text-xs flex items-center justify-end mt-1 -mr-2"

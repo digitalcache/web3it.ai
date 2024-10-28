@@ -11,7 +11,7 @@ const TokenCreate = () => {
       <div className='container mx-auto flex flex-col items-center px-4 md:px-0 mb-10'>
         <h2 className="text-2xl md:text-3xl font-bold mb-2 text-center text-white">Create Idea</h2>
         <h2 className="max-w-[400px] text-center text-white w-full border-b border-white border-opacity-10 pb-4">Register your Idea by creating a token and try to give as much details as possible</h2>
-        <p className="text-neutral-200 mt-4 text-xs font-semibold">Idea token creation fee: 0.0001 ETH</p>
+        <p className="text-neutral-200 mt-4 text-xs font-semibold">Idea token creation fee: 0.0001 {process.env.NEXT_PUBLIC_CURRENCY || ''}</p>
         <p className="text-neutral-200 text-xs font-semibold">Max supply: 1 million tokens. Initial mint: 200k tokens.</p>
         <p className="text-neutral-200 mb-8 text-xs font-semibold text-center">If funding target of 24 ETH is met, a liquidity pool will be created on Uniswap.</p>
         <CreateToken />

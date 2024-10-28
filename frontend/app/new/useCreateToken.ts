@@ -128,16 +128,19 @@ export const useCreateToken = () => {
         if (subdomains) {
           const duplicatedDomain = subdomains.find((d) => d.subdomain === getValues('ticker').toLowerCase())
           try {
-            await supabase.from('Subdomains').insert([
-              {
-                subdomain: duplicatedDomain ? `${duplicatedDomain.subdomain}1` : getValues('ticker').toLowerCase(),
-                address: tokenData.logs[1].address.toLowerCase(),
-              },
-            ])
-            setIsSupabaseSubmitting(false)
-            reset()
-            toast.success("Idea successfully created!!")
-            router.push(routes.viewProjectsPath)
+            const tokenAddressFromLog = tokenData.logs.find((l) => !l.address.startsWith('0x00'))
+            if (tokenAddressFromLog) {
+              await supabase.from('Subdomains').insert([
+                {
+                  subdomain: duplicatedDomain ? `${duplicatedDomain.subdomain}1` : getValues('ticker').toLowerCase(),
+                  address: tokenAddressFromLog.address.toLowerCase(),
+                },
+              ])
+              setIsSupabaseSubmitting(false)
+              reset()
+              toast.success("Idea successfully created!!")
+              router.push(routes.viewProjectsPath)
+            }
           } catch (err) {
             toast.error("Error occurred!")
             setIsSupabaseSubmitting(false)
