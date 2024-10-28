@@ -7,7 +7,7 @@ import { cn } from "@/utils/helpers"
 const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
->(({ 
+>(({
   className, value, ...props
 }, ref) => (
   <ProgressPrimitive.Root
@@ -22,7 +22,6 @@ const Progress = React.forwardRef<
       className="h-full w-full flex-1 bg-gradient-to-r from-indigo-500 rounded-lg to-purple-500 transition-all"
       style={{
         width: `${value}%`,
-        // transform: `translateX(-${100 - (value || 0)}%)`,
       }}
     />
   </ProgressPrimitive.Root>

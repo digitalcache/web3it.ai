@@ -4,9 +4,16 @@ import {
   useTransform,
   motion,
 } from "framer-motion";
+import lang from '@/common/lang';
 import React, {
   useEffect, useRef, useState,
 } from "react";
+
+const {
+  homePage: {
+    timeline: timelineCopy,
+  },
+} = lang
 
 interface TimelineEntry {
   title: string;
@@ -40,10 +47,10 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
     >
       <div className="mx-auto">
         <h2 className="md:text-xl mb-1 md:mb-4 text-white font-medium max-w-4xl">
-          Explore your journey with our app
+          {timelineCopy.heading}
         </h2>
         <p className="text-neutral-300 text-sm md:text-base">
-          You can harness the power of AI to transform your ideas into a fully functional application
+          {timelineCopy.subHeading}
         </p>
       </div>
 

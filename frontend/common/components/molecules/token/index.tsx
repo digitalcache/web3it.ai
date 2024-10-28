@@ -3,12 +3,18 @@ import {
 } from "react";
 import { cn } from "@/utils/helpers";
 import Image from "next/image";
+import lang from '@/common/lang';
 import { SubdomainType } from "@/middleware";
 import { routes } from '@/common/routes';
 import { ethers } from "ethers";
 import Link from "next/link";
 import { IdeaTypeWithDomain } from "@/common/types";
 
+const {
+  ideas: {
+    ideaCard: ideaCardCopy,
+  },
+} = lang
 
 export const Token = ({
   data,
@@ -72,7 +78,7 @@ export const Token = ({
         <div className="flex justify-between mt-2 items-center">
           <div></div>
           <div className="flex gap-2 items-end text-gray-300">
-            <span className="text-sm">Raised:</span>
+            <span className="text-sm">{ideaCardCopy.raised}</span>
             <span className="text-sm text-neutral-200 font-semibold">{fundingRaised ? parseFloat(fundingRaised).toFixed(4) : 0} {process.env.NEXT_PUBLIC_CURRENCY || ''}</span>
           </div>
         </div>

@@ -3,6 +3,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
+import lang from "@/common/lang";
 import {
   Button,
   LinkStyled,
@@ -12,6 +13,10 @@ import {
   TwitterIcon,
   YoutubeIcon,
 } from "../../icons";
+
+const {
+  footer: footerCopy,
+} = lang
 
 export const Footer = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,13 +40,13 @@ export const Footer = () => {
                 </a>
               </div>
               <div className="flex gap-8">
-                <LinkStyled href="#" className="!px-0">Team</LinkStyled>
-                <LinkStyled href="#" className="!px-0">About Us</LinkStyled>
-                <LinkStyled href="#" className="!px-0">Privacy Policy</LinkStyled>
+                <LinkStyled href="#" className="!px-0">{footerCopy.team}</LinkStyled>
+                <LinkStyled href="#" className="!px-0">{footerCopy.aboutUs}</LinkStyled>
+                <LinkStyled href="#" className="!px-0">{footerCopy.privacyPolicy}</LinkStyled>
               </div>
             </div>
             <Button onClick={() => setIsModalOpen(true)} size="md" variant="secondary" className="ring-1 gap-2 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
-              Contact us
+              {footerCopy.contactUs}
             </Button>
           </div>
         </div>

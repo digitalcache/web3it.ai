@@ -3,6 +3,7 @@ import {
 } from "react";
 import Select from "react-select/creatable"
 import { ChevronDown } from "lucide-react";
+import lang from '@/common/lang';
 import {
   MultiValue,
   components,
@@ -10,6 +11,12 @@ import {
 import { CategoryType } from "@/app/new/types";
 import { FilterOptionOption } from "react-select/dist/declarations/src/filters";
 import { MultiSelectAndCustomTagsProps } from "./types"
+
+const {
+  createIdea: {
+    categories: categoriesCopy,
+  },
+} = lang
 
 const getErrorClasses = (error: boolean | undefined) => error ? '!ring-1 !ring-red-300' : '';
 
@@ -85,7 +92,7 @@ export const MultiSelectAndCustomTags = (props : MultiSelectAndCustomTagsProps) 
           })}
           isLoading={isLoading}
           value={value}
-          noOptionsMessage={() => "No Categories found"}
+          noOptionsMessage={() => categoriesCopy.noTagsFound}
           onChange={handleChange}
           isMulti={true}
           filterOption={caseInsensitiveFilterOption}

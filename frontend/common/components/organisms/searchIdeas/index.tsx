@@ -7,10 +7,17 @@ import { Transition } from "@headlessui/react";
 import {
   ChevronDown, PackageSearch,
 } from "lucide-react";
+import lang from "@/common/lang";
 import AsyncSelect from "react-select/async"
 import { createClient } from "@/common/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { routes } from "@/common/routes";
+
+const {
+  header: {
+    searchIdeas: searchIdeasCopy,
+  },
+} = lang
 
 export const SearchIdeas = ({
   searchEnabled,
@@ -64,7 +71,7 @@ export const SearchIdeas = ({
             cacheOptions
             defaultOptions
             loadOptions={promiseOptions}
-            placeholder={"Search for Ideas"}
+            placeholder={searchIdeasCopy.placeholder}
             components={{
               IndicatorSeparator: () => <span></span>,
               DropdownIndicator: (state) => {
@@ -80,7 +87,7 @@ export const SearchIdeas = ({
                 primary: '#7E5EF2',
               },
             })}
-            noOptionsMessage={() => "No Ideas found"}
+            noOptionsMessage={() => searchIdeasCopy.noIdeasFound}
             autoFocus={true}
             onChange={(inputValue) => {
               if (inputValue) {

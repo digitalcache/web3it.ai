@@ -5,7 +5,14 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { useMemo } from 'react';
+import lang from '@/common/lang';
 import { Button } from '../button';
+
+const {
+  header: {
+    connectButton: connectButtonCopy,
+  },
+} = lang
 
 export const ConnectButton = () => {
   const avatarGradient = useMemo(() => {
@@ -50,7 +57,7 @@ export const ConnectButton = () => {
               if (!connected) {
                 return (
                   <Button size="sm" onClick={openConnectModal} variant="secondary" className="flex gap-2 md:ring-1 py-1 !px-2 md:!px-4 md:py-2.5 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
-                    <span className='hidden md:inline'>Connect wallet</span>
+                    <span className='hidden md:inline'>{connectButtonCopy.connectWallet}</span>
                     <WalletMinimal />
                   </Button>
                 );
@@ -58,7 +65,7 @@ export const ConnectButton = () => {
               if (chain.unsupported) {
                 return (
                   <button onClick={openChainModal} type="button" className='px-3 md:px-4 py-2 md:py-3 rounded-xl bg-red-500 text-white font-semibold flex gap-2 items-center text-xs md:text-base'>
-                    Wrong network
+                    {connectButtonCopy.wrongNetwork}
                     <ChevronDown strokeWidth={3} width={20} height={20} className='w-4 h-4 md:w-5 md:h-5' />
                   </button>
                 );
