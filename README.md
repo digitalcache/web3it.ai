@@ -1,6 +1,6 @@
 # WEB3IT.AI CONTRACTS AND FRONTEND
 
-##PROVIDERS
+## PROVIDERS
 
 1. Wagmi - Account info
 2. Pinata - for image
