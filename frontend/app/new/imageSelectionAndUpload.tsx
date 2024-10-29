@@ -12,7 +12,10 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import { UseFormSetValue } from "react-hook-form";
 import { pinataUploadUrl } from "@/common/utils/network/endpoints";
+import lang from "@/common/lang";
 import { TokenDTO } from "./types";
+
+const { createIdea: { imageUpload: imageUploadCopy } } = lang
 
 export const ImageSelectionAndUpload = ({
   errorField,
@@ -36,11 +39,11 @@ export const ImageSelectionAndUpload = ({
         return;
       }
       if (file.size > FILE_SIZE_FIVE_MB) {
-        setError('Please upload image less than 5 mb')
+        setError(imageUploadCopy.imageSizeError)
         return;
       }
       if (!acceptedImageMimeTypes.includes(file.type)) {
-        setError('This is a wrong file format. Only image files are allowed.');
+        setError(imageUploadCopy.imageType);
         return;
       }
       try {
@@ -56,8 +59,8 @@ export const ImageSelectionAndUpload = ({
         setUploadInProgress(false)
       } catch (e) {
         setUploadInProgress(false)
-        setError('Could not add file. Please try again.')
-        toast.error('Could not add file. Please try again!')
+        setError(imageUploadCopy.uploadError)
+        toast.error(imageUploadCopy.uploadError)
       }
     }
   }
@@ -74,9 +77,9 @@ export const ImageSelectionAndUpload = ({
     <div className="flex flex-col">
       <label
         htmlFor="file"
-        className="text-left w-max text-white font-semibold text-sm"
+        className="text-left w-max text-white font-medium text-sm"
       >
-      Logo or image depicting your idea
+        {imageUploadCopy.title}
       </label>
       <input
         type="file"
@@ -108,7 +111,7 @@ export const ImageSelectionAndUpload = ({
         >
           {uploadInProgress ? <CircularSpinner /> : <UploadIcon />}
           <span className="text-gray-400 text-sm font-medium group-hover:bg-gradient-to-b from-indigo-500 to-purple-500 group-hover:text-transparent group-hover:bg-clip-text">
-            {uploadInProgress ? "Uploading..." : 'Upload here'}
+            {uploadInProgress ? imageUploadCopy.uploading : imageUploadCopy.uploadLabel}
           </span>
         </button>
       )}

@@ -51,7 +51,7 @@ export const MultiSelectAndCustomTags = (props : MultiSelectAndCustomTagsProps) 
     <div>
       <div className={`flex`}>
         {labelText && (
-          <label htmlFor={id} className={`block text-sm font-semibold text-white`}>
+          <label htmlFor={id} className={`block text-sm font-medium text-white`}>
             {labelText}
           </label>
         )}
@@ -66,7 +66,7 @@ export const MultiSelectAndCustomTags = (props : MultiSelectAndCustomTagsProps) 
             },
             MultiValue: (props) => {
               return (
-                <div className="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg text-xs px-2 py-1 font-semibold">
+                <div className="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg text-xs px-2 py-1 font-medium">
                   <span className="text-white">
                     <components.MultiValueContainer {...props} />
                   </span>

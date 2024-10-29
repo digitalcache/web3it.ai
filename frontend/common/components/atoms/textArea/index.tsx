@@ -38,7 +38,7 @@ export const TextArea = (props : TextAreaProps) => {
     <div className={width}>
       <div className={`flex`}>
         {labelText && (
-          <label htmlFor={id} className={`block text-sm font-semibold text-white`}>
+          <label htmlFor={id} className={`block text-sm font-medium text-white`}>
             {labelText}
           </label>
         )}

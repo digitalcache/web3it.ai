@@ -62,8 +62,8 @@ export const Header = () => {
               {/* <button onClick={() => setSearchEnabled(true)} className="text-white flex justify-center items-center md:mr-4 cursor-pointer group">
                 <SearchIcon className="buttonWithGradient" />
               </button> */}
-              <Button size="sm" onClick={() => setSearchEnabled(true)} variant="secondary" className="flex gap-2 py-1 !px-2 md:!px-4 md:py-2.5 from-indigo-500 to-purple-500 hover:bg-gradient-to-r">
-                <PackageSearch />
+              <Button size="sm" onClick={() => setSearchEnabled(true)} variant="secondary" className="flex gap-2 py-1 !px-2 md:!px-4 md:py-2.5 hover:!text-indigo-400">
+                <PackageSearch width={32} height={32} className="w-6 h-6 md:w-8 md:h-8" strokeWidth={1.5} />
               </Button>
               <ConnectButton />
               {/* <div className={`lg:hidden`}>
@@ -81,16 +81,16 @@ export const Header = () => {
         <div className={`absolute top-1/2 -translate-y-full h-auto left-0 w-full flex items-center justify-center flex-col`}>
           <ul className={`${navbarOpened ? "" : "hidden"} w-full pt-0 pb-[0] [list-style:none] px-4`}>
             <li className={`flex justify-center ${navbarOpened ? "scale-100 translate-y-0 opacity-100" : "scale-[1.15] -translate-y-[30px] opacity-0"} delay-[210ms] mt-[5px] [transition:transform_0.5s_cubic-bezier(0.4,_0.01,_0.165,_0.99),_opacity_0.6s_cubic-bezier(0.4,_0.01,_0.165,_0.99)]`}>
-              <Button variant="primary" size="sm" type="button" onClick={() => openPage(routes.createProjectPath)} className="transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 w-full max-w-[400px]">Develop</Button>
+              <Button variant="primary" size="sm" type="button" onClick={() => openPage(routes.createProjectPath)} className="transition-all duration-150 hover:from-indigo-500/70 hover:to-purple-500/70 bg-gradient-to-r from-indigo-500 to-purple-500 w-full max-w-[400px]">Develop</Button>
             </li>
             <li className={`flex justify-center ${navbarOpened ? "scale-100 translate-y-0 opacity-100" : "scale-[1.15] -translate-y-[30px] opacity-0"} delay-[210ms] mt-4 [transition:transform_0.5s_cubic-bezier(0.4,_0.01,_0.165,_0.99),_opacity_0.6s_cubic-bezier(0.4,_0.01,_0.165,_0.99)]`}>
-              <Button variant="primary" size="sm" type="button" onClick={() => openPage(routes.viewProjectsPath)} className="transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 w-full max-w-[400px]">Ideas</Button>
+              <Button variant="primary" size="sm" type="button" onClick={() => openPage(routes.viewProjectsPath)} className="transition-all duration-150 hover:from-indigo-500/70 hover:to-purple-500/70 bg-gradient-to-r from-indigo-500 to-purple-500 w-full max-w-[400px]">Ideas</Button>
             </li>
             <li className={`flex justify-center ${navbarOpened ? "scale-100 translate-y-0 opacity-100" : "scale-[1.15] -translate-y-[30px] opacity-0"} delay-[140ms]  mt-4 [transition:transform_0.5s_cubic-bezier(0.4,_0.01,_0.165,_0.99),_opacity_0.6s_cubic-bezier(0.4,_0.01,_0.165,_0.99)]`}>
-              <Button variant="primary" size="sm" type="button" onClick={() => openPage("")} className="transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 w-full max-w-[400px]">Team</Button>
+              <Button variant="primary" size="sm" type="button" onClick={() => openPage("")} className="transition-all duration-150 hover:from-indigo-500/70 hover:to-purple-500/70 bg-gradient-to-r from-indigo-500 to-purple-500 w-full max-w-[400px]">Team</Button>
             </li>
             <li className={`flex justify-center ${navbarOpened ? "scale-100 translate-y-0 opacity-100" : "scale-[1.15] -translate-y-[30px] opacity-0"} delay-[70ms] mt-4 [transition:transform_0.5s_cubic-bezier(0.4,_0.01,_0.165,_0.99),_opacity_0.6s_cubic-bezier(0.4,_0.01,_0.165,_0.99)]`}>
-              <Button variant="primary" size="sm" type="button" onClick={() => openPage("")} className="transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 w-full max-w-[400px]">About us</Button>
+              <Button variant="primary" size="sm" type="button" onClick={() => openPage("")} className="transition-all duration-150 hover:from-indigo-500/70 hover:to-purple-500/70 bg-gradient-to-r from-indigo-500 to-purple-500 w-full max-w-[400px]">About us</Button>
             </li>
           </ul>
         </div>

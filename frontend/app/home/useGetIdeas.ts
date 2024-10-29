@@ -54,7 +54,7 @@ export const useGetIdeas = () => {
           idea: item as IdeaType,
           subdomains,
         }
-      })
+      }).filter((item, index) => index < 10)
     }
     return []
   }, [ideaTokens, subdomains])

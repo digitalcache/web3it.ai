@@ -56,7 +56,7 @@ export const ConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <Button size="sm" onClick={openConnectModal} variant="secondary" className="flex gap-2 md:ring-1 py-1 !px-2 md:!px-4 md:py-2.5 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
+                  <Button size="sm" onClick={openConnectModal} variant="secondary" className="flex gap-2 md:ring-1 py-1 !px-2 md:!px-4 md:py-2.5 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-medium">
                     <span className='hidden md:inline'>{connectButtonCopy.connectWallet}</span>
                     <WalletMinimal />
                   </Button>
@@ -64,15 +64,15 @@ export const ConnectButton = () => {
               }
               if (chain.unsupported) {
                 return (
-                  <button onClick={openChainModal} type="button" className='px-3 md:px-4 py-2 md:py-3 rounded-xl bg-red-500 text-white font-semibold flex gap-2 items-center text-xs md:text-base'>
+                  <button onClick={openChainModal} type="button" className='px-3 md:px-4 py-2 md:py-3 rounded-xl bg-red-500 text-white font-medium flex gap-2 items-center text-xs md:text-base'>
                     {connectButtonCopy.wrongNetwork}
-                    <ChevronDown strokeWidth={3} width={20} height={20} className='w-4 h-4 md:w-5 md:h-5' />
+                    <ChevronDown strokeWidth={2.5} width={20} height={20} className='w-4 h-4 md:w-5 md:h-5' />
                   </button>
                 );
               }
               return (
                 <div className='flex gap-3'>
-                  <button onClick={openAccountModal} className='px-3 md:px-4 py-2 md:py-3 rounded-xl text-white transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r text-xs md:text-base from-indigo-500 to-purple-500 font-semibold flex gap-2 items-center hover:scale-105 ease-in-out' type="button">
+                  <button onClick={openAccountModal} className='px-3 md:px-4 py-2 md:py-3 rounded-xl text-white transition-all duration-150 hover:from-indigo-500/70 hover:to-purple-500/70 bg-gradient-to-r text-xs md:text-base from-indigo-500 to-purple-500 font-medium flex gap-2 items-center ease-in-out' type="button">
                     <span className='rounded-full flex justify-center items-center bg-white p-0.5'>
                       {account.ensAvatar ? (
                         <Image src={account.ensAvatar} alt="avatar" width={20} height={20} />
@@ -82,7 +82,7 @@ export const ConnectButton = () => {
                       )}
                     </span>
                     {account.displayName}
-                    <ChevronDown strokeWidth={3} width={20} height={20} className='w-4 h-4 md:w-5 md:h-5' />
+                    <ChevronDown strokeWidth={2.5} width={20} height={20} className='w-4 h-4 md:w-5 md:h-5' />
                   </button>
                 </div>
               );

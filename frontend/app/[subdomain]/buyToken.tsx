@@ -21,11 +21,15 @@ import {
   ModalTrigger,
 } from "@/common/components/organisms";
 import { KeyedMutator } from "swr";
+import lang from "@/common/lang";
+import { abbreviateNumber } from "@/utils/helpers";
 import {
   Get_Owners_Dto,
   Get_Transfers_Dto,
 } from "./types";
 import ideaAbi from '@/utils/abis/ideaFactory.json'
+
+const { ideaPage: ideaPageCopy } = lang
 
 export const BuyToken = ({
   idea,
@@ -55,8 +59,8 @@ export const BuyToken = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [costWei, setCostWei] = useState(0)
   const fundingRaised = idea ? parseInt(ethers.formatUnits(idea.fundingRaised, 'ether'))  : 0;
-  const fundingGoal = 24;
-  const maxSupply = parseInt('1000000');
+  const fundingGoal = parseInt(process.env.NEXT_PUBLIC_TARGET_ETH || '0');
+  const maxSupply = parseInt(process.env.NEXT_PUBLIC_MAX_SUPPLY || '0');
 
   const totalSupply = idea ? parseInt(ethers.formatUnits(idea.tokenCurrentSupply, 'ether')) : 0;
   const remainingTokens = idea ? maxSupply - totalSupply : 0
@@ -67,7 +71,7 @@ export const BuyToken = ({
       return;
     }
     if (purchaseAmount > remainingTokens) {
-      toast.error(`Limited tokens. Please enter less than ${remainingTokens}`)
+      toast.error(`${ideaPageCopy.limitedTokensError.replace('%aamount%', remainingTokens.toString())}`)
       return
     }
     try {
@@ -98,13 +102,13 @@ export const BuyToken = ({
             purchaseAmount,
           ],
         })
-        toast.success(`Congratulations! You have purchased ${purchaseAmount} ${idea.symbol}`)
+        toast.success(`${ideaPageCopy.purchaseSuccess} ${purchaseAmount} ${idea.symbol}`)
         await mutateTransfers()
         await mutateOwners()
         await mutateIdea()
         setPurchaseAmount(0)
       } catch (error) {
-        toast.error("Purchase could not be completed. Please try again!")
+        toast.error(ideaPageCopy.purchaseError)
       } finally {
         setIsModalOpen(false);
         setTokenInfoLoading(false)
@@ -129,19 +133,17 @@ export const BuyToken = ({
     }
   }
   return (
-    <div className="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl p-4">
+    <div className="bg-gradient-to-tl from-indigo-500 to-purple-500 shadow-lg shadow-black rounded-2xl p-4">
       <div className="mb-4">
-        <div className="text-neutral-200 text-sm font-semibold mb-2 mt-2 flex justify-between items-center">
-          <span>Bonding curve progress</span>
-          <span className="text-sm font-semibold">{fundingRaised}/{fundingGoal} {process.env.NEXT_PUBLIC_CURRENCY || ''}</span>
+        <div className="text-white font-semibold mb-2 flex justify-between items-center">
+          <span>{ideaPageCopy.bondingCurveProgress}</span>
         </div>
-        <div>
+        <div className="mt-3">
           <Progress value={fundingRaisedPercentage} />
+          <div className="text-white w-full text-xs mt-1 font-semibold text-right">{fundingRaised}/{fundingGoal} <span className="font-normal">{process.env.NEXT_PUBLIC_CURRENCY || ''}</span></div>
         </div>
-        <div className="text-neutral-300 text-xs mt-2 max-w-[300px]">
-          When the market cap reaches {fundingGoal} {process.env.NEXT_PUBLIC_CURRENCY || ''}, all the liquidity from the bonding
-          curve will be deposited into Uniswap, and the LP tokens will be
-          burned. Progression increases as the price goes up.
+        <div className="text-neutral-200 text-xs font-medium mt-2 max-w-[300px]">
+          {ideaPageCopy.bondingCurveInfo.replace('%goal%', fundingGoal.toString()).replace('%currency%', process.env.NEXT_PUBLIC_CURRENCY || '')}
         </div>
       </div>
       <Input
@@ -150,47 +152,47 @@ export const BuyToken = ({
         type="number"
         min={1}
         max={remainingTokens}
-        labelText={`Buy tokens for ${idea?.name}`}
+        labelText={`${ideaPageCopy.buyTokensFor} ${idea?.name}`}
         placeholder="Enter amount of tokens to buy"
         value={`${purchaseAmount ? purchaseAmount : ''}`}
         onKeyDown={handleKeyDown}
         onChange={(e) => setPurchaseAmount(parseInt(e.target.value ? e.target.value : '0'))}
         width="w-full"
       />
-      <div className="text-neutral-300 mt-1 text-xs flex items-center">
-        Available tokens: <div className="ml-2">{remainingTokens}/{maxSupply}</div>
+      <div className="text-white mt-1 text-xs flex items-center justify-end">
+        {ideaPageCopy.availableTokens}: <div className="ml-2 font-semibold">{abbreviateNumber(remainingTokens.toString())}/{abbreviateNumber(maxSupply.toString())}</div>
       </div>
       <Modal>
         <ModalTrigger setIsModalOpen={setIsModalOpen} disabled={purchaseAmount <= 0} onClick={getCost}>
-            Purchase
+          {ideaPageCopy.purchaseLabel}
         </ModalTrigger>
         <ModalBody isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
           <ModalContent>
-            <h4 className="text-white font-bold text-xl md:text-2xl ml-6 pt-4">Confirm purchase</h4>
-            <div className="text-center font-semibold md:text-xl text-white mt-16 flex gap-2 flex-col md:flex-row items-center justify-center">
-              <span>You need to pay</span>
-              <div className="bg-white rounded-full px-2 py-1/2 font-black">
+            <h4 className="text-white font-semibold text-xl md:text-2xl ml-6 pt-4">{ideaPageCopy.confirmPurchase}</h4>
+            <div className="text-center font-medium md:text-xl text-white mt-16 flex gap-2 flex-col md:flex-row items-center justify-center">
+              <span>{ideaPageCopy.youNeedToPay}</span>
+              <div className="bg-white rounded-full px-3 py-1/2 font-semibold">
                 <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
                   {cost}
                 </span>
               </div>
-              <span>{process.env.NEXT_PUBLIC_CURRENCY || ''} for {purchaseAmount}</span>
-              <div className="bg-white rounded-full px-2 py-1/2 font-black">
+              <span>{process.env.NEXT_PUBLIC_CURRENCY || ''} {ideaPageCopy.for} {purchaseAmount}</span>
+              <div className="bg-white rounded-full px-3 py-1/2 font-semibold">
                 <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
                   {idea?.symbol}
                 </span>
               </div>
             </div>
-            <p className="text-neutral-200 mt-8 md:mt-4 text-center text-xs md:text-sm">Ensure you have enough funds in your account</p>
+            <p className="text-neutral-200 mt-8 md:mt-4 text-center text-xs md:text-sm">{ideaPageCopy.ensure}</p>
           </ModalContent>
           <ModalFooter className="gap-4 pb-6">
             <Button
               size="md"
               variant="primary"
               onClick={handlePurchase}
-              className="transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 font-semibold"
+              className="transition-all duration-150 hover:from-indigo-500/70 hover:to-purple-500/70 bg-gradient-to-r from-indigo-500 to-purple-500 font-semibold"
             >
-                Buy now
+              {ideaPageCopy.buyNow}
             </Button>
           </ModalFooter>
         </ModalBody>

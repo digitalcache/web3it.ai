@@ -1,44 +1,47 @@
 'use client'
 import { Timeline } from "@/common/components/molecules";
+import lang from "@/common/lang";
+
+const { homePage: homePageCopy } = lang
 
 export const DevelopmentProcess = () => {
   const data = [
     {
-      title: "Ideation",
+      title: homePageCopy.developmentProcess.stepOneTitle,
       content: (
         <div>
           <p className="text-neutral-200 text-sm md:text-lg font-normal">
-          Conceptualize Your Web3 Idea
+            {homePageCopy.developmentProcess.stepOneInfo}
           </p>
         </div>
       ),
     },
     {
-      title: "App Development",
+      title: homePageCopy.developmentProcess.stepTwoTitle,
       content: (
         <div>
           <p className="text-neutral-200 text-sm md:text-lg font-normal">
-            Unleash your creativity with your prompts and transform text into functional applications using Claude AI
+            {homePageCopy.developmentProcess.stepTwoInfo}
           </p>
         </div>
       ),
     },
     {
-      title: "Funding",
+      title: homePageCopy.developmentProcess.stepThreeTitle,
       content: (
         <div>
           <p className="text-neutral-200 text-sm md:text-lg font-normal">
-            Enhance your project's visibility by issuing a token, allowing others to discover and purchase your tokens
+            {homePageCopy.developmentProcess.stepThreeInfo}
           </p>
         </div>
       ),
     },
     {
-      title: "Strategize",
+      title: homePageCopy.developmentProcess.stepFourTitle,
       content: (
         <div>
           <p className="text-neutral-200 text-sm md:text-lg font-normal">
-            Receive guidance on enhancing your networking and marketing to achieve excellence
+            {homePageCopy.developmentProcess.stepFourInfo}
           </p>
         </div>
       ),
@@ -47,7 +50,7 @@ export const DevelopmentProcess = () => {
   return (
     <section className="md:py-12 px-4 md:mb-12">
       <div className="container mx-auto">
-        <h2 className="text-xl md:text-3xl font-bold mb-4 md:mb-8 text-white border-b border-white border-opacity-10 pb-2 md:pb-4">Development Process</h2>
+        <h2 className="text-xl md:text-3xl font-semibold mb-4 md:mb-8 text-white border-b border-white border-opacity-10 pb-2 md:pb-4">{homePageCopy.developmentProcess.heading}</h2>
         <Timeline data={data} />
       </div>
     </section>

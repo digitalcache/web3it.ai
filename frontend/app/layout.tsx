@@ -2,19 +2,47 @@ import {
   ReactNode,
   Suspense,
 } from "react";
-import { DM_Sans } from 'next/font/google';
+import localFont from '@next/font/local'
 import { Providers } from "@/utils/providers";
 import { headers } from 'next/headers';
 import { cookieToInitialState } from "wagmi";
-import '@rainbow-me/rainbowkit/styles.css'
 import { config } from "@/config";
+import '@rainbow-me/rainbowkit/styles.css'
 import './globals.css'
 
-const primaryFont = DM_Sans({
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  subsets: ['latin'],
+const primaryFont = localFont({
+  src: [
+    {
+      path: '../public/fonts/Chillax-Extralight.ttf',
+      weight: '200'
+    },
+    {
+      path: '../public/fonts/Chillax-Light.ttf',
+      weight: '300'
+    },
+    {
+      path: '../public/fonts/Chillax-Regular.ttf',
+      weight: '400'
+    },
+    {
+      path: '../public/fonts/Chillax-Medium.ttf',
+      weight: '500'
+    },
+    {
+      path: '../public/fonts/Chillax-Semibold.ttf',
+      weight: '600'
+    },
+    {
+      path: '../public/fonts/Chillax-Bold.ttf',
+      weight: '700'
+    },
+    {
+      path: '../public/fonts/Chillax-Variable.ttf',
+      weight: '800'
+    },
+  ],
   variable: '--font-primaryFont',
-});
+})
 
 export const metadata = {
   title: 'Web3It.AI | Innovative Crowdfunding Blockchain App for Early-Stage Enterprises',

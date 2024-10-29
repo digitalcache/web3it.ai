@@ -1,7 +1,10 @@
 import dayjs from 'dayjs';
 import relativeTime from "dayjs/plugin/relativeTime"
 import { IdeaType } from "@/common/types";
+import lang from '@/common/lang';
 import { TransferType } from './types';
+
+const { ideaPage: ideaPageCopy } = lang
 
 dayjs.extend(relativeTime)
 
@@ -12,26 +15,25 @@ export const TradeTable = ({
   idea: IdeaType;
   transfers: Array<TransferType> | [];
 }) => {
-
   return (
     <div>
-      <div className="mb-2 md:mt-4 text-neutral-200 font-semibold text:lg lg:text-xl">
-        Check out ongoing trades on {idea?.name}
+      <div className="mb-2 md:mt-4 text-neutral-200 font-medium text:lg lg:text-xl">
+        {ideaPageCopy.checkTransHeading} {idea?.name}
       </div>
       <table className="w-full text-sm text-left text-gray-400 rtl:text-right rounded-xl overflow-hidden">
         <thead className="text-xs bg-purple-700 text-white">
           <tr>
-            <th scope="col" className="px-6 py-3">
-              Account
+            <th scope="col" className="px-6 py-3 font-semibold">
+              {ideaPageCopy.transactionsTable.columnOne}
             </th>
-            <th scope="col" className="px-6 py-3">
-              Value
+            <th scope="col" className="px-6 py-3 font-semibold">
+              {ideaPageCopy.transactionsTable.columnTwo}
             </th>
-            <th scope="col" className="hidden lg:block px-6 py-3">
-              Date
+            <th scope="col" className="hidden lg:block px-6 py-3 font-semibold">
+              {ideaPageCopy.transactionsTable.columnThree}
             </th>
-            <th scope="col" className="px-6 py-3">
-              Transaction
+            <th scope="col" className="px-6 py-3 font-semibold">
+              {ideaPageCopy.transactionsTable.columnFour}
             </th>
           </tr>
         </thead>

@@ -1,7 +1,10 @@
+import lang from "@/common/lang"
 import {
   useEffect,
   useState,
 } from "react"
+
+const { generateIdea } = lang
 
 export const useGreeting = () => {
   const [greeting, setGreeting] = useState("Good morning")
@@ -9,11 +12,11 @@ export const useGreeting = () => {
     const today = new Date()
     const curHr = today.getHours()
     if (curHr < 12) {
-      setGreeting("Good morning")
+      setGreeting(generateIdea.greeting.morning)
     } else if (curHr < 18) {
-      setGreeting("Good afternoon")
+      setGreeting(generateIdea.greeting.afternoon)
     } else {
-      setGreeting("Good evening")
+      setGreeting(generateIdea.greeting.evening)
     }
   }, [])
 

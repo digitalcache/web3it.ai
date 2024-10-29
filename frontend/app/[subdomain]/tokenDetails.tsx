@@ -68,6 +68,12 @@ export const TokenDetails = ({
           ) : null}
         </div>
         <div className="flex flex-col-reverse lg:flex-col gap-4">
+          {idea ? (
+            <TokenCard
+              owners={owners}
+              idea={idea}
+            />
+          ) : null}
           <BuyToken
             idea={idea}
             setTokenInfoLoading={setTokenInfoLoading}
@@ -76,12 +82,6 @@ export const TokenDetails = ({
             mutateOwners={mutateOwners}
             mutateIdea={mutateIdea}
           />
-          {idea ? (
-            <TokenCard
-              owners={owners}
-              idea={idea}
-            />
-          ) : null}
         </div>
       </div>
       <Toaster />

@@ -20,9 +20,15 @@ module.exports = {
         '0%': { transform: 'rotate(0deg)' },
         '100%': { transform: 'rotate(360deg)' },
       },
+      rotatingGradient: {
+        '0%': { background: '#a855f7' },
+        '50%': { background: '#6366f1' },
+        '100%': { background: '#a855f7' },
+      },
     },
     animation: {
       ldsLoader: 'ldsLoader 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
+      rotatingGradient: 'rotatingGradient 2s cubic-bezier(0.5, 0, 0.5, 1) infinite alternate',
     },
   },
   plugins: [

@@ -29,6 +29,9 @@ import { useAddCategory } from './useAddCategory';
 import { tokenSchema } from './validationSchema';
 import { TokenDTO } from './types';
 import abi from '@/utils/abis/ideaFactory.json'
+import lang from '@/common/lang';
+
+const { createIdea: createIdeaCopy } = lang
 
 export const useCreateToken = () => {
   const router = useRouter()
@@ -111,7 +114,7 @@ export const useCreateToken = () => {
             setIdeaCreatedThroughAI(true)
           }
         } catch (error) {
-          toast.error("Idea not found!")
+          toast.error(createIdeaCopy.ideaNotFound)
         } finally {
           setIsIdeaFetching(false)
         }
@@ -138,11 +141,11 @@ export const useCreateToken = () => {
               ])
               setIsSupabaseSubmitting(false)
               reset()
-              toast.success("Idea successfully created!!")
+              toast.success(createIdeaCopy.ideaCreatedMessage)
               router.push(routes.viewProjectsPath)
             }
           } catch (err) {
-            toast.error("Error occurred!")
+            toast.error(createIdeaCopy.errorOccured)
             setIsSupabaseSubmitting(false)
           }
         }
@@ -206,7 +209,7 @@ export const useCreateToken = () => {
         }
       } catch (error: unknown) {
         setImageProcessing(false)
-        toast.error('Something went wrong. Please try again!')
+        toast.error(createIdeaCopy.errorOccured)
       }
     }
     if (!isConnected) {

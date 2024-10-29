@@ -8,10 +8,13 @@ import {
   promptLoadingStates,
   promptPlaceholders,
 } from '@/common/constants';
+import toast from 'react-hot-toast';
 import { generate } from '../actions';
 import { IntefaceAIDTO } from './types';
-import toast from 'react-hot-toast';
+import lang from '@/common/lang';
 // import aiResponse from '@/utils/ai_sample_response.json';
+//
+const { generateIdea: generateIdeaCopy } = lang
 
 export const Prompt = ({
   setGeneratedIdea,
@@ -37,7 +40,7 @@ export const Prompt = ({
           ideaTicker: res.ideaTicker || '',
         })
       } catch (error) {
-        toast.error('Something went wrong. Please try again.')
+        toast.error(generateIdeaCopy.generateError)
         console.error(error)
       } finally {
         setIsGenerating(false)

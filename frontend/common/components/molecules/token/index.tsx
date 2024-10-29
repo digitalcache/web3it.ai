@@ -44,42 +44,40 @@ export const Token = ({
       href={tokenLink}
       prefetch={true}
       className={cn(
-        "rounded-2xl group h-auto w-full relative overflow-hidden hover:shadow-xl transition duration-200 text-left justify-between bg-black flex flex-col",
+        "rounded-3xl group h-auto w-full relative overflow-hidden hover:shadow-xl transition duration-200 text-left justify-between bg-black flex flex-col",
       )}
     >
-      <div className="shadow-lg bg-white flex justify-center items-center w-full">
-        <Image
-          src={idea.tokenImageUrl}
-          alt={idea.symbol}
-          width={400}
-          height={200}
-          quality={40}
-          className={`h-auto w-full`}
-        />
-      </div>
-      <div className={`transition duration-200 px-2 xl:px-4 z-10 relative pb-3 w-full`}>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r overflow-hidden from-indigo-500 to-purple-500 -z-30"></div>
-        <div className='bg-gradient-to-b from-white to-transparent backdrop-blur-3xl blur-[200px] absolute bottom-0 left-0 w-full h-full -z-20'></div>
-        <div className="flex justify-between flex-1 mt-2 items-center">
-          <div className="flex text-neutral-200 justify-between w-full items-center">
-            <div className="font-semibold mr-1">
-              {idea.name}
-            </div>
-          </div>
-          <div className="bg-white rounded-full text-sm px-2 py-1/2 font-bold">
+      <div className={`transition duration-200 px-2 xl:px-4 pt-3 z-10 relative pb-3 w-full`}>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tl overflow-hidden from-indigo-500/80 to-purple-500/80 -z-30"></div>
+        <div className="flex justify-between items-center">
+          <Image
+            src={idea.tokenImageUrl}
+            alt={idea.symbol}
+            width={400}
+            height={200}
+            quality={40}
+            className={`h-8 w-auto`}
+          />
+          <div className="bg-white rounded-full text-xs px-2 py-1/2 font-semibold">
             <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text whitespace-nowrap">
               {idea.symbol}
             </span>
           </div>
         </div>
-        <div className="text-neutral-300 text-xs line-clamp-4 mt-2">
+        <div className="flex justify-between flex-1 items-center mt-4">
+          <div className="flex text-neutral-200 justify-between w-full items-center">
+            <div className="font-semibold mr-1 text-xl">
+              {idea.name}
+            </div>
+          </div>
+        </div>
+        <div className="text-neutral-300 text-sm mt-2">
           {idea.description.replaceAll('$comma$', ',')}
         </div>
-        <div className="flex justify-between mt-2 items-center">
-          <div></div>
-          <div className="flex gap-2 items-end text-gray-300">
-            <span className="text-sm">{ideaCardCopy.raised}</span>
-            <span className="text-sm text-neutral-200 font-semibold">{fundingRaised ? parseFloat(fundingRaised).toFixed(4) : 0} {process.env.NEXT_PUBLIC_CURRENCY || ''}</span>
+        <div className="mt-2">
+          <div className="flex flex-col w-max">
+            <span className="text-sm text-neutral-400">{ideaCardCopy.raised}</span>
+            <span className="text-sm text-neutral-200 font-medium">{fundingRaised ? parseFloat(fundingRaised).toFixed(2).replace(/[.,]00$/, "") : 0} {process.env.NEXT_PUBLIC_CURRENCY || ''}</span>
           </div>
         </div>
       </div>

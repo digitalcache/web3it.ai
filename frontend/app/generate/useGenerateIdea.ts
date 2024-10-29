@@ -6,6 +6,9 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { routes } from "@/common/routes";
 import { IntefaceAIDTO } from "./types"
+import lang from "@/common/lang";
+
+const { generateIdea: { generateError } } = lang
 
 export const useGenerateIdea = () => {
   const [isIdeaProcessing, setIsIdeaProcessing] = useState(false);
@@ -57,7 +60,7 @@ export const useGenerateIdea = () => {
           .select()
         router.push(`${routes.newIdeaPath}?ideaId=${ideaData.id}`)
       } catch (error) {
-        toast.error('Something went wrong. Please try again later.');
+        toast.error(generateError);
       } finally {
         setIsIdeaProcessing(false);
       }

@@ -63,9 +63,9 @@ export const SearchIdeas = ({
       leaveTo="opacity-0"
     >
       <div className='w-full fixed top-0 left-0 h-screen flex justify-center items-center backdrop-blur-md z-[9999] bg-black bg-opacity-20'>
-        <div ref={searchBoxRef} className="relative">
-          <span className="absolute top-1/2 left-3 -translate-y-1/2 text-space-cadet z-10">
-            <PackageSearch />
+        <div ref={searchBoxRef} className="relative font-medium">
+          <span className="absolute top-1/2 left-3 -translate-y-1/2 text-indigo-400 z-10">
+            <PackageSearch width={24} height={24} strokeWidth={1.5} />
           </span>
           <AsyncSelect
             cacheOptions
@@ -75,7 +75,7 @@ export const SearchIdeas = ({
             components={{
               IndicatorSeparator: () => <span></span>,
               DropdownIndicator: (state) => {
-                return <span className={`text-space-cadet cursor-pointer ${state.selectProps.menuIsOpen ? "rotate-180" : ""}`}><ChevronDown/></span>
+                return <span className={`text-indigo-400 cursor-pointer ${state.selectProps.menuIsOpen ? "rotate-180" : ""}`}><ChevronDown/></span>
               },
             }}
             theme={(theme) => ({
@@ -83,8 +83,8 @@ export const SearchIdeas = ({
               borderRadius: 6,
               colors: {
                 ...theme.colors,
-                primary25: '#7E5EF2',
-                primary: '#7E5EF2',
+                primary25: '#818cf8',
+                primary: '#818cf8',
               },
             })}
             noOptionsMessage={() => searchIdeasCopy.noIdeasFound}
@@ -102,7 +102,7 @@ export const SearchIdeas = ({
               input: () => '!ring-0 !my-0 cursor-text',
               menu: () => '!rounded-xl overflow-hidden',
               menuList: () => '!py-0',
-              option: (state) => `${state.isFocused ? "!text-white" : "!text-neutral-600"} !uppercase transition-all duration-200 ease-in-out active:!bg-[#7E5EF2] !cursor-pointer capitalize active:!text-white`,
+              option: (state) => `${state.isFocused ? "!text-white" : "!text-neutral-600"} !uppercase transition-all duration-200 ease-in-out active:!bg-[#818cf8] !cursor-pointer capitalize active:!text-white`,
             }}
           />
         </div>

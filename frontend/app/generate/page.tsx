@@ -11,11 +11,20 @@ import { ClaudeAIIcon } from "@/common/components/icons";
 import {
   Button, Loader,
 } from "@/common/components/atoms";
+import lang from "@/common/lang";
 import { Prompt } from "./Prompt";
 import { PreviewLandingPage } from "./previewLandingPage";
 import { useGreeting } from "./useGreeting";
 import { useGenerateIdea } from "./useGenerateIdea";
 import { IntefaceAIDTO } from "./types";
+
+const { generateIdea: {
+  greeting: greetingCopy,
+  poweredBy: poweredByCopy,
+  continue: continueCopy,
+  orEnhance: orEnhanceCopy,
+  proceed: proceedCopy,
+} } = lang
 
 export const maxDuration = 60
 
@@ -34,12 +43,12 @@ export default function Home () {
   const isIdeaGenerated = Boolean(generatedIdea)
 
   const getIcon = () => {
-    if (greeting === "Good morning") {
-      return <Sunrise />
-    } else if (greeting === "Good afternoon") {
-      return <Sun />
+    if (greeting === greetingCopy.morning) {
+      return <Sunrise strokeWidth={1.5} />
+    } else if (greeting === greetingCopy.afternoon) {
+      return <Sun strokeWidth={1.5} />
     } else {
-      return <Sunset />
+      return <Sunset strokeWidth={1.5} />
     }
   }
 
@@ -49,7 +58,7 @@ export default function Home () {
         <ShootingStars />
       </div>
       {isIdeaProcessing && <Loader />}
-      {!isIdeaGenerated && <div className="text-white absolute bottom-2 right-2 flex gap-1 items-center font-medium text-xs md:text-sm">powered by <ClaudeAIIcon /></div>}
+      {!isIdeaGenerated && <div className="text-white absolute bottom-2 right-2 flex gap-1 items-center font-medium text-xs md:text-sm">{poweredByCopy} <ClaudeAIIcon /></div>}
       <div className={`${generatedIdea ? "pt-16" : "pt-72"} delay-300 transition-all ease-in-out duration-300 pb-12 px-4`}>
         <div className="container mx-auto flex justify-center flex-col items-center">
           <Transition
@@ -68,12 +77,12 @@ export default function Home () {
           </Transition>
           {isIdeaGenerated && (
             <>
-              <div className="text-neutral-300 mt-8 text-xl md:text-3xl font-semibold text-center mb-4 md:mb-6">Continue to Create Token</div>
-              <Button size="md" onClick={() => handleTokenCreation(generatedIdea)} variant="primary" type="button" className="transition-all gap-2 duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 bg-gradient-to-r from-indigo-500 to-purple-500 font-semibold">
-                Proceed
+              <div className="text-neutral-300 mt-8 text-xl md:text-3xl font-medium text-center mb-4 md:mb-6">{continueCopy}</div>
+              <Button size="md" onClick={() => handleTokenCreation(generatedIdea)} variant="primary" type="button" className="transition-all gap-2 duration-150 hover:from-indigo-500/70 hover:to-purple-500/70 bg-gradient-to-r from-indigo-500 to-purple-500 font-medium">
+                {proceedCopy}
               </Button>
               <div className="mt-5 text-sm md:text-base text-neutral-300 border-t pt-5 border-white border-opacity-10">
-                Or keep enhancing the idea
+                {orEnhanceCopy}
               </div>
             </>
           )}

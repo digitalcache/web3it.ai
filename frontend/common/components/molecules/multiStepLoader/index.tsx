@@ -1,9 +1,9 @@
 "use client";
-import { 
+import {
   useState, useEffect,
 } from "react";
 import { cn } from "@/utils/helpers";
-import { 
+import {
   AnimatePresence, motion,
 } from "framer-motion";
 
@@ -60,12 +60,12 @@ const LoaderCore = ({
           <motion.div
             key={index}
             className={cn("text-left flex gap-2 mb-4")}
-            initial={{ 
-              opacity: 0, 
+            initial={{
+              opacity: 0,
               y: -(value * 40),
             }}
-            animate={{ 
-              opacity: opacity, 
+            animate={{
+              opacity: opacity,
               y: -(value * 40),
             }}
             transition={{ duration: 0.5 }}
@@ -79,7 +79,7 @@ const LoaderCore = ({
                   className={cn(
                     "text-white",
                     value === index &&
-                      "text-indigo-500  opacity-100",
+                      "text-indigo-600  opacity-100",
                   )}
                 />
               )}
@@ -87,7 +87,7 @@ const LoaderCore = ({
             <span
               className={cn(
                 "text-white",
-                value === index && "text-indigo-500 opacity-100",
+                value === index && "text-indigo-600 opacity-100",
               )}
             >
               {loadingState.text}

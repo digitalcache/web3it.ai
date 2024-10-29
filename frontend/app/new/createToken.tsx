@@ -14,9 +14,12 @@ import {
   Button,
   TextArea,
 } from '@/common/components/atoms';
+import lang from '@/common/lang';
 import { ImageSelectionAndUpload } from './imageSelectionAndUpload';
 import { useCreateToken } from './useCreateToken';
 import { CategoryType } from './types';
+
+const { createIdea: { form: formCopy } } = lang
 
 export const CreateToken = () => {
   const {
@@ -72,7 +75,7 @@ export const CreateToken = () => {
               return (
                 <Input
                   id={field.name}
-                  labelText="Idea name"
+                  labelText={formCopy.name}
                   placeholder="Web3It.AI"
                   error={!!error}
                   errorMessage={error?.message}
@@ -96,7 +99,7 @@ export const CreateToken = () => {
               return (
                 <Input
                   id={field.name}
-                  labelText="Ticker name"
+                  labelText={formCopy.ticker}
                   placeholder="Ticker"
                   error={!!error}
                   errorMessage={error?.message}
@@ -122,7 +125,7 @@ export const CreateToken = () => {
               return (
                 <TextArea
                   id={field.name}
-                  labelText="Description"
+                  labelText={formCopy.description}
                   placeholder="Describe your idea"
                   error={!!error}
                   errorMessage={error?.message}
@@ -148,7 +151,7 @@ export const CreateToken = () => {
               return (
                 <MultiSelectAndCustomTags
                   id={field.name}
-                  labelText="Select category"
+                  labelText={formCopy.category}
                   placeholder="Security, NFT, DeFi, etc."
                   isLoading={isCategoriesLoading || isAddingCategory}
                   onCreateOption={onCreateOption}
@@ -187,8 +190,8 @@ export const CreateToken = () => {
         </div>
         {ideaCreatedThroughAI && getValues('website') ? (
           <div className="px-4 md:px-8 relative">
-            <label  className={`block text-sm font-semibold text-white`}>
-              Website
+            <label  className={`block text-sm font-medium text-white`}>
+              {formCopy.website}
             </label>
             <div className="w-full h-auto rounded-xl overflow-hidden mt-2 bg-white/50">
               <Image
@@ -218,7 +221,7 @@ export const CreateToken = () => {
                 return (
                   <Input
                     id={field.name}
-                    labelText="Website"
+                    labelText={formCopy.website}
                     placeholder="https://web3it.ai"
                     error={!!error}
                     errorMessage={error?.message}
@@ -242,7 +245,7 @@ export const CreateToken = () => {
               return (
                 <Input
                   id={field.name}
-                  labelText="X (Optional)"
+                  labelText={formCopy.twitter}
                   placeholder="https://x.com/justweb3it"
                   error={!!error}
                   errorMessage={error?.message}
@@ -258,10 +261,10 @@ export const CreateToken = () => {
             size="md"
             type='submit'
             variant="primary"
-            className="transition-all gap-2 w-full md:w-auto duration-150 disabled:bg-space-cadet/40 bg-space-cadet hover:bg-space-cadet/80 font-semibold"
+            className="transition-all gap-2 w-full md:w-auto duration-150 disabled:bg-space-cadet/40 bg-space-cadet hover:bg-space-cadet/80 font-medium"
           >
             Register your idea
-            <PiggyBank />
+            <PiggyBank strokeWidth={1.5} />
           </Button>
         </div>
       </form>

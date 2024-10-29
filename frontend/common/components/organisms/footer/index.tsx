@@ -24,7 +24,7 @@ export const Footer = () => {
   return (
     <>
       <footer className="relative border-t border-gray-200/5">
-        <div className="bottom-0 left-0 opacity-30 absolute w-full h-[300px] bg-gradient-to-b from-transparent to-purple-500 pointer-events-none -z-10"></div>
+        <div className="bottom-0 left-0 opacity-30 absolute w-full h-[300px] bg-gradient-to-b from-transparent to-black pointer-events-none -z-10"></div>
         <div className="">
           <div className="container mx-auto flex flex-col md:flex-row w-full justify-between items-center md:items-end px-4 gap-4 py-4 md:py-12 md:gap-2 md:px-0 pb-4">
             <div className="flex flex-col gap-4">
@@ -45,7 +45,7 @@ export const Footer = () => {
                 <LinkStyled href="#" className="!px-0">{footerCopy.privacyPolicy}</LinkStyled>
               </div>
             </div>
-            <Button onClick={() => setIsModalOpen(true)} size="md" variant="secondary" className="ring-1 gap-2 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-semibold">
+            <Button onClick={() => setIsModalOpen(true)} size="md" variant="secondary" className="ring-1 gap-2 ring-white ring-inset hover:ring-0 from-indigo-500 to-purple-500 hover:bg-gradient-to-r font-medium">
               {footerCopy.contactUs}
             </Button>
           </div>
@@ -53,37 +53,37 @@ export const Footer = () => {
       </footer>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-700 p-8 rounded-lg w-full max-w-md relative">
-            <h2 className="text-2xl font-bold mb-4 text-white">Contact Us</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-eerie-black p-8 pt-4 rounded-3xl w-full max-w-md relative">
+            <h2 className="text-2xl font-semibold text-center mb-8 text-white">{footerCopy.contactUsModal.heading}</h2>
             <form>
               <input
                 type="text"
                 placeholder="Name"
                 required
-                className="w-full mb-4 p-2 bg-gray-600 rounded text-white"
+                className="w-full mb-4 p-2 bg-white ring-0 border-0 outline-none rounded-lg text-black"
               />
               <input
                 type="email"
                 placeholder="Email"
                 required
-                className="w-full mb-4 p-2 bg-gray-600 rounded text-white"
+                className="w-full mb-4 p-2 bg-white ring-0 border-0 outline-none rounded-lg text-black"
               />
               <textarea
                 placeholder="Message"
                 required
-                className="w-full mb-4 p-2 bg-gray-600 rounded h-32 text-white"
+                className="w-full mb-4 p-2 bg-white ring-0 border-0 outline-none h-32 rounded-lg text-black"
               ></textarea>
-              <Button size="md" type="submit" variant="primary" className="transition-all duration-150 hover:from-indigo-500/90 hover:to-purple-500/90 w-full bg-gradient-to-r from-indigo-500 to-purple-500 font-semibold">
-                Send
+              <Button size="sm" type="submit" variant="primary" className="transition-all duration-150 hover:from-indigo-500/70 hover:to-purple-500/70 w-full bg-gradient-to-r from-indigo-500 to-purple-500 font-medium">
+                {footerCopy.contactUsModal.submitButton}
               </Button>
             </form>
-            <p className="mt-4 text-gray-300">
-              You can contact us at support@web3it.ai
+            <p className="mt-4 text-gray-300 text-center">
+              {footerCopy.contactUsModal.youCanContact} support@web3it.ai
             </p>
             <button
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-2 right-2 text-gray-400 hover:text-white"
+              className="absolute top-4 right-4 text-gray-400 hover:text-white"
             >
               <X />
             </button>
