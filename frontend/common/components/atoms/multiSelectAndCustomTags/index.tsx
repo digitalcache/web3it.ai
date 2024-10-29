@@ -58,6 +58,7 @@ export const MultiSelectAndCustomTags = (props : MultiSelectAndCustomTagsProps) 
       </div>
       <div className="mt-2 relative">
         <Select
+          id={id}
           placeholder={placeholder}
           components={{
             IndicatorSeparator: () => <span></span>,

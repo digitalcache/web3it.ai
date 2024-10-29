@@ -12,6 +12,7 @@ import AsyncSelect from "react-select/async"
 import { createClient } from "@/common/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { routes } from "@/common/routes";
+import { OptionProps, components } from "react-select";
 
 const {
   header: {
@@ -39,13 +40,14 @@ export const SearchIdeas = ({
   const promiseOptions = async (inputValue: string) => {
     const { data: Subdomains } = await supabase
       .from('Subdomains')
-      .select('subdomain')
-      .ilike('subdomain', `%${inputValue}%`)
+      .select('*')
+      .or(`subdomain.ilike."%${inputValue}%",name.ilike."%${inputValue}%"`)
     if (Subdomains?.length) {
       return [
         ...Subdomains.map((subdomain) => ({
-          label: subdomain.subdomain,
-          value: subdomain.subdomain,
+          label: `${subdomain.name}`,
+          value: `${subdomain.name} (${subdomain.subdomain})`,
+          subdomain: subdomain.subdomain,
         })),
       ]
     }
@@ -77,6 +79,20 @@ export const SearchIdeas = ({
               DropdownIndicator: (state) => {
                 return <span className={`text-indigo-400 cursor-pointer ${state.selectProps.menuIsOpen ? "rotate-180" : ""}`}><ChevronDown/></span>
               },
+              Option: (props) => {
+                return (
+                  <components.Option {...props}>
+                    <div className="flex items-center justify-between">
+                      <span className=" font-medium">{props.data.label}</span>
+                      <div className="bg-gradient-to-tl from-indigo-500 to-purple-500 rounded-full text-sm px-2 py-1/2 font-medium">
+                        <span className="text-white">
+                          {props.data.subdomain}
+                        </span>
+                      </div>
+                    </div>
+                  </components.Option>
+                );
+              },
             }}
             theme={(theme) => ({
               ...theme,
@@ -102,7 +118,7 @@ export const SearchIdeas = ({
               input: () => '!ring-0 !my-0 cursor-text',
               menu: () => '!rounded-xl overflow-hidden',
               menuList: () => '!py-0',
-              option: (state) => `${state.isFocused ? "!text-white" : "!text-neutral-600"} !uppercase transition-all duration-200 ease-in-out active:!bg-[#818cf8] !cursor-pointer capitalize active:!text-white`,
+              option: (state) => `${state.isFocused ? "!text-white" : "!text-neutral-600"} transition-all duration-200 ease-in-out active:!bg-[#818cf8] !cursor-pointer capitalize active:!text-white`,
             }}
           />
         </div>

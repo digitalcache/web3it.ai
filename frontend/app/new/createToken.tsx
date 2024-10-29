@@ -179,6 +179,7 @@ export const CreateToken = () => {
               } = field;
               return (
                 <ImageSelectionAndUpload
+                  id={field.name}
                   errorField={!!error}
                   errorMessage={error?.message}
                   setValue={setValue}
@@ -263,7 +264,7 @@ export const CreateToken = () => {
             variant="primary"
             className="transition-all gap-2 w-full md:w-auto duration-150 disabled:bg-space-cadet/40 bg-space-cadet hover:bg-space-cadet/80 font-medium"
           >
-            Register your idea
+            {formCopy.submitLabel}
             <PiggyBank strokeWidth={1.5} />
           </Button>
         </div>

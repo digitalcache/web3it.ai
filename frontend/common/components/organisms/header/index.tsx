@@ -6,7 +6,7 @@ import {
 import { routes } from "@/common/routes";
 import { PackageSearch } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { navigate } from "@/app/actions";
+import Link from "next/link";
 import {
   LogoIcon,
 } from "../../icons";
@@ -54,9 +54,9 @@ export const Header = () => {
       />
       <nav className={`fixed top-0 left-0 right-0 z-[70] transition-all px-4 duration-150 ${isScrolled ? "bg-yankees-blue bg-opacity-50 backdrop-blur-sm" : ""} ${navbarOpened ? "bg-yankees-blue bg-opacity-70 backdrop-blur-sm h-screen" : ""}`}>
         <div className="container mx-auto py-3 flex items-center justify-between">
-          <button type="button" onClick={() => navigate(routes.homePath)} className="">
+          <Link href={routes.homePath} prefetch={true} replace className="">
             <LogoIcon />
-          </button>
+          </Link>
           <>
             <div className="flex lg:mr-0 gap-4 items-center">
               {/* <button onClick={() => setSearchEnabled(true)} className="text-white flex justify-center items-center md:mr-4 cursor-pointer group">

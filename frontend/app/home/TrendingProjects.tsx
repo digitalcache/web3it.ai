@@ -3,18 +3,17 @@
 import { routes } from '@/common/routes';
 import { Masonry } from "masonic";
 import {
-  Button, Loader,
+  Loader,
 } from '@/common/components/atoms';
 import { Boxes } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { Token } from '@/common/components/molecules';
+import Link from 'next/link';
 import lang from '@/common/lang';
 import { useGetIdeas } from './useGetIdeas';
 
 const { homePage: homePageCopy } = lang
 
 export const TrendingProjects = () => {
-  const router = useRouter()
   const {
     ideas,
     isLoading,
@@ -29,9 +28,9 @@ export const TrendingProjects = () => {
           <div className="container mx-auto">
             <div className='flex justify-between border-b border-white border-opacity-10 mb-6 md:mb-12 pb-2 md:pb-4'>
               <h2 className="text-xl md:text-3xl font-semibold text-white">{homePageCopy.trendingIdeas}</h2>
-              <Button size="sm" onClick={() => router.push(routes.viewProjectsPath)} variant="secondary" className="flex gap-2 py-1 !px-2 md:!px-4 md:py-2.5 hover:!text-indigo-400">
+              <Link href={routes.viewProjectsPath} prefetch={true} className="flex gap-2 text-white hover:text-indigo-400">
                 <Boxes width={32} height={32} className="w-6 h-6 md:w-8 md:h-8" strokeWidth={1} />
-              </Button>
+              </Link>
             </div>
             {isLoading ? (
               <Loader />

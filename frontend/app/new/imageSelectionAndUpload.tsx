@@ -19,6 +19,7 @@ const { createIdea: { imageUpload: imageUploadCopy } } = lang
 
 export const ImageSelectionAndUpload = ({
   errorField,
+  id,
   errorMessage,
   setValue,
   value,
@@ -27,6 +28,7 @@ export const ImageSelectionAndUpload = ({
   errorMessage?: string;
   setValue: UseFormSetValue<TokenDTO>;
   value: string;
+  id: string;
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState('');
@@ -76,7 +78,7 @@ export const ImageSelectionAndUpload = ({
   return (
     <div className="flex flex-col">
       <label
-        htmlFor="file"
+        htmlFor={id}
         className="text-left w-max text-white font-medium text-sm"
       >
         {imageUploadCopy.title}
@@ -85,7 +87,7 @@ export const ImageSelectionAndUpload = ({
         type="file"
         name="file"
         accept="image/png, image/jpeg"
-        id="file"
+        id={id}
         ref={fileInputRef}
         className="opacity-0 -z-10 absolute overflow-hidden"
         onChange={handleFileChange}

@@ -29,7 +29,7 @@ export const TokenCard = ({
             className={`h-8 w-auto`}
           />
           <div className="flex justify-end mt-1">
-            <div className="bg-white rounded-full text-xs px-2 py-1/2 font-bold">
+            <div className="bg-white rounded-full text-xs px-2 py-1/2 font-semibold">
               <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
                 {idea.symbol}
               </span>

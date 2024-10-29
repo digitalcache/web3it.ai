@@ -51,7 +51,11 @@ export const useCreateToken = () => {
     control,
     reset,
     setValue,
+    setFocus,
     getValues,
+    formState: {
+      errors, isSubmitting,
+    },
   } = useForm<TokenDTO>({
     resolver: yupResolver(tokenSchema),
     mode: 'onBlur',
@@ -95,6 +99,27 @@ export const useCreateToken = () => {
     isAddingCategory,
     onSubmit: addCategory,
   } = useAddCategory()
+
+  useEffect(() => {
+    if (isSubmitting) {
+      const typelessErrors = errors as any
+      const firstError = Object.keys(typelessErrors).reduce((field: any, a) => {
+        return !!typelessErrors[field] ? field : a;
+      }, null);
+
+      if (firstError) {
+        setFocus(firstError, { shouldSelect: true });
+        const elementToScrollTo = document.getElementById(firstError)
+        if (elementToScrollTo) {
+          const y = elementToScrollTo.getBoundingClientRect().top + window.scrollY;
+          window.scroll({
+            top: y - 500,
+            behavior: 'smooth',
+          });
+        }
+      }
+    }
+  }, [errors, setFocus, isSubmitting])
 
   useEffect(() => {
     const fetchAIGeneratedIdea = async () => {
