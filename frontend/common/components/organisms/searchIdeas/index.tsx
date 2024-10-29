@@ -12,7 +12,9 @@ import AsyncSelect from "react-select/async"
 import { createClient } from "@/common/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { routes } from "@/common/routes";
-import { OptionProps, components } from "react-select";
+import {
+  components,
+} from "react-select";
 
 const {
   header: {
