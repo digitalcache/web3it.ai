@@ -14,31 +14,31 @@ const primaryFont = localFont({
   src: [
     {
       path: '../public/fonts/Chillax-Extralight.ttf',
-      weight: '200'
+      weight: '200',
     },
     {
       path: '../public/fonts/Chillax-Light.ttf',
-      weight: '300'
+      weight: '300',
     },
     {
       path: '../public/fonts/Chillax-Regular.ttf',
-      weight: '400'
+      weight: '400',
     },
     {
       path: '../public/fonts/Chillax-Medium.ttf',
-      weight: '500'
+      weight: '500',
     },
     {
       path: '../public/fonts/Chillax-Semibold.ttf',
-      weight: '600'
+      weight: '600',
     },
     {
       path: '../public/fonts/Chillax-Bold.ttf',
-      weight: '700'
+      weight: '700',
     },
     {
       path: '../public/fonts/Chillax-Variable.ttf',
-      weight: '800'
+      weight: '800',
     },
   ],
   variable: '--font-primaryFont',
