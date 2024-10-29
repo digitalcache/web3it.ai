@@ -47,7 +47,7 @@ export const Token = ({
         "rounded-3xl group h-auto w-full relative overflow-hidden hover:shadow-xl transition duration-200 text-left justify-between bg-black flex flex-col",
       )}
     >
-      <div className={`transition duration-200 px-2 xl:px-4 pt-3 z-10 relative pb-3 w-full`}>
+      <div className={`transition duration-200 px-4 pt-3 z-10 relative pb-3 w-full`}>
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tl overflow-hidden from-indigo-500/80 to-purple-500/80 -z-30"></div>
         <div className="flex justify-between items-center">
           <Image

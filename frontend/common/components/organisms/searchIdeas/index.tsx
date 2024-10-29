@@ -109,7 +109,7 @@ export const SearchIdeas = ({
             autoFocus={true}
             onChange={(inputValue) => {
               if (inputValue) {
-                router.push(routes.projectDetailPath.replace('%subdomain%', inputValue.value))
+                router.push(routes.projectDetailPath.replace('%subdomain%', inputValue.subdomain))
                 setSearchEnabled(false)
               }
             }}
