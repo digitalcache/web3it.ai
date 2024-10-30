@@ -1,12 +1,23 @@
 "use client";
 
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { cn } from "@/utils/helpers";
 import {
   AnimatePresence, motion,
 } from "framer-motion";
+import 'regenerator-runtime/runtime'
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from 'react-speech-recognition'
 import {
-  useCallback, useEffect, useRef, useState,
-} from "react";
+  Mic,
+  MicOff,
+} from "lucide-react";
 
 export function PlaceholderAndVanishInput ({
   placeholders,
@@ -20,6 +31,26 @@ export function PlaceholderAndVanishInput ({
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
+
+  const {
+    transcript,
+    listening,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  const handleSpeech = () => {
+    if (listening) {
+      SpeechRecognition.stopListening();
+    } else {
+      SpeechRecognition.startListening();
+    }
+  }
+
+  useEffect(() => {
+    if (listening && transcript) {
+      setValue(transcript)
+    }
+  }, [transcript, listening])
 
   useEffect(() => {
     setValue(input)
@@ -205,7 +236,7 @@ export function PlaceholderAndVanishInput ({
     >
       <canvas
         className={cn(
-          "absolute pointer-events-none  text-base transform scale-50 top-[20%] left-2 sm:left-8 origin-top-left filter invert pr-20",
+          "absolute pointer-events-none  text-base transform scale-50 top-[11%] md:top-[18%] left-4 origin-top-left filter invert pr-20",
           !animating ? "opacity-0" : "opacity-100",
         )}
         ref={canvasRef}
@@ -222,14 +253,27 @@ export function PlaceholderAndVanishInput ({
         value={value}
         type="text"
         className={cn(
-          "w-full relative text-sm sm:text-base z-50 border-none text-eerie-black bg-transparent h-full rounded-full focus:outline-none focus:ring-0 pl-8 pr-12",
+          "w-full relative text-sm sm:text-base z-50 border-none text-eerie-black bg-transparent h-full rounded-full focus:outline-none focus:ring-0 pl-6 pr-20 md:pr-24",
           animating && "text-transparent",
         )}
       />
+      {browserSupportsSpeechRecognition && (
+        <button
+          type="button"
+          onClick={handleSpeech}
+          className="text-white bg-eerie-black absolute right-10 md:right-12 hover:bg-opacity-90 top-1/2 z-50 h-6 w-6 md:h-8 md:w-8 rounded-full disabled:bg-zinc-600 -translate-y-1/2 transition duration-200 flex items-center justify-center"
+        >
+          {listening ? (
+            <MicOff width={20} height={20} strokeWidth={1} className="w-4 h-4 md:w-5 md:h-5" />
+          ) : (
+            <Mic width={20} height={20} strokeWidth={1} className="w-4 h-4 md:w-5 md:h-5" />
+          )}
+        </button>
+      )}
       <button
         disabled={!value}
         type="submit"
-        className="absolute right-2 top-1/2 z-50 -translate-y-1/2 h-6 w-6 md:h-8 md:w-8 rounded-full bg-eerie-black disabled:bg-zinc-600 transition duration-200 flex items-center justify-center"
+        className="absolute right-2 top-1/2 z-50 -translate-y-1/2 h-6 w-6 md:h-8 md:w-8 rounded-full bg-eerie-black hover:bg-opacity-90 disabled:bg-zinc-600 transition duration-200 flex items-center justify-center"
       >
         <motion.svg
           xmlns="http://www.w3.org/2000/svg"
@@ -283,7 +327,7 @@ export function PlaceholderAndVanishInput ({
                 duration: 0.3,
                 ease: "linear",
               }}
-              className="text-zinc-500 text-sm sm:text-base font-normal pl-8 text-left w-[calc(100%-4rem)] truncate"
+              className="text-zinc-500 text-sm sm:text-base font-normal pl-6 text-left w-[calc(100%-5rem)] truncate"
             >
               {placeholders[currentPlaceholder]}
             </motion.p>

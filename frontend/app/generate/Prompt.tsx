@@ -13,7 +13,7 @@ import { generate } from '../actions';
 import { IntefaceAIDTO } from './types';
 import lang from '@/common/lang';
 // import aiResponse from '@/utils/ai_sample_response.json';
-//
+
 const { generateIdea: generateIdeaCopy } = lang
 
 export const Prompt = ({
@@ -23,6 +23,7 @@ export const Prompt = ({
 }) => {
   const [input, setInput] = useState('')
   const [isGenerating, setIsGenerating] = useState(false);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value)
   }

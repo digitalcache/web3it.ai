@@ -54,8 +54,9 @@ export const Header = () => {
       />
       <nav className={`fixed top-0 left-0 right-0 z-[70] transition-all px-4 duration-150 ${isScrolled ? "bg-yankees-blue bg-opacity-50 backdrop-blur-sm" : ""} ${navbarOpened ? "bg-yankees-blue bg-opacity-70 backdrop-blur-sm h-screen" : ""}`}>
         <div className="container mx-auto py-3 flex items-center justify-between">
-          <Link href={routes.homePath} prefetch={true} replace className="">
-            <LogoIcon />
+          <Link href={routes.homePath} prefetch={true} replace className="flex md:gap-2 items-center text-white font-semibold text-lg md:text-xl">
+            <LogoIcon className="scale-75 md:scale-100"/>
+            <span className="text-white">Web3It.AI</span>
           </Link>
           <>
             <div className="flex lg:mr-0 gap-4 items-center">

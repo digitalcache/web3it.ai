@@ -2,6 +2,7 @@
 import { useOutsideClick } from "@/common/hooks";
 import lang from "@/common/lang";
 import { routes } from "@/common/routes";
+import debounce from "debounce-promise";
 import { createClient } from "@/common/utils/supabase/client";
 import { Transition } from "@headlessui/react";
 import {
@@ -39,7 +40,7 @@ export const SearchIdeas = ({
     callback: () => setSearchEnabled(false),
   });
 
-  const promiseOptions = async (inputValue: string) => {
+  const promiseOptions = debounce(async (inputValue: string) => {
     const { data: Subdomains } = await supabase
       .from('Subdomains')
       .select('*')
@@ -54,7 +55,7 @@ export const SearchIdeas = ({
       ]
     }
     return []
-  }
+  }, 1000)
 
   return (
     <Transition
