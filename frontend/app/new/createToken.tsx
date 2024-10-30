@@ -39,6 +39,7 @@ export const CreateToken = () => {
     mutateCategories,
     addCategory,
     isAddingCategory,
+    trigger,
   } = useCreateToken()
 
   const onCreateOption = async (option:string) => {
@@ -179,6 +180,7 @@ export const CreateToken = () => {
               } = field;
               return (
                 <ImageSelectionAndUpload
+                  trigger={trigger}
                   id={field.name}
                   errorField={!!error}
                   errorMessage={error?.message}

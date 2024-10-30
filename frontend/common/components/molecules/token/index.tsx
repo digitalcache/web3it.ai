@@ -27,7 +27,7 @@ export const Token = ({
     subdomains,
   } = data
 
-  const fundingRaised = idea.fundingRaised ? ethers.formatUnits(idea.fundingRaised, 'ether') : 0
+  const fundingRaised = idea ? parseFloat(ethers.formatUnits(idea.fundingRaised, 'ether'))  : 0;
 
   const tokenLink = useMemo(() => {
     if (subdomains?.length) {
@@ -38,7 +38,6 @@ export const Token = ({
     }
     return ''
   }, [subdomains, idea])
-
   return (
     <Link
       href={tokenLink}
@@ -77,7 +76,7 @@ export const Token = ({
         <div className="mt-2">
           <div className="flex flex-col w-max">
             <span className="text-sm text-neutral-400">{ideaCardCopy.raised}</span>
-            <span className="text-sm text-neutral-200 font-medium">{fundingRaised ? parseFloat(fundingRaised).toFixed(2).replace(/[.,]00$/, "") : 0} {process.env.NEXT_PUBLIC_CURRENCY || ''}</span>
+            <span className="text-sm text-neutral-200 font-medium">{fundingRaised ? fundingRaised.toFixed(3).replace(/[.,]000$/, "") : 0} {process.env.NEXT_PUBLIC_CURRENCY || ''}</span>
           </div>
         </div>
       </div>

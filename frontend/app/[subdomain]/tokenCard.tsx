@@ -76,7 +76,7 @@ export const TokenCard = ({
             <div className="text-neutral-300 text-xs flex flex-col">
               {ideaPageCopy.fundingRaised}{" "}
               <div className="">
-                <span className="font-semibold">{fundingRaised ? parseFloat(fundingRaised).toFixed(2).replace(/[.,]00$/, "") : 0} </span>
+                <span className="font-semibold">{fundingRaised ? parseFloat(fundingRaised).toFixed(3).replace(/[.,]000$/, "") : 0} </span>
                 {process.env.NEXT_PUBLIC_CURRENCY || ''}
               </div>
             </div>

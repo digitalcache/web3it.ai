@@ -10,7 +10,10 @@ import { CircularSpinner } from "@/common/components/atoms";
 import { UploadIcon } from "@/common/components/icons";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { UseFormSetValue } from "react-hook-form";
+import { Edit } from "lucide-react";
+import {
+  UseFormSetValue, UseFormTrigger,
+} from "react-hook-form";
 import { pinataUploadUrl } from "@/common/utils/network/endpoints";
 import lang from "@/common/lang";
 import { TokenDTO } from "./types";
@@ -23,12 +26,14 @@ export const ImageSelectionAndUpload = ({
   errorMessage,
   setValue,
   value,
+  trigger,
 } : {
   errorField: boolean;
   errorMessage?: string;
   setValue: UseFormSetValue<TokenDTO>;
   value: string;
   id: string;
+  trigger: UseFormTrigger<TokenDTO>;
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState('');
@@ -36,6 +41,7 @@ export const ImageSelectionAndUpload = ({
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
+      setValue('imageUrl', '')
       const file = event.target.files[0];
       if (!file) {
         return;
@@ -59,10 +65,13 @@ export const ImageSelectionAndUpload = ({
         const IPFS_URL = await uploadRequest.json();
         setValue('imageUrl', IPFS_URL)
         setUploadInProgress(false)
+        setError('')
       } catch (e) {
         setUploadInProgress(false)
         setError(imageUploadCopy.uploadError)
         toast.error(imageUploadCopy.uploadError)
+      } finally {
+        trigger(['imageUrl'])
       }
     }
   }
@@ -86,7 +95,7 @@ export const ImageSelectionAndUpload = ({
       <input
         type="file"
         name="file"
-        accept="image/png, image/jpeg"
+        accept={acceptedImageMimeTypes.join(', ')}
         id={id}
         ref={fileInputRef}
         className="opacity-0 -z-10 absolute overflow-hidden"
@@ -94,7 +103,7 @@ export const ImageSelectionAndUpload = ({
         onClick={handleInputClick}
       />
       {value ? (
-        <div className="w-full h-auto rounded-xl overflow-hidden mt-2 bg-white/50">
+        <div className="w-full h-auto rounded-xl overflow-hidden mt-2 bg-white/50 relative">
           <Image
             src={value}
             alt="pinata"
@@ -103,6 +112,14 @@ export const ImageSelectionAndUpload = ({
             className="w-full h-auto"
             quality={50}
           />
+          <button
+            disabled={uploadInProgress}
+            onClick={handleUploadFile}
+            type="button"
+            className="shadow-sm absolute top-3 right-3 p-2 rounded-lg bg-violets-are-blue hover:bg-opacity-80 text-white"
+          >
+            <Edit width={20} height={20} />
+          </button>
         </div>
       ) : (
         <button

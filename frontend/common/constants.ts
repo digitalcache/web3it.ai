@@ -18,8 +18,7 @@ export const ContractFunctions = {
 }
 
 export const FILE_SIZE_FIVE_MB = 5000000;
-export const acceptedImageMimeTypes = ['image/jpeg', 'image/png'];
-
+export const acceptedImageMimeTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp', 'image/gif', 'image/apng', 'image/avif'];
 export const promptPlaceholders = generateIdea.promptPlaceholders;
 export const promptLoadingStates = generateIdea.promptLoadingStates
 

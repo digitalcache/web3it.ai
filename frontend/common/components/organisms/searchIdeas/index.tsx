@@ -1,20 +1,20 @@
 'use client'
-import {
-  useRef,
-} from "react";
 import { useOutsideClick } from "@/common/hooks";
+import lang from "@/common/lang";
+import { routes } from "@/common/routes";
+import { createClient } from "@/common/utils/supabase/client";
 import { Transition } from "@headlessui/react";
 import {
   ChevronDown, PackageSearch,
 } from "lucide-react";
-import lang from "@/common/lang";
-import AsyncSelect from "react-select/async"
-import { createClient } from "@/common/utils/supabase/client";
 import { useRouter } from "next/navigation";
-import { routes } from "@/common/routes";
+import {
+  useRef,
+} from "react";
 import {
   components,
 } from "react-select";
+import AsyncSelect from "react-select/async";
 
 const {
   header: {
@@ -66,9 +66,9 @@ export const SearchIdeas = ({
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <div className='w-full fixed top-0 left-0 h-screen flex justify-center items-center backdrop-blur-md z-[9999] bg-black bg-opacity-20'>
+      <div className='w-full fixed top-0 left-0 h-screen flex justify-center pt-[200px] md:pt-0 md:items-center backdrop-blur-md z-[9999] bg-black bg-opacity-20'>
         <div ref={searchBoxRef} className="relative font-medium">
-          <span className="absolute top-1/2 left-3 -translate-y-1/2 text-indigo-400 z-10">
+          <span className="absolute top-2.5 md:top-1/2 md:-translate-y-1/2 left-3 text-indigo-400 z-10">
             <PackageSearch width={24} height={24} strokeWidth={1.5} />
           </span>
           <AsyncSelect

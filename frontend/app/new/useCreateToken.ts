@@ -23,13 +23,13 @@ import {
 import { injected } from 'wagmi/connectors'
 import { toast } from "react-hot-toast";
 import { pinataUploadUrl } from '@/common/utils/network/endpoints';
+import lang from '@/common/lang';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useGetCategories } from './useGetCategories';
 import { useAddCategory } from './useAddCategory';
 import { tokenSchema } from './validationSchema';
 import { TokenDTO } from './types';
 import abi from '@/utils/abis/ideaFactory.json'
-import lang from '@/common/lang';
 
 const { createIdea: createIdeaCopy } = lang
 
@@ -53,6 +53,7 @@ export const useCreateToken = () => {
     setValue,
     setFocus,
     getValues,
+    trigger,
     formState: {
       errors, isSubmitting,
     },
@@ -162,6 +163,7 @@ export const useCreateToken = () => {
                 {
                   subdomain: duplicatedDomain ? `${duplicatedDomain.subdomain}1` : getValues('ticker').toLowerCase(),
                   address: tokenAddressFromLog.address.toLowerCase(),
+                  name: getValues('name'),
                 },
               ])
               setIsSupabaseSubmitting(false)
@@ -265,6 +267,7 @@ export const useCreateToken = () => {
     mutateCategories,
     categories,
     isAddingCategory,
+    trigger,
     addCategory,
   }
 }
