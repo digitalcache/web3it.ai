@@ -60,7 +60,6 @@ export const Prompt = ({
         input={input}
         onSubmit={handleSubmit}
       />
-      {/* <div className='text-neutral-500 text-right md:pr-8 text-xs mt-2'>4 attempts left</div> */}
     </div>
   )
 }

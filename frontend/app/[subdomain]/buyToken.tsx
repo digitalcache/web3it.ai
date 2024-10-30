@@ -71,7 +71,7 @@ export const BuyToken = ({
       return;
     }
     if (purchaseAmount > remainingTokens) {
-      toast.error(`${ideaPageCopy.limitedTokensError.replace('%aamount%', remainingTokens.toString())}`)
+      toast.error(`${ideaPageCopy.limitedTokensError.replace('%amount%', remainingTokens.toString())}`)
       return
     }
     try {
@@ -163,7 +163,7 @@ export const BuyToken = ({
         {ideaPageCopy.availableTokens}: <div className="ml-2 font-semibold">{abbreviateNumber(remainingTokens.toString())}/{abbreviateNumber(maxSupply.toString())}</div>
       </div>
       <Modal>
-        <ModalTrigger setIsModalOpen={setIsModalOpen} disabled={purchaseAmount <= 0} onClick={getCost}>
+        <ModalTrigger setIsModalOpen={setIsModalOpen} disabled={purchaseAmount <= 0 || purchaseAmount > remainingTokens} onClick={getCost}>
           {ideaPageCopy.purchaseLabel}
         </ModalTrigger>
         <ModalBody isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>

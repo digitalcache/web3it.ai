@@ -188,7 +188,7 @@ const ideaPage = {
     columnThree: 'Date',
     columnFour: 'Transaction',
   },
-  limitedTokensError: 'Limited tokens. Please enter less than %amount%',
+  limitedTokensError: 'Limited tokens. There is only %amount% tokens left.',
   purchaseSuccess: 'Congratulations! You have purchased',
   purchaseError: 'Purchase could not be completed. Please try again!',
   bondingCurveProgress: 'Bonding curve progress',

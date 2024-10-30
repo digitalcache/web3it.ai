@@ -58,7 +58,7 @@ export default function Home () {
         <ShootingStars />
       </div>
       {isIdeaProcessing && <Loader />}
-      {!isIdeaGenerated && <div className="text-white absolute bottom-2 right-2 flex gap-1 items-center font-medium text-xs md:text-sm">{poweredByCopy} <ClaudeAIIcon /></div>}
+      {!isIdeaGenerated && <div className="text-white absolute bottom-2 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-2 flex gap-1 items-center font-medium text-xs md:text-sm">{poweredByCopy} <ClaudeAIIcon /></div>}
       <div className={`${generatedIdea ? "pt-16" : "pt-72"} delay-300 transition-all ease-in-out duration-300 pb-12 px-4`}>
         <div className="container mx-auto flex justify-center flex-col items-center">
           <Transition
