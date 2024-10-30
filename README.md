@@ -3,7 +3,7 @@
 ## PROVIDERS
 
 - Wagmi - Account info
-- Pinata - for image storage
+- Pinata - for IPFS image storage
 - Supabase - for storing subdomain related info
 - Vercel - for deployment
 - Microlink - for getting screenshot of websites
