@@ -1,5 +1,4 @@
 import {
-  ChangeEvent,
   useState,
 } from 'react';
 import { PlaceholderAndVanishInput } from '@/common/components/atoms';
@@ -24,8 +23,8 @@ export const Prompt = ({
   const [input, setInput] = useState('')
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value)
+  const handleInputChange = (value: string) => {
+    setInput(value)
   }
   const handleSubmit = async () => {
     if (input?.length) {

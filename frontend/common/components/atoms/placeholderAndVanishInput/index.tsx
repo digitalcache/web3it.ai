@@ -27,7 +27,7 @@ export function PlaceholderAndVanishInput ({
 }: {
   input: string;
   placeholders: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
@@ -49,8 +49,9 @@ export function PlaceholderAndVanishInput ({
   useEffect(() => {
     if (listening && transcript) {
       setValue(transcript)
+      onChange && onChange(transcript);
     }
-  }, [transcript, listening])
+  }, [transcript, listening, onChange])
 
   useEffect(() => {
     setValue(input)
@@ -245,7 +246,7 @@ export function PlaceholderAndVanishInput ({
         onChange={(e) => {
           if (!animating) {
             setValue(e.target.value);
-            onChange && onChange(e);
+            onChange && onChange(e.target.value);
           }
         }}
         onKeyDown={handleKeyDown}

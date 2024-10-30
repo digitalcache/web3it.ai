@@ -77,7 +77,7 @@ export default function Home () {
           </Transition>
           {isIdeaGenerated && (
             <>
-              <div className="text-neutral-300 mt-8 text-xl md:text-3xl font-medium text-center mb-4 md:mb-6">{continueCopy}</div>
+              <div className="text-neutral-300 mt-8 text-xl md:text-3xl font-semibold text-center mb-4 md:mb-6">{continueCopy}</div>
               <Button size="md" onClick={() => handleTokenCreation(generatedIdea)} variant="primary" type="button" className="transition-all gap-2 duration-150 hover:from-indigo-500/70 hover:to-purple-500/70 bg-gradient-to-r from-indigo-500 to-purple-500 font-medium">
                 {proceedCopy}
               </Button>
