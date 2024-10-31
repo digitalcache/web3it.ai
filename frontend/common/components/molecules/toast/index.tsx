@@ -18,8 +18,8 @@ export const Toaster = () => {
             appear
             show={toast.visible}
             className={cn(
-              'transform p-4 rounded-2xl flex items-center text-2xl',
-              toast.type === 'success' ? 'bg-green-200' : 'bg-red-200',
+              'transform p-4 rounded-xl flex items-center text-2xl',
+              toast.type === 'success' ? 'bg-gradient-to-br from-indigo-600 to-purple-600' : 'bg-red-400',
             )}
             enter="transition-all duration-150"
             enterFrom="opacity-0 scale-50"
@@ -31,8 +31,8 @@ export const Toaster = () => {
             <ToastIcon toast={toast} />
             <p
               className={cn(
-                toast.type === 'success' ? 'text-green-800' : 'text-red-800',
-                'text-sm',
+                toast.type === 'success' ? 'text-white' : 'text-white',
+                'text-sm font-medium',
               )}
             >
               {resolveValue(toast.message, toast)}

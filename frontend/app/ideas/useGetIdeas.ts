@@ -64,7 +64,7 @@ export const useGetIdeas = () => {
       return 4
     }
     if (windowSize === 'desktopLowRes') {
-      return 3
+      return 2
     }
     if (windowSize === 'tablet') {
       return 2

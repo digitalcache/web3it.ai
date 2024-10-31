@@ -15,6 +15,7 @@ import {
   UseFormSetValue, UseFormTrigger,
 } from "react-hook-form";
 import { pinataUploadUrl } from "@/common/utils/network/endpoints";
+import { blurDataUrl } from "@/common/utils/blurDataUrl";
 import lang from "@/common/lang";
 import { TokenDTO } from "./types";
 
@@ -111,6 +112,8 @@ export const ImageSelectionAndUpload = ({
             height={200}
             className="w-full h-auto"
             quality={50}
+            placeholder="blur"
+            blurDataURL={blurDataUrl}
           />
           <button
             disabled={uploadInProgress}

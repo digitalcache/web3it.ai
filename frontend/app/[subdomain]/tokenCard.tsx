@@ -5,6 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { ethers } from "ethers";
 import lang from "@/common/lang";
 import { OwnerType } from "./types";
+import { TokenXIcon } from "@/common/components/icons";
 
 const { ideaPage: ideaPageCopy } = lang
 
@@ -17,7 +18,7 @@ export const TokenCard = ({
 }) => {
   const fundingRaised = idea?.fundingRaised ? ethers.formatUnits(idea.fundingRaised, 'ether') : 0
   return (
-    <div className="bg-gradient-to-tl lg:max-w-[360px] from-indigo-500/80 to-purple-500/80 p-4 h-auto rounded-2xl shadow-lg">
+    <div className="bg-gradient-to-tl lg:max-w-[360px] from-indigo-500/90 to-purple-500/90 p-4 h-auto rounded-2xl shadow-lg">
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-start">
           <Image
@@ -81,7 +82,16 @@ export const TokenCard = ({
               </div>
             </div>
           </div>
-          <div className="flex justify-end mt-2">
+          <div className="flex justify-end mt-2 gap-2">
+            {idea.twitterUrl ? (
+              <LinkStyled
+                className="!px-0"
+                href={idea.twitterUrl}
+                target="_blank"
+              >
+                <TokenXIcon />
+              </LinkStyled>
+            ) : null}
             <LinkStyled
               className="!px-0 !text-xs w-max flex items-center -mr-2"
               href={idea.productUrl}
@@ -99,17 +109,20 @@ export const TokenCard = ({
             {ideaPageCopy.stakeholders}
           </div>
           {owners.map((owner, index: number) => {
+            if (owner.owner_address.toLowerCase() === (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '').toLowerCase()) {
+              return null
+            }
             return (
               <div
                 key={owner.owner_address}
                 className="flex justify-between gap-2"
               >
                 <LinkStyled
-                  href={`https://amoy.polygonscan.com/address/${owner.owner_address}`}
+                  href={`https://sepolia.etherscan.io/address/${owner.owner_address}`}
                   target="_blank"
                   className="!px-0 !text-sm hover:underline"
                 >
-                  {index + 1}. {owner.owner_address.slice(2, 7)}
+                  {index}. {owner.owner_address.slice(2, 7)}
                 </LinkStyled>
                 <span className="text-neutral-300 text-sm">
                   {parseFloat(owner.percentage_relative_to_total_supply).toFixed(2)}%

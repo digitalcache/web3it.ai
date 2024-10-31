@@ -12,6 +12,7 @@ export type IdeaType = {
     tokenCurrentSupply: bigint;
     productScreenshotUrl: string;
     categories: string;
+    twitterUrl: string;
 }
 
 export type IdeasType = Array<IdeaType>

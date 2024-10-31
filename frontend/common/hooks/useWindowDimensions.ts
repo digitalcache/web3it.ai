@@ -6,7 +6,7 @@ import {
 } from '@/common/hooks/types';
 import {
   lowResDeskLimit,
-  mobileWidthLimit, 
+  mobileWidthLimit,
   tabletWidthLimit,
 } from '../constants';
 
@@ -29,11 +29,11 @@ function getWindowSize (dimensions: WindowDimensions) {
   if (dimensions.width <= mobileWidthLimit) {
     return 'mobile';
   }
-  if (dimensions.width <= tabletWidthLimit) {
-    return 'tablet';
-  }
   if (dimensions.width <= lowResDeskLimit) {
     return 'desktopLowRes';
+  }
+  if (dimensions.width <= tabletWidthLimit) {
+    return 'tablet';
   }
   return 'desktop';
 }

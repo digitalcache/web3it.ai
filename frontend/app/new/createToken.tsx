@@ -14,6 +14,7 @@ import {
   Button,
   TextArea,
 } from '@/common/components/atoms';
+import { blurDataUrl } from '@/common/utils/blurDataUrl';
 import lang from '@/common/lang';
 import { ImageSelectionAndUpload } from './imageSelectionAndUpload';
 import { useCreateToken } from './useCreateToken';
@@ -202,6 +203,8 @@ export const CreateToken = () => {
                 alt="pinata"
                 width={400}
                 height={200}
+                placeholder="blur"
+                blurDataURL={blurDataUrl}
                 className="w-full h-auto"
                 quality={50}
               />

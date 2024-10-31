@@ -2,7 +2,7 @@
 "use client";
 import { useOutsideClick } from "@/common/hooks";
 import { cn } from "@/utils/helpers";
-import { 
+import {
   AnimatePresence, motion,
 } from "framer-motion";
 import React, {
@@ -69,8 +69,8 @@ export const ModalBody = ({
   const modalRef = useRef(null);
 
   useOutsideClick({
-    isVisible: false, 
-    ref: modalRef, 
+    isVisible: false,
+    ref: modalRef,
     callback: () => setIsModalOpen(false),
   });
 

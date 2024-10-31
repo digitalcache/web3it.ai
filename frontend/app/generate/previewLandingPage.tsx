@@ -1,3 +1,4 @@
+import { blurDataUrl } from "@/common/utils/blurDataUrl"
 import Image from "next/image"
 
 export const PreviewLandingPage = ({ image } : { image: string }) => {
@@ -10,7 +11,14 @@ export const PreviewLandingPage = ({ image } : { image: string }) => {
       }}
       className={`w-full border-2 md:border-3 border-[#6C6C6C] p-3 md:p-6 bg-zinc-900 rounded-3xl md:rounded-[30px] shadow-2xl`}
     >
-      <Image alt="preview" width={500} height={500} className="w-full h-auto" src={`data:image/svg+xml;utf8,${encodeURIComponent(image)}`} />
+      <Image
+        alt="preview"
+        width={500}
+        height={500}
+        placeholder="blur"
+        blurDataURL={blurDataUrl}
+        className="w-full h-auto" src={`data:image/svg+xml;utf8,${encodeURIComponent(image)}`}
+      />
     </div>
   )
 }

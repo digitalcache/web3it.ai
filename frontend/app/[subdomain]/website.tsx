@@ -1,4 +1,5 @@
 import { IdeaType } from "@/common/types";
+import { blurDataUrl } from "@/common/utils/blurDataUrl";
 import Image from "next/image";
 
 export const Website = ({
@@ -24,6 +25,8 @@ export const Website = ({
           width={1200}
           height={800}
           alt={idea?.name}
+          placeholder="blur"
+          blurDataURL={blurDataUrl}
         />
       ) : (
         <div className="w-full h-[60vh] bg-zinc-900"></div>

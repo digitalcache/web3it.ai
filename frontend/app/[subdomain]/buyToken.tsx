@@ -133,7 +133,7 @@ export const BuyToken = ({
     }
   }
   return (
-    <div className="bg-gradient-to-tl from-indigo-500 to-purple-500 shadow-lg shadow-black rounded-2xl p-4">
+    <div className="bg-gradient-to-tl from-indigo-500/90 to-purple-500/90 shadow-lg shadow-black rounded-2xl p-4">
       <div className="mb-4">
         <div className="text-white font-semibold mb-2 flex justify-between items-center">
           <span>{ideaPageCopy.bondingCurveProgress}</span>
@@ -183,7 +183,6 @@ export const BuyToken = ({
               <div className="flex items-center gap-1">
                 <div className="bg-white rounded-full px-3 py-1/2 font-semibold">
                   <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
-                  
                     {purchaseAmount}
                   </span>
                 </div>

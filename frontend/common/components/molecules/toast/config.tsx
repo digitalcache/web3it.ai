@@ -7,10 +7,10 @@ export const toasterConfig = {
   toastOptions: {
     duration: 5000,
     success: {
-      icon: <AlertSuccessIcon className="text-white fill-green-400 mr-3" />,
+      icon: <AlertSuccessIcon className="text-white fill-white mr-3" />,
     },
     error: {
-      icon: <AlertErrorIcon className="text-white fill-red-400 mr-3" />,
+      icon: <AlertErrorIcon className="text-white fill-white mr-3" />,
     },
   },
   containerStyle: {

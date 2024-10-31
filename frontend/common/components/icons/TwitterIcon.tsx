@@ -8,27 +8,12 @@ export const TwitterIcon = (props: SVGProps<SVGSVGElement>) => (
     fill="currentColor"
     {...props}
   >
-    <path
-      fill="url(#a_twitter)"
-      d="M32 16c0-8.83-7.17-16-16-16S0 7.17 0 16s7.17 16 16 16 16-7.17 16-16Z"
-    />
-    <path
-      className="group-hover:fill-white fill-black"
-      fillRule="evenodd"
-      d="M12.883 23.246c7.08 0 10.951-5.867 10.951-10.951 0-.168 0-.335-.008-.495a7.901 7.901 0 0 0 1.924-1.995 7.829 7.829 0 0 1-2.211.606A3.849 3.849 0 0 0 25.23 8.28a7.79 7.79 0 0 1-2.442.935 3.85 3.85 0 0 0-6.657 2.634c0 .303.032.598.103.878a10.92 10.92 0 0 1-7.934-4.023 3.858 3.858 0 0 0-.519 1.932 3.83 3.83 0 0 0 1.716 3.2 3.78 3.78 0 0 1-1.74-.479v.048a3.853 3.853 0 0 0 3.09 3.776 3.833 3.833 0 0 1-1.74.063 3.843 3.843 0 0 0 3.591 2.675A7.74 7.74 0 0 1 7 21.506a10.724 10.724 0 0 0 5.883 1.74Z"
-      clipRule="evenodd"
-    />
+    <path d="M32 16C32 7.16938 24.8306 0 16 0C7.16938 0 0 7.16938 0 16C0 24.8306 7.16938 32 16 32C24.8306 32 32 24.8306 32 16Z" fill="url(#paint0_linear_619_377)"/>
+    <path className="group-hover:fill-white fill-black" d="M21.153 8H23.7139L18.119 14.3946L24.7009 23.0961H19.5473L15.5109 17.8187L10.8923 23.0961H8.32979L14.314 16.2564L8 8H13.2844L16.933 12.8238L21.153 8ZM20.2542 21.5633H21.6732L12.5133 9.45232H10.9906L20.2542 21.5633Z" />
     <defs>
-      <linearGradient
-        id="a_twitter"
-        x1={16}
-        x2={16}
-        y1={0}
-        y2={32}
-        gradientUnits="userSpaceOnUse"
-      >
+      <linearGradient id="paint0_linear_619_377" x1="16" y1="0" x2="16" y2="32" gradientUnits="userSpaceOnUse">
         <stop />
-        <stop offset={1} />
+        <stop offset="1" />
       </linearGradient>
     </defs>
   </svg>

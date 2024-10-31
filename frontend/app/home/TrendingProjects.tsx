@@ -19,7 +19,6 @@ export const TrendingProjects = () => {
     isLoading,
     columnCount,
   } = useGetIdeas()
-
   return (
     <>
       {isLoading && <Loader />}
@@ -45,7 +44,6 @@ export const TrendingProjects = () => {
                 />
               </div>
             )}
-
           </div>
         </section> : null}
     </>

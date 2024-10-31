@@ -17,7 +17,7 @@ export const TradeTable = ({
 }) => {
   return (
     <div>
-      <div className="mb-2 md:mt-4 text-neutral-200 font-medium text:lg lg:text-xl">
+      <div className="mb-2 md:mt-4 text-neutral-100 font-semibold text:lg lg:text-xl">
         {ideaPageCopy.checkTransHeading} {idea?.name}
       </div>
       <table className="w-full text-sm text-left text-gray-400 rtl:text-right rounded-xl overflow-hidden">
@@ -49,7 +49,7 @@ export const TradeTable = ({
               >
                 <a
                   className="text-white"
-                  href={`https://amoy.polygonscan.com/address/${transfer.to_address}`}
+                  href={`https://sepolia.etherscan.io/address/${transfer.to_address}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -65,7 +65,7 @@ export const TradeTable = ({
               <th className="px-6 py-4 font-medium hover:underline">
                 <a
                   className="text-white"
-                  href={`https://amoy.polygonscan.com/tx/${transfer.transaction_hash}`}
+                  href={`https://sepolia.etherscan.io/tx/${transfer.transaction_hash}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
