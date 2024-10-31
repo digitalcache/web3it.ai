@@ -171,16 +171,23 @@ export const BuyToken = ({
             <h4 className="text-white font-semibold text-xl md:text-2xl ml-6 pt-4">{ideaPageCopy.confirmPurchase}</h4>
             <div className="text-center font-medium md:text-xl text-white mt-16 flex gap-2 flex-col md:flex-row items-center justify-center">
               <span>{ideaPageCopy.youNeedToPay}</span>
-              <div className="bg-white rounded-full px-3 py-1/2 font-semibold">
-                <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
-                  {cost}
-                </span>
+              <div className="flex items-center gap-1">
+                <div className="bg-white rounded-full px-3 py-1/2 font-semibold">
+                  <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
+                    {cost}
+                  </span>
+                </div>
+                {process.env.NEXT_PUBLIC_CURRENCY || ''}
               </div>
-              <span>{process.env.NEXT_PUBLIC_CURRENCY || ''} {ideaPageCopy.for} {purchaseAmount}</span>
-              <div className="bg-white rounded-full px-3 py-1/2 font-semibold">
-                <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
-                  {idea?.symbol}
-                </span>
+              <span>{ideaPageCopy.for}</span>
+              <div className="flex items-center gap-1">
+                <div className="bg-white rounded-full px-3 py-1/2 font-semibold">
+                  <span className="bg-gradient-to-b from-indigo-500 to-purple-500 text-transparent bg-clip-text">
+                  
+                    {purchaseAmount}
+                  </span>
+                </div>
+                {idea?.symbol}
               </div>
             </div>
             <p className="text-neutral-200 mt-8 md:mt-4 text-center text-xs md:text-sm">{ideaPageCopy.ensure}</p>
