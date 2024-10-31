@@ -16,7 +16,7 @@ const {
   },
 } = lang
 
-export const Token = ({
+export const TokenListItem = ({
   data,
 }: {
   data: IdeaTypeWithDomain;
@@ -63,15 +63,12 @@ export const Token = ({
             </span>
           </div>
         </div>
-        <div className="flex justify-between flex-1 items-center mt-4">
+        <div className="flex justify-between flex-1 items-center mt-2">
           <div className="flex text-neutral-200 justify-between w-full items-center">
             <div className="font-semibold mr-1 text-xl">
               {idea.name}
             </div>
           </div>
-        </div>
-        <div className="text-neutral-300 text-sm mt-2 leading-4">
-          {idea.description.replaceAll('$comma$', ',')}
         </div>
         <div className="mt-2">
           <div className="flex flex-col w-max">

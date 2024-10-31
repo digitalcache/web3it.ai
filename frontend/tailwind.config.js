@@ -25,10 +25,17 @@ module.exports = {
         '50%': { background: '#6366f1' },
         '100%': { background: '#a855f7' },
       },
+      animateIn: {
+        'to': {
+          opacity: '1',
+          transform: 'translateY(0)',
+        }
+      }
     },
     animation: {
       ldsLoader: 'ldsLoader 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
       rotatingGradient: 'rotatingGradient 2s cubic-bezier(0.5, 0, 0.5, 1) infinite alternate',
+      animateIn: 'animateIn 0.5s ease-in-out forwards',
     },
   },
   plugins: [

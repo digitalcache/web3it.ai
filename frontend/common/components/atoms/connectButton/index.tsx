@@ -81,7 +81,7 @@ export const ConnectButton = () => {
                         </div>
                       )}
                     </span>
-                    {account.displayName}
+                    <span className='hidden sm:inline'>{account.displayName}</span>
                     <ChevronDown strokeWidth={2.5} width={20} height={20} className='w-4 h-4 md:w-5 md:h-5' />
                   </button>
                 </div>

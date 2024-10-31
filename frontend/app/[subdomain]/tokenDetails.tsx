@@ -67,7 +67,7 @@ export const TokenDetails = ({
             />
           ) : null}
         </div>
-        <div className="flex flex-col-reverse lg:flex-col gap-4">
+        <div className="flex flex-col lg:flex-col gap-4">
           {idea ? (
             <TokenCard
               owners={owners}

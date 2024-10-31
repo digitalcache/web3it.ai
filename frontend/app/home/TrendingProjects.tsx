@@ -1,7 +1,7 @@
 'use client'
 
 import { routes } from '@/common/routes';
-import { Masonry } from "masonic";
+import { Masonry, } from "masonic";
 import {
   Loader,
 } from '@/common/components/atoms';
@@ -41,6 +41,7 @@ export const TrendingProjects = () => {
                   rowGutter={16}
                   items={ideas}
                   render={Token}
+
                 />
               </div>
             )}
