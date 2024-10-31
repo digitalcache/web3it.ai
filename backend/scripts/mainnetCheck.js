@@ -1,10 +1,10 @@
 const { ethers } = require("hardhat");
 
 async function main() {
-  const contract = await ethers.getContractAt("IdeaFactory",
-  //add the contract address that you just deployed in the last step
-  '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1') //line 6
-  const res = await contract.createIdeaToken(
+  // Grab the contract factory
+  const tokenCt = await ethers.deployContract("IdeaFactory");
+
+  await tokenCt.createIdeaToken(
     "PokeSwap 123",
     "PSWP",
     "https://bronze-deep-gazelle-81.mypinata.cloud/ipfs/bafkreibfmlj5z6uyzwtbnkzgzjszuetvzbedi4xpezurzq2pctzzpex2yy",
@@ -16,7 +16,16 @@ async function main() {
       value: ethers.parseEther("0.0001")
     }
   )
-  console.log(res)
+  const ideas = await tokenCt.getAllIdeaTokens();
+  console.log("ideas before buying", ideas)
+
+  const ideaTokenAddress = await tokenCt.ideaTokenAddresses(0)
+  await tokenCt.buyIdeaToken(ideaTokenAddress, 800000, {
+      value: 24048064056000000000n
+  });
+  const ideas2 = await tokenCt.getAllIdeaTokens();
+  console.log("ideas after buying", ideas2)
+
 }
 
 main()

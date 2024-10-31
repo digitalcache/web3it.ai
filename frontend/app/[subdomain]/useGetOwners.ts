@@ -18,7 +18,7 @@ export const getOwners = async (key: string) => {
 }
 
 export const useGetOwners = ({ tokenAddress } : { tokenAddress: string }) => {
-  const url = getOwnersFromMoralisUrl.replace('%tokenAddress%', tokenAddress).replace('%chainId%', 'polygon amoy')
+  const url = getOwnersFromMoralisUrl.replace('%tokenAddress%', tokenAddress).replace('%chainId%', 'sepolia')
   const result = useSWR<Get_Owners_Dto>(url, url => getOwners(
     url,
   ), {

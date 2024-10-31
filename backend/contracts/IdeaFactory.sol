@@ -29,10 +29,10 @@ contract IdeaFactory {
 
     uint constant IDEATOKEN_CREATION_PLATFORM_FEE = 0.0001 ether;
     uint constant IDEACOIN_FUNDING_DEADLINE_DURATION = 10 days;
-    uint constant IDEACOIN_FUNDING_GOAL = 24 ether;
+    uint constant IDEACOIN_FUNDING_GOAL = 24048064056000000000 wei;
 
-    address constant UNISWAP_V2_FACTORY_ADDRESS = 0x9e5A52f57b3038F1B8EeE45F28b3C1967e22799C;
-    address constant UNISWAP_V2_ROUTER_ADDRESS = 0xedf6066a2b290C185783862C7F4776A2C8077AD1;
+    address constant UNISWAP_V2_FACTORY_ADDRESS = 0xF62c03E08ada871A0bEb309762E260a7a6a880E6;
+    address constant UNISWAP_V2_ROUTER_ADDRESS = 0xeE567Fe1712Faf6149d80dA1E6934E354124CfE3;
 
 
     uint constant DECIMALS = 10 ** 18;
@@ -40,33 +40,56 @@ contract IdeaFactory {
     uint constant INIT_SUPPLY = 20 * MAX_SUPPLY / 100;
 
     uint256 public constant INITIAL_PRICE = 30000000000000;  // Initial price in wei (P0), 3.00 * 10^13
-    uint256 public constant K = 8 * 10**15;  // Growth rate (k), scaled to avoid precision loss (0.01 * 10^18)
+    uint256 public constant K = 5 * 10**15;  // Growth rate (k), scaled to avoid precision loss (0.01 * 10^18)
+    // uint256 public constant K = 0.01 * 10**18;  // Growth rate (k), scaled to avoid precision loss (0.01 * 10^18)
 
     // Function to calculate the cost in wei for purchasing tokensToBuy starting from currentSupply
     function calculateCost(uint256 currentSupply, uint256 tokensToBuy) public pure returns (uint256) {
 
             // Calculate the exponent parts scaled to avoid precision loss
-        uint256 exponent1 = (K * (currentSupply + tokensToBuy)) / 10**18;
-        uint256 exponent2 = (K * currentSupply) / 10**18;
+        uint256 exponent1 = (K * (currentSupply + tokensToBuy)) / 10**12;
+        uint256 exponent2 = (K * currentSupply) / 10**12;
+
+        // (bool success, uint256 result) = Math.tryDiv((K * (currentSupply + tokensToBuy)), 10**18);
+
+        // console.log(success, result);
+
+        // uint256 exponent1NoScale = (K * (currentSupply + tokensToBuy));
+        // uint256 exponent2NoScale = (K * currentSupply);
 
         // Calculate e^(kx) using the exp function
         uint256 exp1 = exp(exponent1);
         uint256 exp2 = exp(exponent2);
 
+        // console.log(exponent1NoScale);
+        // console.log(exponent2NoScale);
+
+        // console.log(exponent1);
+        // console.log(exponent2);
+        // console.log(INITIAL_PRICE);
+        // console.log(exp1);
+        // console.log(exp2);
+
+        // uint256 valueWithoutDifference = (INITIAL_PRICE * 10**18) / K;
+        // console.log(valueWithoutDifference);
+        // console.log(exp1 - exp2);
+
         // Cost formula: (P0 / k) * (e^(k * (currentSupply + tokensToBuy)) - e^(k * currentSupply))
         // We use (P0 * 10^18) / k to keep the division safe from zero
-        uint256 cost = (INITIAL_PRICE * 10**18 * (exp1 - exp2)) / K;  // Adjust for k scaling without dividing by zero
+        uint256 cost = (INITIAL_PRICE * 10**12 * (exp1 - exp2)) / K;  // Adjust for k scaling without dividing by zero
+        // uint256 cost = (INITIAL_PRICE  * (exp1 - exp2));  // Adjust for k scaling without dividing by zero
+        // return cost > 1000 wei ? cost : 1000 wei;
         return cost;
     }
 
     // Improved helper function to calculate e^x for larger x using a Taylor series approximation
     function exp(uint256 x) internal pure returns (uint256) {
-        uint256 sum = 10**18;  // Start with 1 * 10^18 for precision
-        uint256 term = 10**18;  // Initial term = 1 * 10^18
+        uint256 sum = 10**12;  // Start with 1 * 10^18 for precision
+        uint256 term = 10**12;  // Initial term = 1 * 10^18
         uint256 xPower = x;  // Initial power of x
 
         for (uint256 i = 1; i <= 20; i++) {  // Increase iterations for better accuracy
-            term = (term * xPower) / (i * 10**18);  // x^i / i!
+            term = (term * xPower) / (i * 10**12);  // x^i / i!
             sum += term;
 
             // Prevent overflow and unnecessary calculations
@@ -111,7 +134,6 @@ contract IdeaFactory {
         // check to ensure funding goal is not met
         require(listedToken.fundingRaised <= IDEACOIN_FUNDING_GOAL, "Funding has already been raised");
 
-
         // check to ensure there is enough supply to facilitate the purchase
         uint currentSupply = ideaTokenCt.totalSupply();
         // console.log("Current supply of token is ", currentSupply);
@@ -144,7 +166,7 @@ contract IdeaFactory {
             uint tokenAmount = INIT_SUPPLY;
             uint ethAmount = listedToken.fundingRaised;
             uint liquidity = _provideLiquidity(ideaTokenAddress, tokenAmount, ethAmount);
-            // console.log("UNiswap provided liquidty ", liquidity);
+            console.log("UNiswap provided liquidty ", liquidity);
 
             // burn lp token
             _burnLpTokens(pool, liquidity);
@@ -173,30 +195,24 @@ contract IdeaFactory {
         listedToken.tokenCurrentSupply = ideaTokenCt.totalSupply();
         return addressToIdeaTokenMapping[ideaTokenAddress];
     }
-    function _createLiquidityPool(address memeTokenAddress) internal returns(address) {
+    function _createLiquidityPool(address ideaTokenAddress) internal returns(address) {
         IUniswapV2Factory factory = IUniswapV2Factory(UNISWAP_V2_FACTORY_ADDRESS);
         IUniswapV2Router01 router = IUniswapV2Router01(UNISWAP_V2_ROUTER_ADDRESS);
-        address pair = factory.createPair(memeTokenAddress, router.WETH());
+        address pair = factory.createPair(ideaTokenAddress, router.WETH());
         return pair;
     }
-
-    function _provideLiquidity(address memeTokenAddress, uint tokenAmount, uint ethAmount) internal returns(uint){
-        Idea memeTokenCt = Idea(memeTokenAddress);
-        memeTokenCt.approve(UNISWAP_V2_ROUTER_ADDRESS, tokenAmount);
+    function _provideLiquidity(address ideaTokenAddress, uint tokenAmount, uint ethAmount) internal returns(uint){
+        Idea ideaTokenCt = Idea(ideaTokenAddress);
+        ideaTokenCt.approve(UNISWAP_V2_ROUTER_ADDRESS, tokenAmount);
         IUniswapV2Router01 router = IUniswapV2Router01(UNISWAP_V2_ROUTER_ADDRESS);
         (uint amountToken, uint amountETH, uint liquidity) = router.addLiquidityETH{
             value: ethAmount
-        }(memeTokenAddress, tokenAmount, tokenAmount, ethAmount, address(this), block.timestamp);
+        }(ideaTokenAddress, tokenAmount, tokenAmount, ethAmount, address(this), block.timestamp);
         return liquidity;
     }
-
     function _burnLpTokens(address pool, uint liquidity) internal returns(uint){
         IUniswapV2Pair uniswapv2pairct = IUniswapV2Pair(pool);
         uniswapv2pairct.transfer(address(0), liquidity);
-        // console.log("Uni v2 tokens burnt");
         return 1;
     }
-
-
-
 }

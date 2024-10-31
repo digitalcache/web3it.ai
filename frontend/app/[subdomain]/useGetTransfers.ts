@@ -18,7 +18,7 @@ export const getTransfers = async (key: string) => {
 }
 
 export const useGetTransfers = ({ tokenAddress } : { tokenAddress: string }) => {
-  const url = getTransfersFromMoralisUrl.replace('%tokenAddress%', tokenAddress).replace('%chainId%', 'polygon amoy')
+  const url = getTransfersFromMoralisUrl.replace('%tokenAddress%', tokenAddress).replace('%chainId%', 'sepolia')
   const result = useSWR<Get_Transfers_Dto>(url, url => getTransfers(
     url,
   ), {

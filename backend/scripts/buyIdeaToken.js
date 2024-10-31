@@ -3,10 +3,12 @@ const { ethers } = require("hardhat");
 async function main() {
   const contract = await ethers.getContractAt("IdeaFactory",
   //add the contract address that you just deployed in the last step
-  '0xD4f1246CB8D88f6dd6476E90F7A9786Bf49E852D') //line 6
+  '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1') //line 6
   const res = await contract.buyIdeaToken(
-  "0x4DD9291Efc26fDAd0F870155f0886c1a8d2f3666",
-  1) //line 13
+  "0x56639dB16Ac50A89228026e42a316B30179A5376",
+  799998, {
+    value: 24048003936000000000n
+  }) //line 13
   console.log(res)
 }
 
