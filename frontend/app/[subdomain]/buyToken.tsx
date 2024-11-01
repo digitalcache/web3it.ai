@@ -23,7 +23,7 @@ import {
 import { KeyedMutator } from "swr";
 import lang from "@/common/lang";
 import { abbreviateNumber } from "@/utils/helpers";
-import { getCostBasedOnTokens } from "../actions";
+// import { getCostBasedOnTokens } from "@/app/actions";
 import {
   Get_Owners_Dto,
   Get_Transfers_Dto,
@@ -34,6 +34,7 @@ const { ideaPage: ideaPageCopy } = lang
 
 export const BuyToken = ({
   idea,
+  getCostBasedOnTokens,
   setTokenInfoLoading,
   tokenAddress,
   mutateTransfers,
@@ -45,6 +46,7 @@ export const BuyToken = ({
   tokenAddress: string;
   mutateTransfers: KeyedMutator<Get_Transfers_Dto>;
   mutateOwners: KeyedMutator<Get_Owners_Dto>;
+  getCostBasedOnTokens: (totalSupply: number, purchaseAmount: number) => any;
   mutateIdea: any;
 }) => {
   const {

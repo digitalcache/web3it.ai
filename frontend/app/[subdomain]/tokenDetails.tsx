@@ -21,8 +21,10 @@ import ideaAbi from '@/utils/abis/ideaFactory.json'
 
 export const TokenDetails = ({
   tokenAddress,
+  getCostBasedOnTokens,
 } : {
   tokenAddress: string;
+  getCostBasedOnTokens: (totalSupply: number, purchaseAmount: number) => any;
 }) => {
   const [tokenInfoLoading, setTokenInfoLoading] = useState(false);
   const {
@@ -77,6 +79,7 @@ export const TokenDetails = ({
           <BuyToken
             idea={idea}
             setTokenInfoLoading={setTokenInfoLoading}
+            getCostBasedOnTokens={getCostBasedOnTokens}
             tokenAddress={tokenAddress}
             mutateTransfers={mutateTransfers}
             mutateOwners={mutateOwners}
