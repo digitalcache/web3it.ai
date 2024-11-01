@@ -31,13 +31,14 @@ export async function generate (input: string) {
   return object
 }
 
-export async function costBasedOnTokens () {
+export async function costBasedOnTokens (totalSupply: number, purchaseAmount: number) {
   'use server';
 
   const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
-  // const costInWei = await contract.calculateCost(totalSupply, purchaseAmount);
+  const costInWei = await contract.calculateCost(totalSupply, purchaseAmount);
+  // eslint-disable-next-line no-console
+  console.log("here", costInWei)
   // return costInWei
   return 300
 }

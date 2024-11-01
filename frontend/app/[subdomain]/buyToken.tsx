@@ -77,11 +77,12 @@ export const BuyToken = ({
     }
     try {
       setTokenInfoLoading(true)
-      const costInWei = await costBasedOnTokens()
+      const costInWei = await costBasedOnTokens(totalSupply, purchaseAmount)
       setCostWei(costInWei)
       setCost(ethers.formatUnits(costInWei, 'ether'));
       setIsModalOpen(true);
     } catch (error) {
+      console.error(error)
     } finally {
       setTokenInfoLoading(false)
     }
