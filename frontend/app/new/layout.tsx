@@ -1,7 +1,13 @@
-'use client'
 import { ReactNode } from "react";
-import { Toaster } from "@/common/components/molecules";
 import { Header } from "@/common/components/organisms";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Create new ideas and and fuel your startup ideas with blockchain crowdfunding',
+  alternates: {
+    canonical: '/new',
+  },
+}
 
 export default function Layout ({
   children,
@@ -12,7 +18,6 @@ export default function Layout ({
     <div>
       <Header />
       {children}
-      <Toaster />
     </div>
   )
 }

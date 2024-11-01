@@ -7,6 +7,7 @@ import { Providers } from "@/utils/providers";
 import { headers } from 'next/headers';
 import { cookieToInitialState } from "wagmi";
 import { config } from "@/config";
+import { Metadata } from "next";
 import '@rainbow-me/rainbowkit/styles.css'
 import './globals.css'
 
@@ -44,9 +45,9 @@ const primaryFont = localFont({
   variable: '--font-primaryFont',
 })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Web3It.AI | Innovative Crowdfunding Blockchain App for Early-Stage Enterprises',
-  description: "Unlock your startup's potential with our cutting-edge crowdfunding blockchain application. Designed specifically for early-phase companies, our platform offers secure, transparent funding solutions to accelerate your growth. Join us and take your enterprise to new heights.",
+  description: "Boost your startup with our blockchain crowdfunding app. Secure, transparent funding for early-phase companies. Grow faster. Join us now.",
   metadataBase: new URL("https://web3it.ai"),
   alternates: {
     canonical: '/',

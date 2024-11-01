@@ -3,6 +3,7 @@
 import { Footer } from '@/common/components/organisms';
 import lang from '@/common/lang';
 import { abbreviateNumber } from '@/utils/helpers';
+import { Toaster } from "@/common/components/molecules";
 import { CreateToken } from './createToken';
 
 const { createIdea: createIdeaCopy } = lang
@@ -16,9 +17,9 @@ const TokenCreate = () => {
         <h2 className="text-2xl md:text-3xl font-semibold mb-2 text-center text-white">
           {createIdeaCopy.heading}
         </h2>
-        <h2 className="max-w-[400px] text-center text-neutral-200 w-full text-sm border-b border-white border-opacity-10 pb-4">
+        <h1 className="max-w-[400px] text-center text-neutral-200 w-full text-sm border-b border-white border-opacity-10 pb-4">
           {createIdeaCopy.subHeading}
-        </h2>
+        </h1>
         <p className="text-neutral-200 mt-4 text-xs font-medium">
           <span className='font-normal'>{createIdeaCopy.tokenCreationFeeLabel}</span> {process.env.NEXT_PUBLIC_IDEA_CREATION_FEE || ''} {process.env.NEXT_PUBLIC_CURRENCY || ''}
         </p>
@@ -41,6 +42,7 @@ const TokenCreate = () => {
         <CreateToken />
       </div>
       <Footer />
+      <Toaster />
     </div>
   )
 };

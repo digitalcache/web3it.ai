@@ -1,7 +1,13 @@
-'use client'
 import { ReactNode } from "react";
 import { Header } from "@/common/components/organisms";
-import { Toaster } from "@/common/components/molecules";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Create website mockups with AI and launch ideas with unique tokens',
+  alternates: {
+    canonical: '/generate',
+  },
+}
 
 export default function Layout ({
   children,
@@ -12,7 +18,6 @@ export default function Layout ({
     <div>
       <Header />
       {children}
-      <Toaster />
     </div>
   )
 }

@@ -41,9 +41,9 @@ export const TokenCard = ({
           <div className="flex gap-2 items-start justify-between">
             <div className="text-neutral-200 text-xl font-semibold">{idea.name}</div>
           </div>
-          <div className="text-neutral-300 font-medium text-xs mt-1">
+          <h1 className="text-neutral-300 font-medium text-xs mt-1">
             {idea.description.replaceAll('$comma$', ',')}
-          </div>
+          </h1>
           <div className="flex gap-1 mt-1 flex-wrap">
             {idea.categories.split('/').map((category, index) => (
               <div key={index} className="bg-white rounded-full text-xs px-2 py-1/2 font-semibold">

@@ -69,9 +69,9 @@ const ViewTokens = () => {
       <div className="min-h-screen pt-20 md:pt-32 pb-[180px]">
         <div className='container mx-auto flex items-center flex-col w-full relative'>
           <h2 className="text-2xl md:text-3xl font-semibold mb-2 text-center text-white">{ideasCopy.currentIdeas}</h2>
-          <h2 className="text-center text-neutral-200 text-sm pb-4 max-w-[200px] md:max-w-max">
+          <h1 className="text-center text-neutral-200 text-sm pb-4 max-w-[200px] md:max-w-max">
             {ideasCopy.currentIdeasSubHeading}
-          </h2>
+          </h1>
           <div className="absolute top-10 right-4 md:right-0">
             <button type="button" onClick={() => setIsListView(!isListView)} className="flex gap-2 text-white hover:text-indigo-400">
               {isListView ? (
@@ -115,7 +115,7 @@ const ViewTokens = () => {
                     />
                   </div>
                   <div className="text-xl md:text-2xl font-semibold text-white text-center">{ideasCopy.noIdeasHeading}</div>
-                  <div className="text-neutral-400 font-medium mt-2 mb-6 text-center">{ideasCopy.noIdeasSubHeading}</div>
+                  <div className="text-neutral-200 text-sm  mt-2 mb-6 text-center">{ideasCopy.noIdeasSubHeading}</div>
                   <Link href={routes.newIdeaPath} prefetch={true}
                     className={`flex items-center justify-center text-white rounded-xl outline-none px-4 py-3 text-base
                     disabled:cursor-not-allowed ease-in-out transition-all gap-2 duration-150 hover:from-indigo-500/70

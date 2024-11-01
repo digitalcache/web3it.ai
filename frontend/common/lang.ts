@@ -122,6 +122,7 @@ const generateIdea = {
   continue: 'Continue to Create Token',
   proceed: 'Proceed',
   orEnhance: 'Or keep enhancing the idea',
+  h1: 'Generate your Web3 Idea with Claude AI',
 }
 
 const ideas = {
