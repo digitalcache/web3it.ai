@@ -34,7 +34,7 @@ const { ideaPage: ideaPageCopy } = lang
 
 export const BuyToken = ({
   idea,
-  getCostBasedOnTokens,
+  costBasedOnTokens,
   setTokenInfoLoading,
   tokenAddress,
   mutateTransfers,
@@ -46,7 +46,7 @@ export const BuyToken = ({
   tokenAddress: string;
   mutateTransfers: KeyedMutator<Get_Transfers_Dto>;
   mutateOwners: KeyedMutator<Get_Owners_Dto>;
-  getCostBasedOnTokens: (totalSupply: number, purchaseAmount: number) => any;
+  costBasedOnTokens: (totalSupply: number, purchaseAmount: number) => any;
   mutateIdea: any;
 }) => {
   const {
@@ -79,7 +79,7 @@ export const BuyToken = ({
     }
     try {
       setTokenInfoLoading(true)
-      const costInWei = await getCostBasedOnTokens(totalSupply, purchaseAmount)
+      const costInWei = await costBasedOnTokens(totalSupply, purchaseAmount)
       setCostWei(costInWei)
       setCost(ethers.formatUnits(costInWei, 'ether'));
       setIsModalOpen(true);
