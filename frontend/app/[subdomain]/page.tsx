@@ -2,7 +2,6 @@ import { createClient } from '@/common/utils/supabase/client';
 import { readContract } from '@wagmi/core'
 import { Metadata } from 'next';
 import { config } from '@/config';
-import { ethers } from "ethers";
 import { Address } from 'viem';
 import { ContractFunctions } from '@/common/constants';
 import { IdeaType } from '@/common/types';
@@ -46,19 +45,11 @@ const TokenDetail = async ({ params } : {
   const supabase = createClient();
   const { data: subdomains } = await supabase.from('Subdomains').select('*')
 
-  async function costBasedOnTokens (totalSupply: number, purchaseAmount: number) {
-    'use server';
-    const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
-    const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
-    const costInWei = await contract.calculateCost(totalSupply, purchaseAmount);
-    return costInWei
-  }
-
   if (subdomains?.length) {
     const subdomainData = subdomains.find((d) => d.subdomain === params.subdomain)
     if (subdomainData?.address) {
       return (
-        <TokenDetails tokenAddress={subdomainData.address} costBasedOnTokens={costBasedOnTokens} />
+        <TokenDetails tokenAddress={subdomainData.address} />
       )
     }
   }

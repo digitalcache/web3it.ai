@@ -4,7 +4,9 @@ import { redirect } from 'next/navigation'
 import { generateObject } from 'ai';
 import { anthropic } from '@ai-sdk/anthropic';
 import { z } from 'zod';
+import { ethers } from "ethers";
 import { landingPageDescription } from '@/common/constants';
+import ideaAbi from '@/utils/abis/ideaFactory.json'
 
 export async function navigate (href: string) {
   redirect(href)
@@ -27,4 +29,15 @@ export async function generate (input: string) {
     }),
   });
   return object
+}
+
+export async function costBasedOnTokens () {
+  'use server';
+
+  const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
+  // const costInWei = await contract.calculateCost(totalSupply, purchaseAmount);
+  // return costInWei
+  return 300
 }

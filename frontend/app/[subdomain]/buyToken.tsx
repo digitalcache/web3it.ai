@@ -23,7 +23,7 @@ import {
 import { KeyedMutator } from "swr";
 import lang from "@/common/lang";
 import { abbreviateNumber } from "@/utils/helpers";
-// import { getCostBasedOnTokens } from "@/app/actions";
+import { costBasedOnTokens } from "@/app/actions";
 import {
   Get_Owners_Dto,
   Get_Transfers_Dto,
@@ -34,7 +34,6 @@ const { ideaPage: ideaPageCopy } = lang
 
 export const BuyToken = ({
   idea,
-  costBasedOnTokens,
   setTokenInfoLoading,
   tokenAddress,
   mutateTransfers,
@@ -46,7 +45,6 @@ export const BuyToken = ({
   tokenAddress: string;
   mutateTransfers: KeyedMutator<Get_Transfers_Dto>;
   mutateOwners: KeyedMutator<Get_Owners_Dto>;
-  costBasedOnTokens: (totalSupply: number, purchaseAmount: number) => any;
   mutateIdea: any;
 }) => {
   const {
@@ -79,7 +77,7 @@ export const BuyToken = ({
     }
     try {
       setTokenInfoLoading(true)
-      const costInWei = await costBasedOnTokens(totalSupply, purchaseAmount)
+      const costInWei = await costBasedOnTokens()
       setCostWei(costInWei)
       setCost(ethers.formatUnits(costInWei, 'ether'));
       setIsModalOpen(true);
