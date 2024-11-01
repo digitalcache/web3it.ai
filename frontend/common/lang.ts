@@ -130,6 +130,9 @@ const ideas = {
   },
   currentIdeas: 'Current Ideas',
   currentIdeasSubHeading: 'Explore how ideas are doing in the market',
+  noIdeasHeading: 'No ideas yet in this category',
+  noIdeasSubHeading: 'Be the first to contribute! Share your innovative ideas and help grow this category.',
+  registerIdea: 'Register Ideas',
 }
 
 const homePage = {

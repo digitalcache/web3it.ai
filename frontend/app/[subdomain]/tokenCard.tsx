@@ -103,7 +103,7 @@ export const TokenCard = ({
           </div>
         </div>
       </div>
-      {owners?.length ? (
+      {owners?.length > 1 ? (
         <div className="border-t border-gray-200/30 mt-2">
           <div className="text-neutral-200 text-sm font-semibold mb-2 mt-2">
             {ideaPageCopy.stakeholders}

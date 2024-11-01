@@ -37,8 +37,5 @@ export async function costBasedOnTokens (totalSupply: number, purchaseAmount: nu
   const provider = new ethers.InfuraProvider("sepolia", process.env.RPC_URL);
   const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
   const costInWei = await contract.calculateCost(totalSupply, purchaseAmount);
-  // eslint-disable-next-line no-console
-  // console.log("here", costInWei)
   return costInWei
-  // return 300
 }

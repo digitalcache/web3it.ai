@@ -2,11 +2,11 @@
 import { TypewriterEffect } from "@/common/components/atoms";
 import Lottie from 'react-lottie';
 import { BackgroundBeamsWithCollision } from "@/common/components/molecules";
-import * as animationData from '@/common/lottie/hero-animation.json'
 import { useWindowDimensions } from "@/common/hooks/useWindowDimensions";
 import { heroWords } from "@/common/constants";
 import lang from "@/common/lang";
 import { CreateProject } from "./createProject";
+import * as animationData from '@/common/lottie/hero-animation.json'
 
 const { homePage: homePageCopy } = lang
 

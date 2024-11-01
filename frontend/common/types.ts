@@ -19,6 +19,6 @@ export type IdeasType = Array<IdeaType>
 export type IdeaTypeWithDomain = {
     idea: IdeaType;
     subdomains: Array<SubdomainType>;
-}
+} | null
 
-export type IdeaTypeWithDomains = Array<IdeaTypeWithDomain>
+export type IdeaTypeWithDomains = Array<IdeaTypeWithDomain> | []

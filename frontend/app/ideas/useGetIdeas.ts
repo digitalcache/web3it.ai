@@ -15,6 +15,8 @@ import {
 import { createClient } from "@/common/utils/supabase/client";
 import { SubdomainType } from "@/middleware";
 import { Address } from 'viem';
+import { useGetCategories } from "./useGetCategories";
+import { CategoryType } from "./types";
 import abi from '@/utils/abis/ideaFactory.json'
 
 export const useGetIdeas = () => {
@@ -24,6 +26,14 @@ export const useGetIdeas = () => {
   const {
     windowSize,
   } = useWindowDimensions()
+
+  const {
+    categories,
+    setCategories,
+    isCategoriesLoading,
+    currentCategory,
+    setCurrentCategory,
+  } = useGetCategories()
 
   const {
     data: ideaTokens,
@@ -54,10 +64,12 @@ export const useGetIdeas = () => {
           idea: item as IdeaType,
           subdomains,
         }
-      })
+      }).filter((item) =>
+        item.idea.categories.includes(currentCategory) || currentCategory === 'All',
+      )
     }
     return []
-  }, [ideaTokens, subdomains])
+  }, [ideaTokens, subdomains, currentCategory])
 
   const columnCount = useMemo(() => {
     if (windowSize === 'desktop') {
@@ -71,9 +83,30 @@ export const useGetIdeas = () => {
     }
     return 1
   }, [windowSize])
+
+  const handleCategoryChange = (c: CategoryType) => {
+    setCurrentCategory(c.value)
+    setCategories(categories.map((category) => {
+      if (category.id === c.id) {
+        return {
+          ...category,
+          active: true,
+        }
+      }
+      return {
+        ...category,
+        active: false,
+      }
+    }))
+  }
+
   return {
-    isLoading,
+    categories,
+    setCategories,
+    isLoading: isCategoriesLoading || isLoading,
     ideas,
     columnCount,
+    currentCategory,
+    handleCategoryChange,
   }
 }
