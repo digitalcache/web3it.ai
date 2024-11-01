@@ -34,7 +34,7 @@ export async function generate (input: string) {
 export async function costBasedOnTokens (totalSupply: number, purchaseAmount: number) {
   'use server';
 
-  const provider = new ethers.InfuraProvider("sepolia", process.env.RPC_URL);
+  const provider = new ethers.InfuraProvider("matic", process.env.RPC_URL);
   const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
   const costInWei = await contract.calculateCost(totalSupply, purchaseAmount);
   return costInWei

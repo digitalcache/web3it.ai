@@ -60,7 +60,7 @@ export const BuyToken = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [costWei, setCostWei] = useState(0)
   const fundingRaised = idea ? parseInt(ethers.formatUnits(idea.fundingRaised, 'ether'))  : 0;
-  const fundingGoal = parseInt(process.env.NEXT_PUBLIC_TARGET_ETH || '0');
+  const fundingGoal = parseFloat(process.env.NEXT_PUBLIC_TARGET_ETH || '0');
   const maxSupply = parseInt(process.env.NEXT_PUBLIC_MAX_SUPPLY || '0');
 
   const totalSupply = idea ? parseInt(ethers.formatUnits(idea.tokenCurrentSupply, 'ether')) : 0;
@@ -142,7 +142,7 @@ export const BuyToken = ({
           <Progress value={fundingRaisedPercentage} />
           <div className="text-white w-full text-xs mt-1 font-semibold text-right">{fundingRaised}/{fundingGoal} <span className="font-normal">{process.env.NEXT_PUBLIC_CURRENCY || ''}</span></div>
         </div>
-        <div className="text-neutral-200 text-xs font-medium mt-2 max-w-[300px]">
+        <div className="text-neutral-200 text-xs font-medium mt-2 lg:max-w-[300px]">
           {ideaPageCopy.bondingCurveInfo.replace('%goal%', fundingGoal.toString()).replace('%currency%', process.env.NEXT_PUBLIC_CURRENCY || '')}
         </div>
       </div>

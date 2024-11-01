@@ -57,7 +57,7 @@ export const TokenCard = ({
             <div className="text-neutral-300 text-xs flex flex-col">
               {ideaPageCopy.createdBy}{" "}
               <LinkStyled
-                href={`https://sepolia.etherscan.io/address/${idea.creatorAddress}`}
+                href={`https://polygonscan.com/address/${idea.creatorAddress}`}
                 target="_blank"
                 className="!px-0 !text-xs hover:underline font-semibold"
               >
@@ -67,7 +67,7 @@ export const TokenCard = ({
             <div className="text-neutral-300 text-xs flex flex-col">
               {ideaPageCopy.tokenAddress}{" "}
               <LinkStyled
-                href={`https://sepolia.etherscan.io/address/${idea.tokenAddress}`}
+                href={`https://polygonscan.com/address/${idea.tokenAddress}`}
                 target="_blank"
                 className="!px-0 !text-xs hover:underline font-semibold"
               >
@@ -118,7 +118,7 @@ export const TokenCard = ({
                 className="flex justify-between gap-2"
               >
                 <LinkStyled
-                  href={`https://sepolia.etherscan.io/address/${owner.owner_address}`}
+                  href={`https://polygonscan.com/address/${owner.owner_address}`}
                   target="_blank"
                   className="!px-0 !text-sm hover:underline"
                 >

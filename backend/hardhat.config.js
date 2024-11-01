@@ -5,10 +5,10 @@ require("@nomicfoundation/hardhat-toolbox");
 module.exports = {
   solidity: "0.8.24",
   networks: {
-    sepolia: {
-      url: `https://sepolia.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    polygon: {
+      url: `https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
       accounts: [process.env.ACCOUNT_PRIVATE_KEY],
-      chainId: 11155111,
+      chainId: 137,
     },
     // hardhat: {
     //   forking: {
@@ -29,7 +29,7 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      sepolia: process.env.ETHERSCAN_API_KEY,
+      polygon: process.env.POLYGONSCAN_API_KEY,
       // polygonAmoy: process.env.POLYGONSCAN_API_KEY,
       // buildbear: 'verifyContracts'
     },

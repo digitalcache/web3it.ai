@@ -33,69 +33,30 @@ contract IdeaFactory {
 
     address constant UNISWAP_V2_FACTORY_ADDRESS = 0xF62c03E08ada871A0bEb309762E260a7a6a880E6;
     address constant UNISWAP_V2_ROUTER_ADDRESS = 0xeE567Fe1712Faf6149d80dA1E6934E354124CfE3;
-
-
     uint constant DECIMALS = 10 ** 18;
     uint constant MAX_SUPPLY = 1000000 * DECIMALS;
     uint constant INIT_SUPPLY = 20 * MAX_SUPPLY / 100;
 
-    uint256 public constant INITIAL_PRICE = 30000000000000;  // Initial price in wei (P0), 3.00 * 10^13
-    uint256 public constant K = 5 * 10**15;  // Growth rate (k), scaled to avoid precision loss (0.01 * 10^18)
-    // uint256 public constant K = 0.01 * 10**18;  // Growth rate (k), scaled to avoid precision loss (0.01 * 10^18)
+    uint256 public constant INITIAL_PRICE = 30000000000000;  
+    uint256 public constant K = 5 * 10**15;
 
-    // Function to calculate the cost in wei for purchasing tokensToBuy starting from currentSupply
     function calculateCost(uint256 currentSupply, uint256 tokensToBuy) public pure returns (uint256) {
-
-            // Calculate the exponent parts scaled to avoid precision loss
         uint256 exponent1 = (K * (currentSupply + tokensToBuy)) / 10**12;
         uint256 exponent2 = (K * currentSupply) / 10**12;
-
-        // (bool success, uint256 result) = Math.tryDiv((K * (currentSupply + tokensToBuy)), 10**18);
-
-        // console.log(success, result);
-
-        // uint256 exponent1NoScale = (K * (currentSupply + tokensToBuy));
-        // uint256 exponent2NoScale = (K * currentSupply);
-
-        // Calculate e^(kx) using the exp function
         uint256 exp1 = exp(exponent1);
-        uint256 exp2 = exp(exponent2);
-
-        // console.log(exponent1NoScale);
-        // console.log(exponent2NoScale);
-
-        // console.log(exponent1);
-        // console.log(exponent2);
-        // console.log(INITIAL_PRICE);
-        // console.log(exp1);
-        // console.log(exp2);
-
-        // uint256 valueWithoutDifference = (INITIAL_PRICE * 10**18) / K;
-        // console.log(valueWithoutDifference);
-        // console.log(exp1 - exp2);
-
-        // Cost formula: (P0 / k) * (e^(k * (currentSupply + tokensToBuy)) - e^(k * currentSupply))
-        // We use (P0 * 10^18) / k to keep the division safe from zero
-        uint256 cost = (INITIAL_PRICE * 10**12 * (exp1 - exp2)) / K;  // Adjust for k scaling without dividing by zero
-        // uint256 cost = (INITIAL_PRICE  * (exp1 - exp2));  // Adjust for k scaling without dividing by zero
-        // return cost > 1000 wei ? cost : 1000 wei;
-        return cost;
+        uint256 exp2 = exp(exponent2); uint256 cost = (INITIAL_PRICE * 10**12 * (exp1 - exp2)) / K;
+        return cost/100;
     }
 
-    // Improved helper function to calculate e^x for larger x using a Taylor series approximation
     function exp(uint256 x) internal pure returns (uint256) {
-        uint256 sum = 10**12;  // Start with 1 * 10^18 for precision
-        uint256 term = 10**12;  // Initial term = 1 * 10^18
-        uint256 xPower = x;  // Initial power of x
-
-        for (uint256 i = 1; i <= 20; i++) {  // Increase iterations for better accuracy
-            term = (term * xPower) / (i * 10**12);  // x^i / i!
+        uint256 sum = 10**12;
+        uint256 term = 10**12;
+        uint256 xPower = x;
+        for (uint256 i = 1; i <= 20; i++) {
+            term = (term * xPower) / (i * 10**12);
             sum += term;
-
-            // Prevent overflow and unnecessary calculations
             if (term < 1) break;
         }
-
         return sum;
     }
 
@@ -110,11 +71,9 @@ contract IdeaFactory {
         string memory twitterUrl
     ) public payable returns(address) {
 
-        //should deploy the meme token, mint the initial supply to the token factory contract
         require(msg.value >= IDEATOKEN_CREATION_PLATFORM_FEE, "fee not paid for ideatoken creation");
         Idea ct = new Idea(name, symbol, INIT_SUPPLY);
         address ideaTokenAddress = address(ct);
-        
         ideaToken memory newlyCreatedToken = ideaToken(name, symbol, description, imageUrl, productUrl, categories, productScreenshotUrl, twitterUrl, 0, ideaTokenAddress, msg.sender, 0);
         ideaTokenAddresses.push(ideaTokenAddress);
         addressToIdeaTokenMapping[ideaTokenAddress] = newlyCreatedToken;
@@ -122,64 +81,36 @@ contract IdeaFactory {
     }
 
     function buyIdeaToken(address ideaTokenAddress, uint tokenQty) public payable returns(uint) {
-
-        //check if memecoin is listed
         require(addressToIdeaTokenMapping[ideaTokenAddress].tokenAddress!=address(0), "Token is not listed");
-
+        
         ideaToken storage listedToken = addressToIdeaTokenMapping[ideaTokenAddress];
-
-
         Idea ideaTokenCt = Idea(ideaTokenAddress);
-
-        // check to ensure funding goal is not met
+        
         require(listedToken.fundingRaised <= IDEACOIN_FUNDING_GOAL, "Funding has already been raised");
-
-        // check to ensure there is enough supply to facilitate the purchase
+        
         uint currentSupply = ideaTokenCt.totalSupply();
-        // console.log("Current supply of token is ", currentSupply);
-        // console.log("Max supply of token is ", MAX_SUPPLY);
         uint available_qty = MAX_SUPPLY - currentSupply;
-        // console.log("Qty available for purchase ",available_qty);
-
-
         uint scaled_available_qty = available_qty / DECIMALS;
         uint tokenQty_scaled = tokenQty * DECIMALS;
 
         require(tokenQty <= scaled_available_qty, "Not enough available supply");
 
-        // calculate the cost for purchasing tokenQty tokens as per the exponential bonding curve formula
         uint currentSupplyScaled = (currentSupply - INIT_SUPPLY) / DECIMALS;
         uint requiredEth = calculateCost(currentSupplyScaled, tokenQty);
 
-        // check if user has sent correct value of eth to facilitate this purchase
         require(msg.value >= requiredEth, "Incorrect value of ETH sent");
 
-        // Incerement the funding
         listedToken.fundingRaised+= msg.value;
-
+        
         if(listedToken.fundingRaised >= IDEACOIN_FUNDING_GOAL){
-            // create liquidity pool
             address pool = _createLiquidityPool(ideaTokenAddress);
-            // console.log("Pool address ", pool);
-
-            // provide liquidity
             uint tokenAmount = INIT_SUPPLY;
             uint ethAmount = listedToken.fundingRaised;
             uint liquidity = _provideLiquidity(ideaTokenAddress, tokenAmount, ethAmount);
-            console.log("UNiswap provided liquidty ", liquidity);
-
-            // burn lp token
             _burnLpTokens(pool, liquidity);
-
         }
 
-        // mint the tokens
         ideaTokenCt.mint(tokenQty_scaled, msg.sender);
-
-        // console.log("User balance of the tokens is ", ideaTokenCt.balanceOf(msg.sender));
-
-        // console.log("New available qty ", MAX_SUPPLY - ideaTokenCt.totalSupply());
-
         return 1;
     }
     function getAllIdeaTokens() public view returns(ideaToken[] memory) {

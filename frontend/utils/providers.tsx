@@ -17,16 +17,16 @@ import {
   http,
   WagmiProvider,
 } from "wagmi";
-import { sepolia } from 'wagmi/chains'
+import { polygon } from 'wagmi/chains'
 
 const config = getDefaultConfig({
   appName: 'Web3It.AI',
   projectId: '9c501b5f82295e29fb3a0b4eb14dab53',
   chains: [
-    sepolia,
+    polygon,
   ],
   transports: {
-    [sepolia.id]: http(),
+    [polygon.id]: http(),
   },
   ssr: true,
 })
