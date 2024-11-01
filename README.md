@@ -8,4 +8,4 @@
 - Vercel - for deployment (payment required)
 - Microlink - for getting screenshot of websites 
 - Moralis - for getting token transactions and owners (payment required)
-- Rainbow - Wallet connect
+- Rainbow - Wallet connect 
