@@ -46,7 +46,7 @@ const TokenDetail = async ({ params } : {
   const supabase = createClient();
   const { data: subdomains } = await supabase.from('Subdomains').select('*')
 
-  async function costBasedOnTokens (totalSupply: number, purchaseAmount: number) {
+  async function costBasedOnTokens () {
     'use server';
     return 300
     // const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
