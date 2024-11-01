@@ -1,6 +1,6 @@
 # WEB3IT.AI CONTRACTS AND FRONTEND
 
-## PROVIDERS
+## PROVIDERS 
 
 - Wagmi - Account info 
 - Pinata - for IPFS image storage (payment required) 
