@@ -2,7 +2,7 @@
 
 ## PROVIDERS
 
-- Wagmi - Account ens info 
+- Wagmi - Account info 
 - Pinata - for IPFS image storage (payment required)
 - Supabase - for storing subdomain related info (payment required)
 - Vercel - for deployment (payment required)
