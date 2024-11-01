@@ -1,7 +1,7 @@
 # WEB3IT.AI CONTRACTS AND FRONTEND
 
 ## PROVIDERS 
-
+ 
 - Wagmi - Account info 
 - Pinata - for IPFS image storage (payment required)  
 - Supabase - for storing subdomain related info (payment required) 
