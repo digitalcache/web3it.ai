@@ -19,7 +19,7 @@ const Progress = React.forwardRef<
     {...props}
   >
     <ProgressPrimitive.Indicator
-      className="h-full w-full flex-1 bg-transparent relative overflow-hidden animate-rotatingGradient rounded-md"
+      className="h-full w-full flex-1 transition-all duration-500 ease-in-out bg-transparent relative overflow-hidden animate-rotatingGradient rounded-md"
       style={{
         width: `${value}%`,
       }}
