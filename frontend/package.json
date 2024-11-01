@@ -38,6 +38,8 @@
     "autosize": "^6.0.1",
     "clsx": "^2.1.1",
     "debounce-promise": "^3.1.2",
+    "embla-carousel": "^8.3.1",
+    "embla-carousel-react": "^8.3.1",
     "eslint-config-next": "^14.1.4",
     "ethers": "^6.13.2",
     "framer-motion": "^11.11.8",

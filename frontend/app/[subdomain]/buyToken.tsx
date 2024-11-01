@@ -23,12 +23,12 @@ import {
 import { KeyedMutator } from "swr";
 import lang from "@/common/lang";
 import { abbreviateNumber } from "@/utils/helpers";
+import { getCostBasedOnTokens } from "../actions";
 import {
   Get_Owners_Dto,
   Get_Transfers_Dto,
 } from "./types";
 import ideaAbi from '@/utils/abis/ideaFactory.json'
-import { getCostBasedOnTokens } from "../actions";
 
 const { ideaPage: ideaPageCopy } = lang
 

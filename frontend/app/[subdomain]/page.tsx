@@ -9,6 +9,8 @@ import NotFound from '../not-found';
 import { TokenDetails } from './tokenDetails';
 import ideaAbi from '@/utils/abis/ideaFactory.json'
 
+export const maxDuration = 20
+
 export async function generateMetadata ({ params } : {
   params: {
     subdomain: string;
