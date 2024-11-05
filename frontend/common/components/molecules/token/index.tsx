@@ -6,9 +6,9 @@ import Image from "next/image";
 import lang from '@/common/lang';
 import { SubdomainType } from "@/middleware";
 import { routes } from '@/common/routes';
-import { ethers } from "ethers";
 import Link from "next/link";
 import { IdeaTypeWithDomain } from "@/common/types";
+import { ethers } from "ethers";
 
 const {
   ideas: {

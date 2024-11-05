@@ -43,6 +43,9 @@ export const Hero = () => {
             <br />
             <br />
             {homePageCopy.subHeading2}
+            <br />
+            <br />
+            {homePageCopy.subHeading3}
           </h2>
           <div className='mt-16 flex gap-4 lg:items-center flex-col lg:flex-row'>
             <CreateProject />

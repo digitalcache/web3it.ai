@@ -1,0 +1,2 @@
+npx thirdweb deploy -k 
+npx thirdweb build

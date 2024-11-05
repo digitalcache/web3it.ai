@@ -58,6 +58,11 @@ const nextConfig = {
         hostname: 'iad.microlink.io',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'google.com',
+        pathname: '/**',
+      },
     ],
   },
   logging: {

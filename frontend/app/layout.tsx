@@ -46,8 +46,8 @@ const primaryFont = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'Web3It.AI | Innovative Crowdfunding Blockchain App for Early-Stage Enterprises',
-  description: "Boost your startup with our blockchain crowdfunding app. Secure, transparent funding for early-phase companies. Grow faster. Join us now.",
+  title: 'Web3It.AI | Turn Public Good Ideas into Reality',
+  description: "A home for ideas to get discovered, funded, and championed by the communities they serve. Time to launch something meaningful.",
   metadataBase: new URL("https://web3it.ai"),
   alternates: {
     canonical: '/',

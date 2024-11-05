@@ -5,17 +5,17 @@ import {
   createStorage,
 } from 'wagmi'
 import { 
-  polygon,
+  unichainSepolia,
 } from 'wagmi/chains'
 export const config = createConfig({
   chains: [
-    polygon,
+    unichainSepolia,
   ],
   ssr: true,
   storage: createStorage({
     storage: cookieStorage,
   }),
   transports: {
-    [polygon.id]: http(),
+    [unichainSepolia.id]: http(),
   },
 })

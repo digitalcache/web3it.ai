@@ -1,14 +1,50 @@
-const { ethers } = require("hardhat");
+const hre = require("hardhat");
 
 async function main() {
-  // Grab the contract factory
-  const CrowdFactory = await ethers.getContractFactory("IdeaFactory");
+  try {
+    // Get network information
+    const network = await ethers.provider.getNetwork();
+    console.log(`Deploying to network: ${network.name} (${network.chainId})`);
 
-  // Start deployment, returning a promise that resolves to a contract object
-  const crowd = await CrowdFactory.deploy(); // Instance of the contract
-  await crowd.waitForDeployment();
-  const address = await crowd.getAddress();
-  console.log("Contract deployed to address:", address);
+    // Deploy Idea contract factory first
+    console.log("Deploying Idea contract factory...");
+    const Idea = await ethers.getContractFactory("Idea");
+    console.log("Idea contract factory deployed successfully.");
+
+    // Deploy IdeaFactory contract
+    console.log("Deploying IdeaFactory contract...");
+    const IdeaFactory = await ethers.getContractFactory("IdeaFactory");
+    const deploymentTx = await IdeaFactory.deploy();
+    
+    // Wait for deployment
+    console.log("Waiting for deployment transaction...");
+    const ideaFactory = await deploymentTx.waitForDeployment();
+    const ideaFactoryAddress = await ideaFactory.getAddress();
+    
+    // Get deployment transaction receipt
+    const receipt = await deploymentTx.deploymentTransaction().wait();
+    
+    console.log(`IdeaFactory deployed to: ${ideaFactoryAddress}`);
+    console.log(`Transaction hash: ${deploymentTx.deploymentTransaction().hash}`);
+    console.log(`Block number: ${receipt.blockNumber}`);
+ 
+    // Verify contract on Etherscan if not on localhost
+    console.log("Verifying contract on PolygonScan...");
+    try {
+      await hre.run("verify:verify", {
+        address: ideaFactoryAddress,
+        constructorArguments: [],
+      });
+      console.log("Contract verified successfully");
+    } catch (error) {
+      console.log("Error verifying contract:", error.message);
+    }
+
+
+  } catch (error) {
+    console.error("Deployment failed:", error);
+    process.exit(1);
+  }
 }
 
 main()

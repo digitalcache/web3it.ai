@@ -17,16 +17,16 @@ import {
   http,
   WagmiProvider,
 } from "wagmi";
-import { polygon } from 'wagmi/chains'
+import { unichainSepolia } from 'wagmi/chains'
 
 const config = getDefaultConfig({
   appName: 'Web3It.AI',
   projectId: '9c501b5f82295e29fb3a0b4eb14dab53',
   chains: [
-    polygon,
+    unichainSepolia,
   ],
   transports: {
-    [polygon.id]: http(),
+    [unichainSepolia.id]: http(),
   },
   ssr: true,
 })

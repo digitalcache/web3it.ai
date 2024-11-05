@@ -6,7 +6,6 @@ import Image from 'next/image';
 import {
   Controller,
 } from "react-hook-form";
-import { PiggyBank } from 'lucide-react';
 import { MultiValue } from "react-select";
 import { Input } from '@/common/components/molecules';
 import { v4 } from "uuid";
@@ -270,7 +269,6 @@ export const CreateToken = () => {
             className="transition-all gap-2 w-full md:w-auto duration-150 disabled:bg-space-cadet/40 bg-space-cadet hover:bg-space-cadet/80 font-medium"
           >
             {formCopy.submitLabel}
-            <PiggyBank strokeWidth={1.5} />
           </Button>
         </div>
       </form>

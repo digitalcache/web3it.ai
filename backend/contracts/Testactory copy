@@ -5,7 +5,7 @@
 // import "hardhat/console.sol";
 // import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol";
 // import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
-// import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router01.sol";
+// import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
 // contract IdeaFactory {
 //     struct ideaToken {
@@ -31,8 +31,8 @@
 //     uint constant IDEACOIN_FUNDING_DEADLINE_DURATION = 10 days;
 //     uint constant IDEACOIN_FUNDING_GOAL = 24048064056000000000 wei;
 
-//     address constant UNISWAP_V2_FACTORY_ADDRESS = 0xF62c03E08ada871A0bEb309762E260a7a6a880E6;
-//     address constant UNISWAP_V2_ROUTER_ADDRESS = 0xeE567Fe1712Faf6149d80dA1E6934E354124CfE3;
+//     address constant UNISWAP_V2_FACTORY_ADDRESS = 0x9e5A52f57b3038F1B8EeE45F28b3C1967e22799C;
+//     address constant UNISWAP_V2_ROUTER_ADDRESS = 0xedf6066a2b290C185783862C7F4776A2C8077AD1;
 //     uint constant DECIMALS = 10 ** 18;
 //     uint constant MAX_SUPPLY = 1000000 * DECIMALS;
 //     uint constant INIT_SUPPLY = 20 * MAX_SUPPLY / 100;
@@ -45,7 +45,7 @@
 //         uint256 exponent2 = (K * currentSupply) / 10**12;
 //         uint256 exp1 = exp(exponent1);
 //         uint256 exp2 = exp(exponent2); uint256 cost = (INITIAL_PRICE * 10**12 * (exp1 - exp2)) / K;
-//         return cost;
+//         return cost/100;
 //     }
 
 //     function exp(uint256 x) internal pure returns (uint256) {
@@ -80,7 +80,7 @@
 //         return ideaTokenAddress;
 //     }
 
-//     function buyIdeaToken(address ideaTokenAddress, uint tokenQty) public payable returns(uint) {
+//     function buyIdeaToken(address ideaTokenAddress, uint tokenQty) public payable returns(address) {
 //         require(addressToIdeaTokenMapping[ideaTokenAddress].tokenAddress!=address(0), "Token is not listed");
         
 //         ideaToken storage listedToken = addressToIdeaTokenMapping[ideaTokenAddress];
@@ -103,15 +103,45 @@
 //         listedToken.fundingRaised+= msg.value;
         
 //         if(listedToken.fundingRaised >= IDEACOIN_FUNDING_GOAL){
-//             address pool = _createLiquidityPool(ideaTokenAddress);
-//             uint tokenAmount = INIT_SUPPLY;
-//             uint ethAmount = listedToken.fundingRaised;
-//             uint liquidity = _provideLiquidity(ideaTokenAddress, tokenAmount, ethAmount);
-//             _burnLpTokens(pool, liquidity);
+//           address pool = _createLiquidityPool(ideaTokenAddress);
+//           uint tokenAmount = INIT_SUPPLY;
+//           uint ethAmount = listedToken.fundingRaised;
+//           uint liquidity = _provideLiquidity(ideaTokenAddress, tokenAmount, ethAmount);
+//           console.log("UNiswap provided liquidty ", liquidity);
+//           _burnLpTokens(pool, liquidity);
+//           return pool;
+//         //   return (pool, liquidity);
 //         }
 
 //         ideaTokenCt.mint(tokenQty_scaled, msg.sender);
+//         console.log("User balance of the tokens is ", ideaTokenCt.balanceOf(msg.sender));
+
+//         console.log("New available qty ", MAX_SUPPLY - ideaTokenCt.totalSupply());
+//         return ideaTokenAddress;
+//         // return (ideaTokenAddress, tokenQty);
+//     }
+   
+//     function _createLiquidityPool(address ideaTokenAddress) internal returns(address) {
+//         IUniswapV2Factory factory = IUniswapV2Factory(UNISWAP_V2_FACTORY_ADDRESS);
+//         IUniswapV2Router02 router = IUniswapV2Router02(UNISWAP_V2_ROUTER_ADDRESS);
+//         address pair = factory.createPair(ideaTokenAddress, router.WETH());
+//         return pair;
+//     }
+//     function _provideLiquidity(address ideaTokenAddress, uint tokenAmount, uint ethAmount) internal returns(uint){
+//         Idea ideaTokenCt = Idea(ideaTokenAddress);
+//         ideaTokenCt.approve(UNISWAP_V2_ROUTER_ADDRESS, tokenAmount);
+//         IUniswapV2Router02 router = IUniswapV2Router02(UNISWAP_V2_ROUTER_ADDRESS);
+//         (uint amountToken, uint amountETH, uint liquidity) = router.addLiquidityETH{
+//             value: ethAmount
+//         }(ideaTokenAddress, tokenAmount, tokenAmount, ethAmount, address(this), block.timestamp);
+//         return liquidity;
+//     }
+//      function _burnLpTokens(address pool, uint liquidity) internal returns(uint){
+//         IUniswapV2Pair pair = IUniswapV2Pair(pool);
+//         pair.transfer(address(0), liquidity);
+//         console.log("Uni v2 tokens burnt");
 //         return 1;
+       
 //     }
 //     function getAllIdeaTokens() public view returns(ideaToken[] memory) {
 //         ideaToken[] memory allTokens = new ideaToken[](ideaTokenAddresses.length);
@@ -125,25 +155,5 @@
 //         Idea ideaTokenCt = Idea(ideaTokenAddress);
 //         listedToken.tokenCurrentSupply = ideaTokenCt.totalSupply();
 //         return addressToIdeaTokenMapping[ideaTokenAddress];
-//     }
-//     function _createLiquidityPool(address ideaTokenAddress) internal returns(address) {
-//         IUniswapV2Factory factory = IUniswapV2Factory(UNISWAP_V2_FACTORY_ADDRESS);
-//         IUniswapV2Router01 router = IUniswapV2Router01(UNISWAP_V2_ROUTER_ADDRESS);
-//         address pair = factory.createPair(ideaTokenAddress, router.WETH());
-//         return pair;
-//     }
-//     function _provideLiquidity(address ideaTokenAddress, uint tokenAmount, uint ethAmount) internal returns(uint){
-//         Idea ideaTokenCt = Idea(ideaTokenAddress);
-//         ideaTokenCt.approve(UNISWAP_V2_ROUTER_ADDRESS, tokenAmount);
-//         IUniswapV2Router01 router = IUniswapV2Router01(UNISWAP_V2_ROUTER_ADDRESS);
-//         (uint amountToken, uint amountETH, uint liquidity) = router.addLiquidityETH{
-//             value: ethAmount
-//         }(ideaTokenAddress, tokenAmount, tokenAmount, ethAmount, address(this), block.timestamp);
-//         return liquidity;
-//     }
-//     function _burnLpTokens(address pool, uint liquidity) internal returns(uint){
-//         IUniswapV2Pair uniswapv2pairct = IUniswapV2Pair(pool);
-//         uniswapv2pairct.transfer(address(0), liquidity);
-//         return 1;
 //     }
 // }

@@ -17,14 +17,15 @@ async function main() {
     }
   )
   const ideas = await tokenCt.getAllIdeaTokens();
-  console.log("ideas before buying", ideas)
+  console.log("initializing token buy", ideas)
 
   const ideaTokenAddress = await tokenCt.ideaTokenAddresses(0)
+  console.log("token address ", ideaTokenAddress)
   await tokenCt.buyIdeaToken(ideaTokenAddress, 800000, {
       value: 24048064056000000000n
   });
-  const ideas2 = await tokenCt.getAllIdeaTokens();
-  console.log("ideas after buying", ideas2)
+  console.log("all token bought")
+ 
 
 }
 

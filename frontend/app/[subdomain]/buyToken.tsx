@@ -5,11 +5,11 @@ import { Button } from "@/common/components/atoms";
 import { Input } from "@/common/components/molecules";
 import { IdeaType } from "@/common/types";
 import {
-  useAccount, useConnect, useWriteContract,
+  useAccount, useConnect,
+  useWriteContract,
 } from "wagmi";
 import { injected } from 'wagmi/connectors'
 import { Progress } from "@/common/components/molecules";
-import { ethers } from "ethers";
 import { ContractFunctions } from "@/common/constants";
 import { Address } from "viem";
 import toast from "react-hot-toast";
@@ -23,7 +23,8 @@ import {
 import { KeyedMutator } from "swr";
 import lang from "@/common/lang";
 import { abbreviateNumber } from "@/utils/helpers";
-import { costBasedOnTokens } from "@/app/actions";
+import { ethers } from "ethers";
+// import { costBasedOnTokens } from "@/app/actions";
 import {
   Get_Owners_Dto,
   Get_Transfers_Dto,
@@ -50,6 +51,7 @@ export const BuyToken = ({
   const {
     writeContractAsync,
   } = useWriteContract()
+
   const { connect } = useConnect()
   const {
     isConnected,
@@ -77,7 +79,16 @@ export const BuyToken = ({
     }
     try {
       setTokenInfoLoading(true)
-      const costInWei = await costBasedOnTokens(totalSupply, purchaseAmount)
+      const provider = new ethers.JsonRpcProvider(
+        "https://unichain-sepolia.g.alchemy.com/v2/alcht_fY6SXB7YOYPGcYFEOXvwHGxsCOH9zg",
+        {
+          name: 'unichain-sepolia',
+          chainId: 1301,
+        },
+      );
+      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
+      const costInWei = await contract.calculateCost(totalSupply, purchaseAmount);
+      // const costInWei = await costBasedOnTokens(totalSupply, purchaseAmount)
       setCostWei(costInWei)
       setCost(ethers.formatUnits(costInWei, 'ether'));
       setIsModalOpen(true);
@@ -87,7 +98,6 @@ export const BuyToken = ({
       setTokenInfoLoading(false)
     }
   };
-
   const handlePurchase = async () => {
     const purchaseAction = async () => {
       try {

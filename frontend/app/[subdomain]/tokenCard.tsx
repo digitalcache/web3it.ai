@@ -57,7 +57,7 @@ export const TokenCard = ({
             <div className="text-neutral-300 text-xs flex flex-col">
               {ideaPageCopy.createdBy}{" "}
               <LinkStyled
-                href={`https://polygonscan.com/address/${idea.creatorAddress}`}
+                href={`https://unichain-sepolia.blockscout.com/address/${idea.creatorAddress}`}
                 target="_blank"
                 className="!px-0 !text-xs hover:underline font-semibold"
               >
@@ -67,7 +67,7 @@ export const TokenCard = ({
             <div className="text-neutral-300 text-xs flex flex-col">
               {ideaPageCopy.tokenAddress}{" "}
               <LinkStyled
-                href={`https://polygonscan.com/address/${idea.tokenAddress}`}
+                href={`https://unichain-sepolia.blockscout.com/address/${idea.tokenAddress}`}
                 target="_blank"
                 className="!px-0 !text-xs hover:underline font-semibold"
               >

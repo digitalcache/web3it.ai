@@ -1,0 +1,97 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "./Idea.sol";
+import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
+import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
+import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
+import "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "hardhat/console.sol";
+
+contract UniswapV3Manager {
+    uint24 public constant POOL_FEE = 3000;
+
+    IUniswapV3Factory public immutable uniswapFactory;
+    INonfungiblePositionManager public immutable positionManager;
+    address payable public immutable WETH9;
+    
+    constructor(
+        address _factory,
+        address _positionManager,
+        address payable _weth9
+    ) {
+        uniswapFactory = IUniswapV3Factory(_factory);
+        positionManager = INonfungiblePositionManager(_positionManager);
+        WETH9 = _weth9;
+    }
+
+    function createPool(address tokenAddress) external returns (address) {
+        address pool = uniswapFactory.createPool(
+            tokenAddress,
+            WETH9,
+            POOL_FEE
+        );
+        uint160 sqrtPriceX96 = sqrt(uint256(1 << 96));
+        IUniswapV3Pool(pool).initialize(sqrtPriceX96);
+        return pool;
+    }
+
+    function provideLiquidity(
+        address tokenAddress,
+        uint256 tokenAmount
+    ) external payable returns (uint256) {
+        require(IERC20(tokenAddress).approve(address(positionManager), tokenAmount), "Approval failed");
+        bool isToken0 = tokenAddress < WETH9;
+        INonfungiblePositionManager.MintParams memory params = INonfungiblePositionManager.MintParams({
+            token0: isToken0 ? tokenAddress : WETH9,
+            token1: isToken0 ? WETH9 : tokenAddress,
+            fee: POOL_FEE,
+            tickLower: -887220,
+            tickUpper: 887220,
+            amount0Desired: isToken0 ? tokenAmount : msg.value,
+            amount1Desired: isToken0 ? msg.value : tokenAmount,
+            amount0Min: 0,
+            amount1Min: 0,
+            recipient: msg.sender,
+            deadline: block.timestamp
+        });
+    
+        try positionManager.mint(params) returns (
+            uint256 tokenId,
+            uint128 liquidity,
+            uint256 amount0,
+            uint256 amount1
+        ) {
+            // Log the results for debugging
+            console.log("TokenId:", tokenId);
+            console.log("Liquidity:", liquidity);
+            console.log("Amount0:", amount0);
+            console.log("Amount1:", amount1);
+            
+            return tokenId;
+        } catch Error(string memory reason) {
+            // Log and revert with the error message
+            console.log("Failed with reason:", reason);
+            revert(reason);
+        } catch {
+            // Log and revert with a generic message
+            console.log("Failed with no reason");
+            revert("Liquidity provision failed");
+        }
+    }
+
+    function sqrt(uint256 x) internal pure returns (uint160) {
+        if (x == 0) return 0;
+        uint256 z = (x + 1) / 2;
+        uint256 y = x;
+        while (z < y) {
+            y = z;
+            z = (x / z + z) / 2;
+        }
+        return uint160(y);
+    }
+    // receive() external payable {}
+}

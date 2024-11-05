@@ -31,6 +31,9 @@ export async function generateMetadata ({ params } : {
       return {
         title: `${idea.name} | Web3It.AI`,
         description: `${idea.description}`,
+        alternates: {
+          // canonical: '/ideas',
+        },
       }
     }
   }

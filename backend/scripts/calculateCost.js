@@ -3,9 +3,9 @@ const { ethers } = require("hardhat");
 async function main() {
   const contract = await ethers.getContractAt("IdeaFactory",
   //add the contract address that you just deployed in the last step
-  '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9') //line 6
+  '0x37eaB2C62ddd87301DD698685E4cDa4127CB2984') //line 6
  const res =  await contract.calculateCost(
-    0, 1
+    0, 800000
  ) //line 13
  console.log(res)
 }

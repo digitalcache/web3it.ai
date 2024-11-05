@@ -33,7 +33,7 @@ const createIdea = {
   categories: {
     noTagsFound: 'No Categories found',
   },
-  heading: 'Create Idea',
+  heading: 'Create Token',
   subHeading: 'Register your Idea by creating a token and try to give as much details as possible',
   tokenCreationFeeLabel: 'One time fee:',
   maxSupplyLabel: 'Max Supply: ',
@@ -74,7 +74,7 @@ const createIdea = {
     category: 'Select category',
     website: 'Website',
     twitter: 'X (optional)',
-    submitLabel: 'Register your idea',
+    submitLabel: 'Submit',
   },
 }
 
@@ -129,11 +129,11 @@ const ideas = {
   ideaCard: {
     raised: 'Raised',
   },
-  currentIdeas: 'Current Ideas',
-  currentIdeasSubHeading: 'Explore how ideas are doing in the market',
+  currentIdeas: 'Browse Ideas',
+  currentIdeasSubHeading: 'Explore how other ideas are doing in the market',
   noIdeasHeading: 'No ideas yet in this category',
   noIdeasSubHeading: 'Be the first to contribute! Share your innovative ideas and help grow this category.',
-  registerIdea: 'Register Ideas',
+  registerIdea: 'Fund Existing Idea',
 }
 
 const homePage = {
@@ -141,30 +141,34 @@ const homePage = {
     heading: 'Explore your journey with our app',
     subHeading: 'You can harness the power of AI to transform your ideas into a fully functional application',
   },
-  subHeading: 'Explore ideas with Web3It.AI',
-  h1: 'Fund your Web3 project with ease.',
-  subHeading1: "Launch a new project or secure funding for your Web3 site with our application, guiding you from design through to the development of your application using Claude AI.",
-  subHeading2: "Join us in redefining the digital landscape, where your ideas are not just seen but are also invested in and supported through the power of tokenization. Let's build the future of the web, together.",
+  subHeading: 'Launch Ideas That Matter with Web3It.AI',
+  h1: 'Turn Public Good Ideas into Reality',
+  subHeading1: "Have a solution that could help communities thrive? Transform your public goods idea into a funded project in minutes.",
+  subHeading2: "Our AI-powered platform takes you from spark to launch - whether you're creating free educational resources, building community tools, developing environmental solutions, or launching open infrastructure. With instant funding through fair token launches, your idea can start making an impact today.",
+  subHeading3: "A home for ideas to get discovered, funded, and championed by the communities they serve. Time to launch something meaningful.",
   heroWords: [
     {
-      text: "Effortlessly",
+      text: "Turn",
     },
     {
-      text: "Fund",
+      text: "Public",
     },
     {
-      text: "Your",
-    },
-    {
-      text: "Web3",
+      text: "Good",
       className: "gradientText",
     },
     {
       text: "Ideas",
     },
+    {
+      text: "Into",
+    },
+    {
+      text: "Reality",
+    },
   ],
-  fundButtonLabel: 'Finance Your Venture',
-  generateButtonLabel: 'Create Your Concept',
+  fundButtonLabel: 'Fund Existing Idea',
+  generateButtonLabel: 'Launch New Idea',
   trendingIdeas: 'Trending Ideas',
   developmentProcess: {
     heading: 'Development Process',

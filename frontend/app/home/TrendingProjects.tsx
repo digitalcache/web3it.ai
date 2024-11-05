@@ -41,7 +41,6 @@ export const TrendingProjects = () => {
                   rowGutter={16}
                   items={ideas}
                   render={Token}
-
                 />
               </div>
             )}
