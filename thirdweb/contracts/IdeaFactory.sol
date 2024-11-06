@@ -53,9 +53,8 @@ contract IdeaFactory {
     }
 
     address constant UNISWAP_V3_FACTORY_ADDRESS = 0x1F98431c8aD98523631AE4a59f267346ea31F984;
-    address constant UNISWAP_V3_POSITION_MANAGER = 0xC36442b4a4522E871399CD717aBDD847Ab11FE88;
-    address constant UNISWAP_V3_ROUTER = 0xE592427A0AEce92De3Edee1F18E0157C05861564;
-    address constant WETH9 = 0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270;
+    address constant UNISWAP_V3_POSITION_MANAGER = 0xB7F724d6dDDFd008eFf5cc2834edDE5F9eF0d075;
+    address constant WETH9 = 0x4200000000000000000000000000000000000006;
 
     uint24 public constant poolFee = 3000; // 0.3% fee tier
     uint256 public constant IDEATOKEN_CREATION_FEE = 0.0001 ether;
@@ -135,7 +134,7 @@ contract IdeaFactory {
         return pool;
     }
 
-     function _provideLiquidity(address ideaTokenAddress, uint tokenAmount, uint ethAmount) internal {
+    function _provideLiquidity(address ideaTokenAddress, uint tokenAmount, uint ethAmount) internal {
         // Approve the position manager
         TransferHelper.safeApprove(ideaTokenAddress, UNISWAP_V3_POSITION_MANAGER, tokenAmount);
 
@@ -156,30 +155,8 @@ contract IdeaFactory {
             deadline: block.timestamp
         });
 
+        // create liquidty for the target eth i.e. 24eth
         (uint tokenId, uint128 liquidity, uint amount0, uint amount1) = positionManager.mint{value: ethAmount}(params);
-
-        // // First collect any fees that might have accrued
-        // INonfungiblePositionManager.CollectParams memory collectParams = INonfungiblePositionManager.CollectParams({
-        //     tokenId: tokenId,
-        //     recipient: address(this),
-        //     amount0Max: type(uint128).max,
-        //     amount1Max: type(uint128).max
-        // });
-        // positionManager.collect(collectParams);
-
-        // // Remove the liquidity
-        // INonfungiblePositionManager.DecreaseLiquidityParams memory decreaseLiquidityParams =
-        //     INonfungiblePositionManager.DecreaseLiquidityParams({
-        //         tokenId: tokenId,
-        //         liquidity: liquidity,
-        //         amount0Min: 0,
-        //         amount1Min: 0,
-        //         deadline: block.timestamp
-        //     });
-        // positionManager.decreaseLiquidity(decreaseLiquidityParams);
-
-        // // Now we can safely burn the position
-        // positionManager.burn(tokenId);
     }
 
     function createIdeaToken(
