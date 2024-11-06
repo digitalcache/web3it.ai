@@ -56,7 +56,6 @@ export const BuyToken = ({
   const {
     isConnected,
   } = useAccount()
-
   const [purchaseAmount, setPurchaseAmount] = useState(0);
   const [cost, setCost] = useState('0');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -87,8 +86,10 @@ export const BuyToken = ({
         },
       );
       const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
-      const costInWei = await contract.calculateCost(totalSupply, purchaseAmount);
-      // const costInWei = await costBasedOnTokens(totalSupply, purchaseAmount)
+      const initialSupply = parseInt(process.env.NEXT_PUBLIC_INITIAL_SUPPLY || '0')
+      const actualSupply = totalSupply - initialSupply
+      const costInWei = await contract.calculateCost(actualSupply, purchaseAmount);
+      // await costBasedOnTokens(totalSupply, purchaseAmount)
       setCostWei(costInWei)
       setCost(ethers.formatUnits(costInWei, 'ether'));
       setIsModalOpen(true);

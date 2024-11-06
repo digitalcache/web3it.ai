@@ -75,7 +75,7 @@ contract IdeaFactory {
         uint256 exponent2 = (K * currentSupply) / 10**12;
         uint256 exp1 = exp(exponent1);
         uint256 exp2 = exp(exponent2); uint256 cost = (INITIAL_PRICE * 10**12 * (exp1 - exp2)) / K;
-        return cost/100;
+        return cost/1000;
     }
 
     function exp(uint256 x) internal pure returns (uint256) {

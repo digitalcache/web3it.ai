@@ -32,9 +32,17 @@ export async function generate (input: string) {
 }
 
 // export async function costBasedOnTokens (totalSupply: number, purchaseAmount: number) {
-//   // 'use server';
-
-//   // const provider = new ethers.InfuraProvider("unichain", process.env.RPC_URL);
+//   'use server';
+//   // const provider = new ethers.AlchemyProvider(
+//   //   "https://unichain-sepolia.g.alchemy.com/v2/alcht_fY6SXB7YOYPGcYFEOXvwHGxsCOH9zg",
+//   //   {
+//   //     name: 'unichain-sepolia',
+//   //     chainId: 1301,
+//   //   },
+//   // );
+//   // const provider = new ethers.JsonRpcProvider("https://unichain-sepolia.g.alchemy.com/v2/alcht_fY6SXB7YOYPGcYFEOXvwHGxsCOH9zg");
+//   // const provider = new ethers.AlchemyProvider("", "alcht_fY6SXB7YOYPGcYFEOXvwHGxsCOH9zg");
+//   // console.log(provider)
 //   // const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
 //   // const costInWei = await contract.calculateCost(totalSupply, purchaseAmount);
 //   // return costInWei
