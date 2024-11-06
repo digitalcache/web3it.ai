@@ -34,6 +34,7 @@
     "@vercel/analytics": "^1.2.2",
     "@vercel/edge-config": "^1.1.0",
     "ai": "^3.4.18",
+    "alchemy-sdk": "^3.4.7",
     "autoprefixer": "10.4.19",
     "autosize": "^6.0.1",
     "clsx": "^2.1.1",

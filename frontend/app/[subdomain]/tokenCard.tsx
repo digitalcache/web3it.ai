@@ -3,9 +3,9 @@ import { IdeaType } from "@/common/types";
 import Image from "next/image";
 import { ArrowUpRight } from 'lucide-react';
 import { ethers } from "ethers";
+import { TokenXIcon } from "@/common/components/icons";
 import lang from "@/common/lang";
 import { OwnerType } from "./types";
-import { TokenXIcon } from "@/common/components/icons";
 
 const { ideaPage: ideaPageCopy } = lang
 
@@ -104,33 +104,34 @@ export const TokenCard = ({
         </div>
       </div>
       {owners?.length > 1 ? (
-        <div className="border-t border-gray-200/30 mt-2">
-          <div className="text-neutral-200 text-sm font-semibold mb-2 mt-2">
-            {ideaPageCopy.stakeholders}
-          </div>
-          {owners.map((owner, index: number) => {
-            if (owner.owner_address.toLowerCase() === (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '').toLowerCase()) {
-              return null
-            }
-            return (
-              <div
-                key={owner.owner_address}
-                className="flex justify-between gap-2"
-              >
-                <LinkStyled
-                  href={`https://polygonscan.com/address/${owner.owner_address}`}
-                  target="_blank"
-                  className="!px-0 !text-sm hover:underline"
-                >
-                  {index}. {owner.owner_address.slice(2, 7)}
-                </LinkStyled>
-                <span className="text-neutral-300 text-sm">
-                  {parseFloat(owner.percentage_relative_to_total_supply).toFixed(2)}%
-                </span>
-              </div>
-            );
-          })}
-        </div>
+        <></>
+        // <div className="border-t border-gray-200/30 mt-2">
+        //   <div className="text-neutral-200 text-sm font-semibold mb-2 mt-2">
+        //     {ideaPageCopy.stakeholders}
+        //   </div>
+        //   {owners.map((owner, index: number) => {
+        //     if (owner.owner_address.toLowerCase() === (process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '').toLowerCase()) {
+        //       return null
+        //     }
+        //     return (
+        //       <div
+        //         key={owner.owner_address}
+        //         className="flex justify-between gap-2"
+        //       >
+        //         <LinkStyled
+        //           href={`https://polygonscan.com/address/${owner.owner_address}`}
+        //           target="_blank"
+        //           className="!px-0 !text-sm hover:underline"
+        //         >
+        //           {index}. {owner.owner_address.slice(2, 7)}
+        //         </LinkStyled>
+        //         <span className="text-neutral-300 text-sm">
+        //           {parseFloat(owner.percentage_relative_to_total_supply).toFixed(2)}%
+        //         </span>
+        //       </div>
+        //     );
+        //   })}
+        // </div>
       ) : null}
     </div>
   );

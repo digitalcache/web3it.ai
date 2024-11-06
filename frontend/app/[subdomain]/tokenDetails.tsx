@@ -12,7 +12,7 @@ import { IdeaType } from '@/common/types';
 import { Loader } from '@/common/components/atoms';
 import { Toaster } from '@/common/components/molecules';
 import { Website } from './website';
-import { TradeTable } from './tradeTable';
+// import { TradeTable } from './tradeTable';
 import { TokenCard } from './tokenCard';
 import { BuyToken } from './buyToken';
 import { useGetTransfers } from './useGetTransfers';
@@ -40,7 +40,7 @@ export const TokenDetails = ({
   });
 
   const {
-    transfers,
+    // transfers,
     mutateTransfers,
   } = useGetTransfers({
     tokenAddress,
@@ -60,12 +60,12 @@ export const TokenDetails = ({
       <div className="container mx-auto flex flex-col-reverse lg:flex-row gap-8 pt-24 px-4 md:px-0 lg:pt-32 pb-12">
         <div className="lg:w-4/5 flex flex-col gap-4" style={{ perspective: '1000px' }}>
           <Website idea={idea} />
-          {transfers?.length ? (
+          {/* {transfers?.length ? (
             <TradeTable
               idea={idea}
               transfers={transfers}
             />
-          ) : null}
+          ) : null} */}
         </div>
         <div className="flex flex-col lg:flex-col gap-4">
           {idea ? (

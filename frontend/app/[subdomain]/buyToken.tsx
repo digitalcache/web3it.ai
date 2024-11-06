@@ -5,7 +5,9 @@ import { Button } from "@/common/components/atoms";
 import { Input } from "@/common/components/molecules";
 import { IdeaType } from "@/common/types";
 import {
-  useAccount, useConnect,
+  useAccount,
+  useConnect,
+  useReadContract,
   useWriteContract,
 } from "wagmi";
 import { injected } from 'wagmi/connectors'
@@ -24,7 +26,6 @@ import { KeyedMutator } from "swr";
 import lang from "@/common/lang";
 import { abbreviateNumber } from "@/utils/helpers";
 import { ethers } from "ethers";
-// import { costBasedOnTokens } from "@/app/actions";
 import {
   Get_Owners_Dto,
   Get_Transfers_Dto,
@@ -51,7 +52,6 @@ export const BuyToken = ({
   const {
     writeContractAsync,
   } = useWriteContract()
-
   const { connect } = useConnect()
   const {
     isConnected,
@@ -67,6 +67,19 @@ export const BuyToken = ({
   const totalSupply = idea ? parseInt(ethers.formatUnits(idea.tokenCurrentSupply, 'ether')) : 0;
   const remainingTokens = idea ? maxSupply - totalSupply : 0
   const fundingRaisedPercentage = (fundingRaised / fundingGoal) * 100;
+  const initialSupply = parseInt(process.env.NEXT_PUBLIC_INITIAL_SUPPLY || '0')
+  const actualSupply = totalSupply - initialSupply
+  const {
+    refetch: getCostRPC,
+  } = useReadContract({
+    abi: ideaAbi,
+    address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
+    functionName: ContractFunctions.calculateCost,
+    args: [actualSupply, purchaseAmount],
+    query: {
+      enabled: false,
+    },
+  })
 
   const getCost = async () => {
     if (!purchaseAmount && purchaseAmount < 0) {
@@ -78,20 +91,9 @@ export const BuyToken = ({
     }
     try {
       setTokenInfoLoading(true)
-      const provider = new ethers.JsonRpcProvider(
-        "https://unichain-sepolia.g.alchemy.com/v2/alcht_fY6SXB7YOYPGcYFEOXvwHGxsCOH9zg",
-        {
-          name: 'unichain-sepolia',
-          chainId: 1301,
-        },
-      );
-      const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '', ideaAbi, provider);
-      const initialSupply = parseInt(process.env.NEXT_PUBLIC_INITIAL_SUPPLY || '0')
-      const actualSupply = totalSupply - initialSupply
-      const costInWei = await contract.calculateCost(actualSupply, purchaseAmount);
-      // await costBasedOnTokens(totalSupply, purchaseAmount)
-      setCostWei(costInWei)
-      setCost(ethers.formatUnits(costInWei, 'ether'));
+      const { data: costInWei } = await getCostRPC()
+      setCostWei(costInWei as number)
+      setCost(ethers.formatUnits(costInWei as number, 'ether'));
       setIsModalOpen(true);
     } catch (error) {
       console.error(error)
