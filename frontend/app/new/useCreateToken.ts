@@ -44,6 +44,7 @@ export const useCreateToken = () => {
   const [ideaCreatedThroughAI, setIdeaCreatedThroughAI] = useState(false)
   const [txnHash, setTxnHash] = useState('')
   const [imageProcessing, setImageProcessing] = useState(false)
+  const [showSuccessLottie, setShowSuccessLottie] = useState(false)
   const MEME_CREATION_FEE = BigInt(100000000000000)
 
   const {
@@ -168,6 +169,7 @@ export const useCreateToken = () => {
               ])
               setIsSupabaseSubmitting(false)
               reset()
+              setShowSuccessLottie(true)
               toast.success(createIdeaCopy.ideaCreatedMessage)
               router.push(routes.viewProjectsPath)
             }
@@ -263,6 +265,7 @@ export const useCreateToken = () => {
     onSubmit,
     setValue,
     getValues,
+    showSuccessLottie,
     isCategoriesLoading,
     mutateCategories,
     categories,

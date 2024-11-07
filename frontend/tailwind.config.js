@@ -13,6 +13,8 @@ module.exports = {
         'yankees-blue': '#211D40',
         'eerie-black': '#181926',
         'manatee': '#979DA6',
+        'iris': '#4e54c8',
+        'light-cobalt-blue': '#8f94fb',
       },
     },
     keyframes: {
@@ -29,8 +31,8 @@ module.exports = {
         'to': {
           opacity: '1',
           transform: 'translateY(0)',
-        }
-      }
+        },
+      },
     },
     animation: {
       ldsLoader: 'ldsLoader 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',

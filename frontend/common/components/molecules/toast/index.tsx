@@ -19,7 +19,7 @@ export const Toaster = () => {
             show={toast.visible}
             className={cn(
               'transform p-4 rounded-xl flex items-center text-2xl',
-              toast.type === 'success' ? 'bg-gradient-to-br from-indigo-600 to-purple-600' : 'bg-red-400',
+              toast.type === 'success' ? 'bg-gradient-to-br from-iris to-light-cobalt-blue' : 'bg-red-400',
             )}
             enter="transition-all duration-150"
             enterFrom="opacity-0 scale-50"

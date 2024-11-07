@@ -7,7 +7,9 @@ import {
   Controller,
 } from "react-hook-form";
 import { MultiValue } from "react-select";
+import Lottie from 'react-lottie';
 import { Input } from '@/common/components/molecules';
+import { useWindowDimensions } from '@/common/hooks/useWindowDimensions';
 import { v4 } from "uuid";
 import {
   Button,
@@ -18,6 +20,7 @@ import lang from '@/common/lang';
 import { ImageSelectionAndUpload } from './imageSelectionAndUpload';
 import { useCreateToken } from './useCreateToken';
 import { CategoryType } from './types';
+import * as animationData from '@/common/lottie/success-animation.json'
 
 const { createIdea: { form: formCopy } } = lang
 
@@ -36,11 +39,16 @@ export const CreateToken = () => {
     isSupabaseSubmitting,
     categories,
     isCategoriesLoading,
+    showSuccessLottie,
     mutateCategories,
     addCategory,
     isAddingCategory,
     trigger,
   } = useCreateToken()
+
+  const {
+    windowSize,
+  } = useWindowDimensions()
 
   const onCreateOption = async (option:string) => {
     const newCategory = {
@@ -52,6 +60,16 @@ export const CreateToken = () => {
     mutateCategories();
   }
 
+  const defaultOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  };
+
+
   const createOptionValue = (field: string[]) => {
     const ans = categories?.flatMap((category) => field?.includes(category.id.toString()) ? category : []);
     return ans;
@@ -59,6 +77,16 @@ export const CreateToken = () => {
   return (
     <>
       {(isPending || isLoading || isSupabaseSubmitting || imageProcessing || isIdeaFetching) && <Loader />}
+      {showSuccessLottie && (
+        <div className="pointer-events-none hidden md:block fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1000]">
+          {windowSize !== "mobile" ? (
+            <Lottie options={defaultOptions}
+              height={400}
+              width={400}
+            />
+          ) : null}
+        </div>
+      )}
       <form onSubmit={handleSubmit(onSubmit)} className='max-w-[800px] relative bg-gradient-to-r overflow-hidden from-indigo-500 to-purple-500 w-full rounded-2xl pt-8 flex flex-col gap-4'>
         <div className='bg-gradient-to-t from-white to-transparent backdrop-blur-3xl blur-[200px] absolute bottom-0 left-0 w-full h-[400px] -z-[0]'></div>
         <div className="px-4 md:px-8 relative flex gap-4 flex-col md:gap-2 md:flex-row">
