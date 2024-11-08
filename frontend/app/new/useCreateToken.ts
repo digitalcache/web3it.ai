@@ -17,7 +17,7 @@ import { ContractFunctions } from '@/common/constants';
 import {
   useAccount,
   useConnect,
-  useTransactionReceipt,
+  useWaitForTransactionReceipt,
   useWriteContract,
 } from 'wagmi';
 import { injected } from 'wagmi/connectors'
@@ -84,13 +84,19 @@ export const useCreateToken = () => {
   const {
     data: tokenData,
     isLoading,
-  } = useTransactionReceipt({
+    error,
+  } = useWaitForTransactionReceipt({
     hash: txnHash as Address,
     query: {
       enabled: txnHash ? true : false,
     },
   })
 
+  useEffect(() => {
+    if (error) {
+      toast.error(createIdeaCopy.errorOccured)
+    }
+  }, [error])
   const {
     data: categories,
     isCategoriesLoading,
@@ -152,7 +158,7 @@ export const useCreateToken = () => {
 
   useEffect(() => {
     const addTokenAddressToJSON = async () => {
-      if (tokenData) {
+      if (tokenData && tokenData.status === "success") {
         setIsSupabaseSubmitting(true)
         const { data: subdomains } = await supabase.from('Subdomains').select('*')
         if (subdomains) {
@@ -179,10 +185,12 @@ export const useCreateToken = () => {
           }
         }
       }
+      if (tokenData && tokenData.status === "reverted") {
+        toast.error("Transaction reverted. Please try again.")
+      }
     }
     addTokenAddressToJSON()
   }, [tokenData, router, reset, getValues, supabase])
-
   const onSubmit: SubmitHandler<TokenDTO> = async (data) => {
     const createToken = async () => {
       try {

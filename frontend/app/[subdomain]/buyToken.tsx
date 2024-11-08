@@ -10,10 +10,13 @@ import {
   useReadContract,
   useWriteContract,
 } from "wagmi";
+import { simulateContract } from '@wagmi/core'
 import { injected } from 'wagmi/connectors'
 import { Progress } from "@/common/components/molecules";
 import { ContractFunctions } from "@/common/constants";
-import { Address } from "viem";
+import {
+  Address, parseUnits,
+} from "viem";
 import toast from "react-hot-toast";
 import {
   Modal,
@@ -31,6 +34,7 @@ import {
   Get_Transfers_Dto,
 } from "./types";
 import ideaAbi from '@/utils/abis/ideaFactory.json'
+import { config } from "@/config";
 
 const { ideaPage: ideaPageCopy } = lang
 
@@ -55,11 +59,13 @@ export const BuyToken = ({
   const { connect } = useConnect()
   const {
     isConnected,
+    address,
   } = useAccount()
   const [purchaseAmount, setPurchaseAmount] = useState(0);
   const [cost, setCost] = useState('0');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [costWei, setCostWei] = useState(0)
+  const [buyStatus, setBuyStatus] = useState(false)
   const fundingRaised = idea ? parseFloat(ethers.formatUnits(idea.fundingRaised, 'ether'))  : 0;
   const fundingGoal = parseFloat(process.env.NEXT_PUBLIC_TARGET_ETH || '0');
   const maxSupply = parseInt(process.env.NEXT_PUBLIC_MAX_SUPPLY || '0');
@@ -81,6 +87,24 @@ export const BuyToken = ({
     },
   })
 
+  const simulateBuy = async (amount: number) => {
+    try {
+      await simulateContract(config, {
+        abi: ideaAbi,
+        address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as Address,
+        functionName: ContractFunctions.buyToken,
+        value: parseUnits(amount.toString(), 0),
+        args: [
+          tokenAddress,
+          purchaseAmount,
+        ],
+        account: address,
+      })
+      setBuyStatus(true)
+    } catch (error) {
+      setBuyStatus(false)
+    }
+  }
   const getCost = async () => {
     if (!purchaseAmount && purchaseAmount < 0) {
       return;
@@ -95,12 +119,14 @@ export const BuyToken = ({
       setCostWei(costInWei as number)
       setCost(ethers.formatUnits(costInWei as number, 'ether'));
       setIsModalOpen(true);
+      await simulateBuy(costInWei as number)
     } catch (error) {
       console.error(error)
     } finally {
       setTokenInfoLoading(false)
     }
   };
+
   const handlePurchase = async () => {
     const purchaseAction = async () => {
       try {
@@ -146,7 +172,7 @@ export const BuyToken = ({
     }
   }
   return (
-    <div className="bg-gradient-to-tl from-indigo-500/90 to-purple-500/90 shadow-lg shadow-black rounded-2xl p-4">
+    <div className="bg-gradient-to-tr from-indigo-500/90 to-purple-500/90 shadow-lg shadow-black rounded-2xl p-4">
       <div className="mb-4">
         <div className="text-white font-semibold mb-2 flex justify-between items-center">
           <span>{ideaPageCopy.bondingCurveProgress}</span>
@@ -202,9 +228,9 @@ export const BuyToken = ({
                 {idea?.symbol}
               </div>
             </div>
-            <p className="text-neutral-200 mt-8 md:mt-4 text-center text-xs md:text-sm">{ideaPageCopy.ensure}</p>
+            {!buyStatus && <p className="text-red-500 mt-5 text-center text-xs md:text-sm px-4">{ideaPageCopy.likelyFail}</p>}
           </ModalContent>
-          <ModalFooter className="gap-4 pb-6">
+          <ModalFooter className="gap-4 pb-6 mt-5">
             <Button
               size="md"
               variant="primary"

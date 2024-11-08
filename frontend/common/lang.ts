@@ -207,6 +207,7 @@ const ideaPage = {
   for: 'for',
   confirmPurchase: 'Confirm purchase',
   ensure: 'Ensure you have enough funds in your account',
+  likelyFail: 'Note: This transaction will likely fail as you do not have enough funds',
   buyNow: 'Buy now',
   bondingCurveInfo: "When the market cap reaches %goal% %currency%, all the liquidity from the bonding curve will be deposited into Uniswap, and the LP tokens will be burned. Progression increases as the price goes up.",
 }

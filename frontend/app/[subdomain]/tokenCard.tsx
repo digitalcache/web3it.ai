@@ -18,7 +18,7 @@ export const TokenCard = ({
 }) => {
   const fundingRaised = idea?.fundingRaised ? ethers.formatUnits(idea.fundingRaised, 'ether') : 0
   return (
-    <div className="bg-gradient-to-tl lg:max-w-[360px] from-indigo-500/90 to-purple-500/90 p-4 h-auto rounded-2xl shadow-lg">
+    <div className="bg-gradient-to-br lg:max-w-[360px] from-indigo-500/90 to-purple-500/90 p-4 h-auto rounded-2xl shadow-lg">
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-start">
           <Image
